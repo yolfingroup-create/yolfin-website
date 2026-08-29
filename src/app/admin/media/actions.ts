@@ -36,7 +36,7 @@ export async function uploadMediaAssetAction(
 
     const MAX_SIZE = 10 * 1024 * 1024; // 10MB
     if (file.size > MAX_SIZE) {
-      return { error: "File size exceeds limit (10MB maximum). Please select a smaller image." };
+      return { error: "Image is too large. Please choose an image under 10 MB." };
     }
 
     const arrayBuffer = await file.arrayBuffer();
@@ -62,7 +62,7 @@ export async function uploadMediaAssetAction(
 
     if (dbError) {
       console.error("Database insert error for media asset:", dbError);
-      return { error: "Unable to save image metadata. Please try again." };
+      return { error: "Unable to upload image. Please try again." };
     }
 
     revalidatePath("/admin/media");

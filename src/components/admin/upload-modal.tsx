@@ -32,7 +32,7 @@ export function UploadModal({ isOpen, onClose, onToast }: UploadModalProps) {
     }
 
     if (file.size > 10 * 1024 * 1024) {
-      setValidationError("File size exceeds 10MB limit. Please select a smaller file.");
+      setValidationError("Image is too large. Please choose an image under 10 MB.");
       return;
     }
 
@@ -193,7 +193,7 @@ export function UploadModal({ isOpen, onClose, onToast }: UploadModalProps) {
               {isUploading ? (
                 <>
                   <Loader2 className="w-4 h-4 animate-spin" />
-                  <span>Uploading...</span>
+                  <span>Uploading image...</span>
                 </>
               ) : (
                 "Upload Image"
