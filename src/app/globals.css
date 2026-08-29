@@ -8,7 +8,7 @@
   --color-brand-green-hover: #0F733E;
   --color-secondary-green: #2FA866;
   --color-light-green: #EAF7F0;
-  --color-soft-bg: #F7F9FB;
+  --color-soft-bg: #F8FAFC;
   --color-slate-muted: #64748B;
   --color-slate-subtle: #94A3B8;
   --color-border-light: #E2E8F0;
@@ -21,7 +21,7 @@
   --foreground: #071F49;
 }
 
-/* Mobile-first base styles */
+/* Mobile-first base reset */
 html {
   scroll-behavior: smooth;
   -webkit-text-size-adjust: 100%;
@@ -37,7 +37,7 @@ body {
   flex-direction: column;
 }
 
-/* Prevent horizontal overflow on small screens (320px - 430px) */
+/* Prevent horizontal scroll leakage on mobile viewports (320px - 430px) */
 * {
   box-sizing: border-box;
 }
@@ -47,14 +47,14 @@ body {
   width: 100%;
   margin-left: auto;
   margin-right: auto;
-  padding-left: 1rem;
-  padding-right: 1rem;
+  padding-left: 1.25rem; /* 20px on mobile for clean padding */
+  padding-right: 1.25rem;
 }
 
 @media (min-width: 640px) {
   .container-custom {
-    padding-left: 1.5rem;
-    padding-right: 1.5rem;
+    padding-left: 1.75rem;
+    padding-right: 1.75rem;
   }
 }
 
@@ -64,4 +64,15 @@ body {
     padding-left: 2rem;
     padding-right: 2rem;
   }
+}
+
+/* Custom interactive focus states for accessibility */
+*:focus-visible {
+  outline: 2px solid var(--color-brand-green);
+  outline-offset: 2px;
+}
+
+/* Touch Target Minimum Height Helper */
+.touch-target {
+  min-height: 44px;
 }

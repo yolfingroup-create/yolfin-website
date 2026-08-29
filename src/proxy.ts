@@ -4,8 +4,17 @@ import { NextResponse, type NextRequest } from "next/server";
 export const ADMIN_EMAIL = "yolfingroup@gmail.com";
 
 export async function proxy(request: NextRequest) {
+  const pathname = request.nextUrl.pathname;
+  const requestHeaders = new Headers(request.headers);
+  requestHeaders.set(
+    "x-is-admin-route",
+    pathname.startsWith("/admin") ? "true" : "false"
+  );
+
   let supabaseResponse = NextResponse.next({
-    request,
+    request: {
+      headers: requestHeaders,
+    },
   });
 
   const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
@@ -25,7 +34,9 @@ export async function proxy(request: NextRequest) {
           request.cookies.set(name, value)
         );
         supabaseResponse = NextResponse.next({
-          request,
+          request: {
+            headers: requestHeaders,
+          },
         });
         cookiesToSet.forEach(({ name, value, options }) =>
           supabaseResponse.cookies.set(name, value, options)
@@ -40,8 +51,6 @@ export async function proxy(request: NextRequest) {
 
   const isSingleAdmin =
     !!user && user.email?.toLowerCase() === ADMIN_EMAIL.toLowerCase();
-
-  const pathname = request.nextUrl.pathname;
 
   // Protect /admin routes
   if (pathname.startsWith("/admin")) {

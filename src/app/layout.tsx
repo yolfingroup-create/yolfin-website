@@ -1,6 +1,11 @@
 import type { Metadata, Viewport } from "next";
 import { Inter } from "next/font/google";
+import { headers } from "next/headers";
 import "./globals.css";
+import { Navbar } from "@/components/layout/navbar";
+import { Footer } from "@/components/layout/footer";
+import { BookingModalProvider } from "@/context/booking-modal-context";
+import { TrialBookingModal } from "@/components/modals/trial-booking-modal";
 import { SITE_CONFIG } from "@/lib/constants";
 
 const inter = Inter({
@@ -38,7 +43,7 @@ export const metadata: Metadata = {
   creator: SITE_CONFIG.name,
   publisher: SITE_CONFIG.name,
   formatDetection: {
-    email: true,
+    email: fontDetection(),
     address: true,
     telephone: true,
   },
@@ -68,15 +73,33 @@ export const metadata: Metadata = {
   },
 };
 
-export default function RootLayout({
+function fontDetection() {
+  return true;
+}
+
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const headerList = await headers();
+  const isAdminRoute = headerList.get("x-is-admin-route") === "true";
+
   return (
     <html lang="en" className={`${inter.variable} antialiased`}>
       <body className="flex min-h-screen flex-col bg-white text-navy font-sans">
-        {children}
+        <BookingModalProvider>
+          {isAdminRoute ? (
+            children
+          ) : (
+            <>
+              <Navbar />
+              <main className="flex-1">{children}</main>
+              <Footer />
+            </>
+          )}
+          <TrialBookingModal />
+        </BookingModalProvider>
       </body>
     </html>
   );
