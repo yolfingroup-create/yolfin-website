@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { getAdminUser } from "@/lib/supabase/auth";
 import { logoutAdminAction } from "./actions";
 
@@ -24,14 +25,32 @@ export default async function AdminLayout({
   return (
     <div className="min-h-screen bg-slate-950 text-slate-100 flex flex-col">
       {/* Protected Admin Navigation Bar */}
-      <header className="bg-slate-900 border-b border-slate-800 px-6 py-4 flex items-center justify-between sticky top-0 z-50">
-        <div className="flex items-center gap-3">
-          <span className="font-extrabold text-lg text-emerald-400 tracking-tight">
-            Yolfin Group
-          </span>
-          <span className="px-2.5 py-0.5 bg-emerald-950 text-emerald-300 border border-emerald-800 text-xs font-semibold rounded-md uppercase">
-            CMS Admin
-          </span>
+      <header className="bg-slate-900 border-b border-slate-800 px-6 py-3.5 flex flex-wrap items-center justify-between gap-4 sticky top-0 z-50">
+        <div className="flex items-center gap-6">
+          <Link href="/admin" className="flex items-center gap-3 group">
+            <span className="font-extrabold text-lg text-emerald-400 tracking-tight">
+              Yolfin Group
+            </span>
+            <span className="px-2.5 py-0.5 bg-emerald-950 text-emerald-300 border border-emerald-800 text-xs font-semibold rounded-md uppercase">
+              CMS Admin
+            </span>
+          </Link>
+
+          {/* Admin Navigation Links */}
+          <nav className="flex items-center gap-3 text-xs font-semibold">
+            <Link
+              href="/admin"
+              className="px-3 py-1.5 rounded-lg text-slate-300 hover:text-white hover:bg-slate-800 transition-colors"
+            >
+              Dashboard
+            </Link>
+            <Link
+              href="/admin/media"
+              className="px-3 py-1.5 rounded-lg text-emerald-400 bg-emerald-950/80 border border-emerald-800/80 font-bold transition-colors"
+            >
+              Media Library
+            </Link>
+          </nav>
         </div>
 
         <div className="flex items-center gap-4 text-xs">
@@ -45,7 +64,7 @@ export default async function AdminLayout({
           <form action={logoutAdminAction}>
             <button
               type="submit"
-              className="px-3.5 py-2 bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 rounded-lg font-medium text-xs transition-colors"
+              className="px-3.5 py-2 bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 rounded-lg font-medium text-xs transition-colors cursor-pointer"
             >
               Sign Out
             </button>

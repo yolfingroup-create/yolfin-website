@@ -1,5 +1,10 @@
 import type { Metadata } from "next";
-import { getPublishedServices, getWhyYolfinItems, getPublishedSeoMetadata } from "@/lib/supabase/queries";
+import {
+  getPublishedServices,
+  getWhyYolfinItems,
+  getPublishedSeoMetadata,
+  getHomepageImagePlacements,
+} from "@/lib/supabase/queries";
 import { Hero } from "@/components/home/hero";
 import { TrustHighlights } from "@/components/home/trust-highlights";
 import { TrialBanner } from "@/components/home/trial-banner";
@@ -32,9 +37,10 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export default async function HomePage() {
-  const [services, whyItems] = await Promise.all([
+  const [services, whyItems, homepageImages] = await Promise.all([
     getPublishedServices(),
     getWhyYolfinItems(),
+    getHomepageImagePlacements(),
   ]);
 
   const jsonLd = {
@@ -79,8 +85,8 @@ export default async function HomePage() {
 
       {/* Main Homepage Flow */}
       <div className="flex flex-col min-h-screen">
-        {/* A. Hero Section */}
-        <Hero />
+        {/* A. Hero Section (Dynamic Hero Image support) */}
+        <Hero heroImage={homepageImages.heroImage} />
 
         {/* B. Trust Highlights Strip */}
         <TrustHighlights />
@@ -94,8 +100,8 @@ export default async function HomePage() {
         {/* E. Additional Trust Bar */}
         <TrustBar />
 
-        {/* F. Why Yolfin Preview Section (Powered by Supabase DB) */}
-        <WhyUsPreview items={whyItems} />
+        {/* F. Why Yolfin Preview Section (Dynamic Why Us Image support) */}
+        <WhyUsPreview items={whyItems} whyUsImage={homepageImages.whyUsImage} />
 
         {/* G. Final Bottom Conversion CTA */}
         <FinalCTA />

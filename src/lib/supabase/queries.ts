@@ -9,6 +9,7 @@ import type {
   AboutContentRow,
   SiteSettingRow,
   SEOMetadataRow,
+  MediaAssetRow,
 } from "@/types";
 
 /**
@@ -227,4 +228,69 @@ export async function getPublishedSeoMetadata(
   }
 
   return data ?? [];
+}
+
+/**
+ * Fetches all media assets for admin media management.
+ */
+export async function getAllMediaAssets(): Promise<MediaAssetRow[]> {
+  const supabase = await createClient();
+  const { data, error } = await supabase
+    .from("media_assets")
+    .select("*")
+    .order("created_at", { ascending: false });
+
+  if (error) {
+    console.error("Error fetching media assets:", error);
+    return [];
+  }
+
+  return data ?? [];
+}
+
+/**
+ * Fetches dynamic published media assets assigned to homepage placements (hero & why_us).
+ */
+export async function getHomepageImagePlacements(): Promise<{
+  heroImage: MediaAssetRow | null;
+  whyUsImage: MediaAssetRow | null;
+  placementsMap: Record<string, string>;
+}> {
+  const supabase = await createClient();
+
+  const { data: settingData } = await supabase
+    .from("site_settings")
+    .select("setting_value")
+    .eq("setting_key", "homepage_image_placements")
+    .maybeSingle();
+
+  const placementsMap = (settingData?.setting_value as Record<string, string>) || {};
+
+  const heroImageId = placementsMap.hero_image_id;
+  const whyUsImageId = placementsMap.why_us_image_id;
+
+  let heroImage: MediaAssetRow | null = null;
+  let whyUsImage: MediaAssetRow | null = null;
+
+  if (heroImageId) {
+    const { data } = await supabase
+      .from("media_assets")
+      .select("*")
+      .eq("id", heroImageId)
+      .eq("is_published", true)
+      .maybeSingle();
+    heroImage = data;
+  }
+
+  if (whyUsImageId) {
+    const { data } = await supabase
+      .from("media_assets")
+      .select("*")
+      .eq("id", whyUsImageId)
+      .eq("is_published", true)
+      .maybeSingle();
+    whyUsImage = data;
+  }
+
+  return { heroImage, whyUsImage, placementsMap };
 }
