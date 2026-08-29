@@ -1,0 +1,67 @@
+@import "tailwindcss";
+
+@theme {
+  --color-navy: #071F49;
+  --color-navy-dark: #04132F;
+  --color-navy-light: #0D2D68;
+  --color-brand-green: #138A4B;
+  --color-brand-green-hover: #0F733E;
+  --color-secondary-green: #2FA866;
+  --color-light-green: #EAF7F0;
+  --color-soft-bg: #F7F9FB;
+  --color-slate-muted: #64748B;
+  --color-slate-subtle: #94A3B8;
+  --color-border-light: #E2E8F0;
+
+  --font-sans: var(--font-inter), system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+}
+
+:root {
+  --background: #FFFFFF;
+  --foreground: #071F49;
+}
+
+/* Mobile-first base styles */
+html {
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  background-color: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-sans);
+  overflow-x: hidden;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Prevent horizontal overflow on small screens (320px - 430px) */
+* {
+  box-sizing: border-box;
+}
+
+/* Base Container Utility for Mobile-First layouts */
+.container-custom {
+  width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+
+@media (min-width: 640px) {
+  .container-custom {
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .container-custom {
+    max-width: 1280px;
+    padding-left: 2rem;
+    padding-right: 2rem;
+  }
+}
