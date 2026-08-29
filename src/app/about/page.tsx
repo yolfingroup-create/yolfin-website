@@ -129,23 +129,23 @@ export default async function AboutPage() {
               </div>
             </div>
 
-            {/* Corporate Metrics Bar */}
+            {/* Supported Corporate Pillar Badges */}
             <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 p-6 bg-navy text-white rounded-3xl shadow-xl">
               <div className="p-4 text-center space-y-1">
-                <p className="text-2xl sm:text-3xl font-extrabold text-emerald-400">100+</p>
-                <p className="text-xs font-semibold text-slate-300">Satisfied Clients</p>
+                <p className="text-base sm:text-lg font-extrabold text-emerald-400">Client-Centric</p>
+                <p className="text-xs font-semibold text-slate-300">Dedicated Support</p>
               </div>
               <div className="p-4 text-center space-y-1 border-l border-slate-800">
-                <p className="text-2xl sm:text-3xl font-extrabold text-emerald-400">50+</p>
-                <p className="text-xs font-semibold text-slate-300">Businesses Served</p>
+                <p className="text-base sm:text-lg font-extrabold text-emerald-400">India & UAE</p>
+                <p className="text-xs font-semibold text-slate-300">Multi-Region Reach</p>
               </div>
               <div className="p-4 text-center space-y-1 border-t sm:border-t-0 sm:border-l border-slate-800">
-                <p className="text-2xl sm:text-3xl font-extrabold text-emerald-400">100%</p>
-                <p className="text-xs font-semibold text-slate-300">Data Security</p>
+                <p className="text-base sm:text-lg font-extrabold text-emerald-400">100% Safe</p>
+                <p className="text-xs font-semibold text-slate-300">Data Confidentiality</p>
               </div>
               <div className="p-4 text-center space-y-1 border-t lg:border-t-0 border-l border-slate-800">
-                <p className="text-2xl sm:text-3xl font-extrabold text-emerald-400">24/7</p>
-                <p className="text-xs font-semibold text-slate-300">Dedicated Support</p>
+                <p className="text-base sm:text-lg font-extrabold text-emerald-400">Prompt & Reliable</p>
+                <p className="text-xs font-semibold text-slate-300">Dedicated Assistance</p>
               </div>
             </div>
           </Container>
