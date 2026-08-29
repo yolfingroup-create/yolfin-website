@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import { Mail, Phone, MapPin } from "lucide-react";
 import { Logo } from "@/components/ui/logo";
 import { Container } from "@/components/ui/container";
@@ -117,6 +118,14 @@ export function Footer() {
         {/* 5. Bottom Copyright & Legal Bar */}
         <div className="pt-8 border-t border-slate-800 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-500 text-center sm:text-left">
           <p>© 2026 Yolfin Group. All Rights Reserved.</p>
+          <div className="flex gap-4">
+            <Link
+              href="https://www.ekodrix.com/"
+              className="text-sm text-slate-500 hover:text-white transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-accent rounded px-0.5 inline-flex items-center gap-1"
+            >
+              Crafted by <span className="inline-flex items-center font-semibold">Ek<Image src="/ekodrix-logo.png" alt="o" width={14} height={14} className="mx-0.5 inline-block rounded-full align-middle" />drix</span>
+            </Link>
+          </div>
           <div className="flex items-center gap-6">
             <Link
               href="/privacy-policy"
