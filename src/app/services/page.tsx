@@ -1,10 +1,12 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import Link from "next/link";
 import {
   ArrowRight,
   Calculator,
   Plane,
   Building,
+  Building2,
   CheckCircle2,
   Sparkles,
   FileCheck,
@@ -14,7 +16,7 @@ import {
 import { Container } from "@/components/ui/container";
 import { SectionHeading } from "@/components/ui/section-heading";
 import { Button } from "@/components/ui/button";
-import { getPublishedServices, getActiveServiceItems, getPublishedSeoMetadata } from "@/lib/supabase/queries";
+import { getPublishedServices, getActiveServiceItems, getPublishedSeoMetadata, getImagePlacements } from "@/lib/supabase/queries";
 import { SITE_CONFIG } from "@/lib/constants";
 import type { SEOMetadataRow } from "@/types";
 
@@ -41,10 +43,13 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export default async function ServicesPage() {
-  const [services, serviceItems] = await Promise.all([
+  const [services, serviceItems, imagePlacements] = await Promise.all([
     getPublishedServices(),
     getActiveServiceItems(),
+    getImagePlacements(),
   ]);
+
+  const servicesHeroImage = imagePlacements.servicesHeroImage;
 
   const jsonLd = {
     "@context": "https://schema.org",
@@ -81,35 +86,64 @@ export default async function ServicesPage() {
       />
 
       <div className="flex flex-col min-h-screen">
-        {/* 1. Hero Section */}
+        {/* 1. Hero Section — with dynamic Services Hero image on right */}
         <section className="relative bg-gradient-to-b from-slate-50 via-white to-light-green/20 pt-12 pb-16 md:pt-20 md:pb-24 overflow-hidden border-b border-slate-100">
           <Container>
-            <div className="max-w-3xl space-y-6">
-              <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-light-green border border-emerald-200 text-brand-green font-bold text-xs uppercase tracking-wider">
-                <Sparkles className="w-3.5 h-3.5 text-brand-green" />
-                <span>OUR SERVICES</span>
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-14 items-center">
+              {/* Left — Text Content */}
+              <div className="space-y-6">
+                <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-light-green border border-emerald-200 text-brand-green font-bold text-xs uppercase tracking-wider">
+                  <Sparkles className="w-3.5 h-3.5 text-brand-green" />
+                  <span>OUR SERVICES</span>
+                </div>
+
+                <h1 className="text-3xl sm:text-5xl font-extrabold text-navy tracking-tight leading-tight">
+                  Solutions That{" "}
+                  <span className="text-brand-green underline decoration-emerald-400/40 decoration-wavy">
+                    Drive Your Business
+                  </span>
+                </h1>
+
+                <p className="text-slate-muted text-base sm:text-lg leading-relaxed">
+                  Practical, reliable and affordable solutions to manage your business financials, compliance, travel, and operations across India and the UAE.
+                </p>
+
+                <div className="flex items-center gap-3 pt-2">
+                  <Button
+                    openBookingModal
+                    variant="primary"
+                    size="lg"
+                    icon={<ArrowRight className="w-4 h-4" />}
+                  >
+                    Book 1 Month Free
+                  </Button>
+                </div>
               </div>
 
-              <h1 className="text-3xl sm:text-5xl font-extrabold text-navy tracking-tight leading-tight">
-                Solutions That{" "}
-                <span className="text-brand-green underline decoration-emerald-400/40 decoration-wavy">
-                  Drive Your Business
-                </span>
-              </h1>
-
-              <p className="text-slate-muted text-base sm:text-lg leading-relaxed">
-                Practical, reliable and affordable solutions to manage your business financials, compliance, travel, and operations across India and the UAE.
-              </p>
-
-              <div className="flex items-center gap-3 pt-2">
-                <Button
-                  openBookingModal
-                  variant="primary"
-                  size="lg"
-                  icon={<ArrowRight className="w-4 h-4" />}
-                >
-                  Book 1 Month Free
-                </Button>
+              {/* Right — Dynamic Hero Image */}
+              <div className="relative hidden lg:block">
+                <div className="relative aspect-[4/3] rounded-3xl overflow-hidden shadow-2xl border border-slate-200/60">
+                  {servicesHeroImage ? (
+                    <Image
+                      src={servicesHeroImage.secure_url}
+                      alt={servicesHeroImage.alt_text || "Yolfin Group Services"}
+                      fill
+                      className="object-cover"
+                      sizes="(max-width: 1024px) 100vw, 50vw"
+                      priority
+                    />
+                  ) : (
+                    <div className="w-full h-full bg-gradient-to-br from-slate-100 via-emerald-50 to-slate-100 flex items-center justify-center">
+                      <div className="text-center space-y-3 p-8">
+                        <div className="w-20 h-20 rounded-full bg-light-green flex items-center justify-center mx-auto">
+                          <Building2 className="w-10 h-10 text-brand-green" />
+                        </div>
+                        <p className="text-sm font-bold text-navy">Yolfin Group</p>
+                        <p className="text-xs text-slate-muted">Corporate Support Services</p>
+                      </div>
+                    </div>
+                  )}
+                </div>
               </div>
             </div>
           </Container>

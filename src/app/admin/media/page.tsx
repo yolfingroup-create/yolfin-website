@@ -7,7 +7,9 @@ import { Toast, type ToastMessage } from "@/components/admin/toast";
 import { UploadModal } from "@/components/admin/upload-modal";
 import { EditMediaModal } from "@/components/admin/edit-media-modal";
 import { ImagePickerModal } from "@/components/admin/image-picker-modal";
-import { assignHomepageImageAction } from "./actions";
+import { assignPlacementImageAction } from "./actions";
+import { PLACEMENT_SLOTS, getPlacementsByPage } from "@/lib/placement-config";
+import type { PlacementKey } from "@/lib/placement-config";
 import type { MediaAssetRow } from "@/types";
 
 export default function AdminMediaPage() {
@@ -24,7 +26,7 @@ export default function AdminMediaPage() {
   const [pickerConfig, setPickerConfig] = useState<{
     isOpen: boolean;
     title: string;
-    key: "hero_image_id" | "why_us_image_id";
+    key: PlacementKey;
   }>({
     isOpen: false,
     title: "",
@@ -75,14 +77,14 @@ export default function AdminMediaPage() {
   };
 
   const handleSelectPlacementImage = async (
-    key: "hero_image_id" | "why_us_image_id",
+    key: PlacementKey,
     assetId: string | null
   ) => {
-    const result = await assignHomepageImageAction(key, assetId);
+    const result = await assignPlacementImageAction(key, assetId);
     if (result.error) {
       setToast({ type: "error", text: result.error });
     } else {
-      setToast({ type: "success", text: result.message || "Homepage image updated successfully" });
+      setToast({ type: "success", text: result.message || "Image placement updated successfully" });
       loadMediaData();
     }
   };
@@ -98,13 +100,15 @@ export default function AdminMediaPage() {
 
   const getPlacementBadge = (assetId: string) => {
     const usages: string[] = [];
-    if (placementsMap.hero_image_id === assetId) usages.push("Homepage Hero");
-    if (placementsMap.why_us_image_id === assetId) usages.push("Homepage Why Us");
+    for (const slot of PLACEMENT_SLOTS) {
+      if (placementsMap[slot.key] === assetId) {
+        usages.push(slot.label);
+      }
+    }
     return usages;
   };
 
-  const heroAsset = assets.find((a) => a.id === placementsMap.hero_image_id);
-  const whyUsAsset = assets.find((a) => a.id === placementsMap.why_us_image_id);
+  const pageGroups = getPlacementsByPage();
 
   return (
     <div className="space-y-8 pb-12">
@@ -134,104 +138,82 @@ export default function AdminMediaPage() {
         </button>
       </div>
 
-      {/* Homepage Image Placements Section */}
-      <div className="bg-slate-900 border border-slate-800 rounded-2xl p-6 space-y-6">
+      {/* Website Image Placements Section — grouped by page */}
+      <div className="bg-slate-900 border border-slate-800 rounded-2xl p-6 space-y-8">
         <div>
-          <h2 className="text-lg font-bold text-white">Homepage Image Assignments</h2>
+          <h2 className="text-lg font-bold text-white">Website Image Assignments</h2>
           <p className="text-xs text-slate-400">
-            Select uploaded published images for key visual placements on the corporate homepage.
+            Select uploaded published images for key visual placements across all public website pages.
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          {/* Hero Image Slot */}
-          <div className="bg-slate-950 p-4 rounded-xl border border-slate-800 space-y-3">
-            <div className="flex items-center justify-between">
-              <div>
-                <span className="text-[10px] font-bold text-emerald-400 uppercase tracking-wider">
-                  Placement Slot #1
-                </span>
-                <h3 className="text-sm font-bold text-white">Homepage Hero Visual</h3>
-              </div>
-              <button
-                onClick={() =>
-                  setPickerConfig({
-                    isOpen: true,
-                    title: "Homepage Hero Visual",
-                    key: "hero_image_id",
-                  })
-                }
-                className="px-3 py-1.5 bg-slate-800 hover:bg-slate-700 text-emerald-400 text-xs font-bold rounded-lg border border-slate-700 transition-colors cursor-pointer"
-              >
-                {heroAsset ? "Change Image" : "Select Image"}
-              </button>
+        {Object.entries(pageGroups).map(([pageName, slots]) => (
+          <div key={pageName} className="space-y-4">
+            {/* Page Group Header */}
+            <div className="flex items-center gap-2">
+              <span className="px-2.5 py-1 bg-slate-800 text-slate-300 text-[10px] font-bold rounded-lg uppercase tracking-wider border border-slate-700">
+                {pageName}
+              </span>
+              <div className="flex-1 h-px bg-slate-800" />
             </div>
 
-            {heroAsset ? (
-              <div className="flex items-center gap-3 p-2 bg-slate-900 rounded-lg border border-slate-800">
-                <img
-                  src={heroAsset.secure_url}
-                  alt={heroAsset.alt_text || "Hero"}
-                  className="w-16 h-12 object-cover rounded-md"
-                />
-                <div className="overflow-hidden text-xs">
-                  <p className="font-bold text-white truncate">{heroAsset.alt_text || heroAsset.public_id}</p>
-                  <p className="text-[11px] text-emerald-400 flex items-center gap-1">
-                    <CheckCircle2 className="w-3 h-3" /> Active on Homepage Hero
-                  </p>
-                </div>
-              </div>
-            ) : (
-              <p className="text-xs text-slate-500 italic p-3 bg-slate-900/50 rounded-lg">
-                No custom image assigned. Using corporate fallback visual.
-              </p>
-            )}
-          </div>
+            {/* Slots Grid */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              {slots.map((slot) => {
+                const assignedAsset = assets.find((a) => a.id === placementsMap[slot.key]);
+                const globalSlotIndex = PLACEMENT_SLOTS.findIndex((s) => s.key === slot.key) + 1;
 
-          {/* Why Us Image Slot */}
-          <div className="bg-slate-950 p-4 rounded-xl border border-slate-800 space-y-3">
-            <div className="flex items-center justify-between">
-              <div>
-                <span className="text-[10px] font-bold text-emerald-400 uppercase tracking-wider">
-                  Placement Slot #2
-                </span>
-                <h3 className="text-sm font-bold text-white">Homepage Why Us Visual</h3>
-              </div>
-              <button
-                onClick={() =>
-                  setPickerConfig({
-                    isOpen: true,
-                    title: "Homepage Why Us Visual",
-                    key: "why_us_image_id",
-                  })
-                }
-                className="px-3 py-1.5 bg-slate-800 hover:bg-slate-700 text-emerald-400 text-xs font-bold rounded-lg border border-slate-700 transition-colors cursor-pointer"
-              >
-                {whyUsAsset ? "Change Image" : "Select Image"}
-              </button>
+                return (
+                  <div
+                    key={slot.key}
+                    className="bg-slate-950 p-4 rounded-xl border border-slate-800 space-y-3"
+                  >
+                    <div className="flex items-center justify-between">
+                      <div>
+                        <span className="text-[10px] font-bold text-emerald-400 uppercase tracking-wider">
+                          Placement Slot #{globalSlotIndex}
+                        </span>
+                        <h3 className="text-sm font-bold text-white">{slot.label}</h3>
+                      </div>
+                      <button
+                        onClick={() =>
+                          setPickerConfig({
+                            isOpen: true,
+                            title: slot.label,
+                            key: slot.key,
+                          })
+                        }
+                        className="px-3 py-1.5 bg-slate-800 hover:bg-slate-700 text-emerald-400 text-xs font-bold rounded-lg border border-slate-700 transition-colors cursor-pointer"
+                      >
+                        {assignedAsset ? "Change Image" : "Select Image"}
+                      </button>
+                    </div>
+
+                    {assignedAsset ? (
+                      <div className="flex items-center gap-3 p-2 bg-slate-900 rounded-lg border border-slate-800">
+                        <img
+                          src={assignedAsset.secure_url}
+                          alt={assignedAsset.alt_text || slot.label}
+                          className="w-16 h-12 object-cover rounded-md"
+                        />
+                        <div className="overflow-hidden text-xs">
+                          <p className="font-bold text-white truncate">{assignedAsset.alt_text || assignedAsset.public_id}</p>
+                          <p className="text-[11px] text-emerald-400 flex items-center gap-1">
+                            <CheckCircle2 className="w-3 h-3" /> Active on {slot.label}
+                          </p>
+                        </div>
+                      </div>
+                    ) : (
+                      <p className="text-xs text-slate-500 italic p-3 bg-slate-900/50 rounded-lg">
+                        No custom image assigned. Using corporate fallback visual.
+                      </p>
+                    )}
+                  </div>
+                );
+              })}
             </div>
-
-            {whyUsAsset ? (
-              <div className="flex items-center gap-3 p-2 bg-slate-900 rounded-lg border border-slate-800">
-                <img
-                  src={whyUsAsset.secure_url}
-                  alt={whyUsAsset.alt_text || "Why Us"}
-                  className="w-16 h-12 object-cover rounded-md"
-                />
-                <div className="overflow-hidden text-xs">
-                  <p className="font-bold text-white truncate">{whyUsAsset.alt_text || whyUsAsset.public_id}</p>
-                  <p className="text-[11px] text-emerald-400 flex items-center gap-1">
-                    <CheckCircle2 className="w-3 h-3" /> Active on Homepage Why Us
-                  </p>
-                </div>
-              </div>
-            ) : (
-              <p className="text-xs text-slate-500 italic p-3 bg-slate-900/50 rounded-lg">
-                No custom image assigned. Using corporate fallback visual.
-              </p>
-            )}
           </div>
-        </div>
+        ))}
       </div>
 
       {/* Filter & Search Toolbar */}
@@ -352,7 +334,7 @@ export default function AdminMediaPage() {
                       ))}
                     </div>
                   ) : (
-                    <p className="text-[10px] text-slate-500 italic">Not assigned to homepage</p>
+                    <p className="text-[10px] text-slate-500 italic">Not assigned to any placement</p>
                   )}
                 </div>
 
@@ -386,7 +368,7 @@ export default function AdminMediaPage() {
         onToast={handleToast}
       />
 
-      {/* Homepage Placement Picker Modal */}
+      {/* Placement Picker Modal */}
       <ImagePickerModal
         isOpen={pickerConfig.isOpen}
         placementTitle={pickerConfig.title}

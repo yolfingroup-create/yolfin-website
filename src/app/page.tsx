@@ -3,7 +3,7 @@ import {
   getPublishedServices,
   getWhyYolfinItems,
   getPublishedSeoMetadata,
-  getHomepageImagePlacements,
+  getImagePlacements,
 } from "@/lib/supabase/queries";
 import { Hero } from "@/components/home/hero";
 import { TrustHighlights } from "@/components/home/trust-highlights";
@@ -40,7 +40,7 @@ export default async function HomePage() {
   const [services, whyItems, homepageImages] = await Promise.all([
     getPublishedServices(),
     getWhyYolfinItems(),
-    getHomepageImagePlacements(),
+    getImagePlacements(),
   ]);
 
   const jsonLd = {

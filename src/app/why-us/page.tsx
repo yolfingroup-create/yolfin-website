@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import {
   ArrowRight,
   ShieldCheck,
@@ -21,6 +22,7 @@ import {
   getComparisonItems,
   getPublishedTestimonials,
   getPublishedSeoMetadata,
+  getImagePlacements,
 } from "@/lib/supabase/queries";
 import { SITE_CONFIG } from "@/lib/constants";
 import type { SEOMetadataRow } from "@/types";
@@ -48,11 +50,14 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export default async function WhyUsPage() {
-  const [whyItems, comparisonItems, testimonials] = await Promise.all([
+  const [whyItems, comparisonItems, testimonials, imagePlacements] = await Promise.all([
     getWhyYolfinItems(),
     getComparisonItems(),
     getPublishedTestimonials(),
+    getImagePlacements(),
   ]);
+
+  const whyUsHeroImage = imagePlacements.whyUsHeroImage;
 
   const jsonLd = {
     "@context": "https://schema.org",
@@ -89,38 +94,67 @@ export default async function WhyUsPage() {
       />
 
       <div className="flex flex-col min-h-screen">
-        {/* 1. Hero Section */}
+        {/* 1. Hero Section — with dynamic Why Us Hero image on right */}
         <section className="relative bg-gradient-to-b from-slate-50 via-white to-light-green/20 pt-12 pb-16 md:pt-20 md:pb-24 overflow-hidden border-b border-slate-100">
           <Container>
-            <div className="max-w-3xl space-y-6">
-              <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-light-green border border-emerald-200 text-brand-green font-bold text-xs uppercase tracking-wider">
-                <Sparkles className="w-3.5 h-3.5" />
-                <span>WHY CHOOSE YOLFIN GROUP</span>
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-14 items-center">
+              {/* Left — Text Content */}
+              <div className="space-y-6">
+                <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-light-green border border-emerald-200 text-brand-green font-bold text-xs uppercase tracking-wider">
+                  <Sparkles className="w-3.5 h-3.5" />
+                  <span>WHY CHOOSE YOLFIN GROUP</span>
+                </div>
+
+                <h1 className="text-3xl sm:text-5xl font-extrabold text-navy tracking-tight leading-tight">
+                  Your Success Is{" "}
+                  <span className="text-brand-green underline decoration-emerald-400/40 decoration-wavy">
+                    Our Priority
+                  </span>
+                </h1>
+
+                <p className="text-slate-muted text-base sm:text-lg leading-relaxed">
+                  We don&apos;t just handle your numbers; we take care of your business growth with trust, accuracy, and dedicated responsibility across India and the UAE.
+                </p>
+
+                <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3.5 pt-2">
+                  <Button
+                    openBookingModal
+                    variant="primary"
+                    size="lg"
+                    icon={<ArrowRight className="w-4 h-4" />}
+                  >
+                    Book 1 Month Free
+                  </Button>
+                  <Button href="/services" variant="outline" size="lg">
+                    Explore Services
+                  </Button>
+                </div>
               </div>
 
-              <h1 className="text-3xl sm:text-5xl font-extrabold text-navy tracking-tight leading-tight">
-                Your Success Is{" "}
-                <span className="text-brand-green underline decoration-emerald-400/40 decoration-wavy">
-                  Our Priority
-                </span>
-              </h1>
-
-              <p className="text-slate-muted text-base sm:text-lg leading-relaxed">
-                We don&apos;t just handle your numbers; we take care of your business growth with trust, accuracy, and dedicated responsibility across India and the UAE.
-              </p>
-
-              <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3.5 pt-2">
-                <Button
-                  openBookingModal
-                  variant="primary"
-                  size="lg"
-                  icon={<ArrowRight className="w-4 h-4" />}
-                >
-                  Book 1 Month Free
-                </Button>
-                <Button href="/services" variant="outline" size="lg">
-                  Explore Services
-                </Button>
+              {/* Right — Dynamic Hero Image */}
+              <div className="relative hidden lg:block">
+                <div className="relative aspect-[4/3] rounded-3xl overflow-hidden shadow-2xl border border-slate-200/60">
+                  {whyUsHeroImage ? (
+                    <Image
+                      src={whyUsHeroImage.secure_url}
+                      alt={whyUsHeroImage.alt_text || "Why Choose Yolfin Group"}
+                      fill
+                      className="object-cover"
+                      sizes="(max-width: 1024px) 100vw, 50vw"
+                      priority
+                    />
+                  ) : (
+                    <div className="w-full h-full bg-gradient-to-br from-slate-100 via-emerald-50 to-slate-100 flex items-center justify-center">
+                      <div className="text-center space-y-3 p-8">
+                        <div className="w-20 h-20 rounded-full bg-light-green flex items-center justify-center mx-auto">
+                          <Handshake className="w-10 h-10 text-brand-green" />
+                        </div>
+                        <p className="text-sm font-bold text-navy">Yolfin Group</p>
+                        <p className="text-xs text-slate-muted">More Than a Service, A Partner</p>
+                      </div>
+                    </div>
+                  )}
+                </div>
               </div>
             </div>
           </Container>

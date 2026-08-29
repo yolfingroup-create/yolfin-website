@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import {
   ArrowRight,
   ShieldCheck,
@@ -11,11 +12,12 @@ import {
   Lock,
   HeartHandshake,
   TrendingUp,
+  Quote,
 } from "lucide-react";
 import { Container } from "@/components/ui/container";
 import { SectionHeading } from "@/components/ui/section-heading";
 import { Button } from "@/components/ui/button";
-import { getWhyYolfinItems, getPublishedSeoMetadata } from "@/lib/supabase/queries";
+import { getWhyYolfinItems, getPublishedSeoMetadata, getImagePlacements } from "@/lib/supabase/queries";
 import { SITE_CONFIG } from "@/lib/constants";
 import type { SEOMetadataRow } from "@/types";
 
@@ -42,7 +44,13 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export default async function AboutPage() {
-  const whyItems = await getWhyYolfinItems();
+  const [whyItems, imagePlacements] = await Promise.all([
+    getWhyYolfinItems(),
+    getImagePlacements(),
+  ]);
+
+  const aboutHeroImage = imagePlacements.aboutHeroImage;
+  const aboutJourneyImage = imagePlacements.aboutJourneyImage;
 
   const jsonLd = {
     "@context": "https://schema.org",
@@ -66,38 +74,74 @@ export default async function AboutPage() {
       />
 
       <div className="flex flex-col min-h-screen">
-        {/* 1. Hero Section */}
+        {/* 1. Hero Section — with dynamic About Hero image on right */}
         <section className="relative bg-gradient-to-b from-slate-50 via-white to-light-green/20 pt-12 pb-16 md:pt-20 md:pb-24 overflow-hidden border-b border-slate-100">
           <Container>
-            <div className="max-w-3xl space-y-6">
-              <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-light-green border border-emerald-200 text-brand-green font-bold text-xs uppercase tracking-wider">
-                <Sparkles className="w-3.5 h-3.5" />
-                <span>ABOUT YOLFIN GROUP</span>
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-14 items-center">
+              {/* Left — Text Content */}
+              <div className="space-y-6">
+                <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-light-green border border-emerald-200 text-brand-green font-bold text-xs uppercase tracking-wider">
+                  <Sparkles className="w-3.5 h-3.5" />
+                  <span>ABOUT YOLFIN GROUP</span>
+                </div>
+
+                <h1 className="text-3xl sm:text-5xl font-extrabold text-navy tracking-tight leading-tight">
+                  We Simplify Business.{" "}
+                  <span className="text-brand-green underline decoration-emerald-400/40 decoration-wavy">
+                    You Focus on Growth.
+                  </span>
+                </h1>
+
+                <p className="text-slate-muted text-base sm:text-lg leading-relaxed">
+                  Yolfin Group is a startup company committed to providing reliable and affordable solutions in Accounting, Finance, Travel and Facility Management across India and the UAE. We combine modern technology with personal attention to help businesses work smarter and grow faster.
+                </p>
+
+                <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3.5 pt-2">
+                  <Button
+                    openBookingModal
+                    variant="primary"
+                    size="lg"
+                    icon={<ArrowRight className="w-4 h-4" />}
+                  >
+                    Book 1 Month Free
+                  </Button>
+                  <Button href="/contact" variant="outline" size="lg">
+                    Contact Us
+                  </Button>
+                </div>
               </div>
 
-              <h1 className="text-3xl sm:text-5xl font-extrabold text-navy tracking-tight leading-tight">
-                We Simplify Business.{" "}
-                <span className="text-brand-green underline decoration-emerald-400/40 decoration-wavy">
-                  You Focus on Growth.
-                </span>
-              </h1>
-
-              <p className="text-slate-muted text-base sm:text-lg leading-relaxed">
-                Yolfin Group is a startup company committed to providing reliable and affordable solutions in Accounting, Finance, Travel and Facility Management across India and the UAE. We combine modern technology with personal attention to help businesses work smarter and grow faster.
-              </p>
-
-              <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3.5 pt-2">
-                <Button
-                  openBookingModal
-                  variant="primary"
-                  size="lg"
-                  icon={<ArrowRight className="w-4 h-4" />}
-                >
-                  Book 1 Month Free
-                </Button>
-                <Button href="/contact" variant="outline" size="lg">
-                  Contact Us
-                </Button>
+              {/* Right — Dynamic Hero Image */}
+              <div className="relative hidden lg:block">
+                <div className="relative aspect-[4/3] rounded-3xl overflow-hidden shadow-2xl border border-slate-200/60">
+                  {aboutHeroImage ? (
+                    <Image
+                      src={aboutHeroImage.secure_url}
+                      alt={aboutHeroImage.alt_text || "About Yolfin Group"}
+                      fill
+                      className="object-cover"
+                      sizes="(max-width: 1024px) 100vw, 50vw"
+                      priority
+                    />
+                  ) : (
+                    <div className="w-full h-full bg-gradient-to-br from-slate-100 via-emerald-50 to-slate-100 flex items-center justify-center">
+                      <div className="text-center space-y-3 p-8">
+                        <div className="w-20 h-20 rounded-full bg-light-green flex items-center justify-center mx-auto">
+                          <Building2 className="w-10 h-10 text-brand-green" />
+                        </div>
+                        <p className="text-sm font-bold text-navy">Yolfin Group</p>
+                        <p className="text-xs text-slate-muted">Your Trusted Growth Partner</p>
+                      </div>
+                    </div>
+                  )}
+                </div>
+                {/* Floating Quote Card — matches reference design */}
+                <div className="absolute -bottom-4 -left-4 bg-navy text-white p-5 rounded-2xl shadow-xl max-w-xs border border-slate-700">
+                  <Quote className="w-5 h-5 text-emerald-400 mb-2" />
+                  <p className="text-xs leading-relaxed text-slate-200">
+                    We don&apos;t just manage your business, we help it grow.
+                  </p>
+                </div>
               </div>
             </div>
           </Container>
@@ -226,9 +270,94 @@ export default async function AboutPage() {
           </Container>
         </section>
 
-        {/* 4. Dynamic Why Choose Yolfin Grid */}
+        {/* 4. Our Journey Section — with dynamic Journey image on right */}
+        <section className="py-14 sm:py-16 md:py-20 bg-white border-b border-slate-100">
+          <Container className="space-y-10">
+            <SectionHeading
+              eyebrow="OUR STORY"
+              title="Our"
+              highlightText="Journey"
+              className="text-center"
+            />
+
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-14 items-center">
+              {/* Left — Timeline */}
+              <div className="space-y-8">
+                <div className="flex items-start gap-4">
+                  <div className="w-10 h-10 rounded-full bg-light-green flex items-center justify-center shrink-0 mt-1">
+                    <Sparkles className="w-5 h-5 text-brand-green" />
+                  </div>
+                  <div>
+                    <h3 className="text-base font-bold text-navy">The Beginning</h3>
+                    <p className="text-xs text-slate-muted leading-relaxed mt-1">
+                      Yolfin Group was founded with a simple idea — to support businesses with reliable and affordable financial and management solutions.
+                    </p>
+                  </div>
+                </div>
+
+                <div className="flex items-start gap-4">
+                  <div className="w-10 h-10 rounded-full bg-light-green flex items-center justify-center shrink-0 mt-1">
+                    <TrendingUp className="w-5 h-5 text-brand-green" />
+                  </div>
+                  <div>
+                    <h3 className="text-base font-bold text-navy">Our Growth</h3>
+                    <p className="text-xs text-slate-muted leading-relaxed mt-1">
+                      With the trust of our clients, we are growing step by step, expanding our services and improving every day.
+                    </p>
+                  </div>
+                </div>
+
+                <div className="flex items-start gap-4">
+                  <div className="w-10 h-10 rounded-full bg-light-green flex items-center justify-center shrink-0 mt-1">
+                    <Target className="w-5 h-5 text-brand-green" />
+                  </div>
+                  <div>
+                    <h3 className="text-base font-bold text-navy">The Future</h3>
+                    <p className="text-xs text-slate-muted leading-relaxed mt-1">
+                      We aim to be a leading business support partner in India and UAE, known for trust, innovation and excellence.
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              {/* Right — Dynamic Journey Image */}
+              <div className="relative">
+                <div className="relative aspect-[4/3] rounded-3xl overflow-hidden shadow-xl border border-slate-200/60">
+                  {aboutJourneyImage ? (
+                    <Image
+                      src={aboutJourneyImage.secure_url}
+                      alt={aboutJourneyImage.alt_text || "Our Journey at Yolfin Group"}
+                      fill
+                      className="object-cover"
+                      sizes="(max-width: 1024px) 100vw, 50vw"
+                    />
+                  ) : (
+                    <div className="w-full h-full bg-gradient-to-br from-navy via-slate-800 to-navy-dark flex items-center justify-center">
+                      <div className="text-center space-y-3 p-8">
+                        <div className="w-16 h-16 rounded-full bg-emerald-500/20 border-2 border-emerald-500/40 flex items-center justify-center mx-auto">
+                          <TrendingUp className="w-8 h-8 text-emerald-400" />
+                        </div>
+                        <p className="text-sm font-bold text-white">Yolfin Group</p>
+                        <p className="text-xs text-slate-300">Growing Together</p>
+                      </div>
+                    </div>
+                  )}
+                </div>
+                {/* Floating quote overlay — matches reference design */}
+                <div className="absolute bottom-4 left-4 right-4 bg-navy/90 backdrop-blur-sm text-white p-4 rounded-xl border border-slate-700/50">
+                  <Quote className="w-4 h-4 text-emerald-400 mb-1.5" />
+                  <p className="text-xs leading-relaxed text-slate-200 italic">
+                    Built on trust. Driven by commitment. Focused on your growth.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </Container>
+        </section>
+
+        {/* 5. Dynamic Why Choose Yolfin Grid */}
         {whyItems.length > 0 && (
-          <section className="py-14 sm:py-16 bg-white border-b border-slate-100">
+          <section className="py-14 sm:py-16 bg-slate-50 border-b border-slate-100">
             <Container className="space-y-8">
               <SectionHeading
                 eyebrow="OUR ADVANTAGE"
@@ -239,7 +368,7 @@ export default async function AboutPage() {
 
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                 {whyItems.map((item) => (
-                  <div key={item.id} className="p-5 bg-slate-50 rounded-2xl border border-slate-200/70 space-y-2">
+                  <div key={item.id} className="p-5 bg-white rounded-2xl border border-slate-200/70 space-y-2">
                     <h3 className="text-sm font-bold text-navy">{item.title}</h3>
                     <p className="text-xs text-slate-600 leading-relaxed">{item.description}</p>
                   </div>
@@ -249,7 +378,7 @@ export default async function AboutPage() {
           </section>
         )}
 
-        {/* 5. Final CTA */}
+        {/* 6. Final CTA */}
         <section className="py-14 sm:py-16 md:py-20 bg-navy text-white relative overflow-hidden">
           <Container className="relative z-10 text-center space-y-5 max-w-3xl mx-auto">
             <div className="inline-flex items-center gap-1.5 px-3.5 py-1.5 bg-emerald-950 text-emerald-400 border border-emerald-800 text-xs font-bold rounded-full uppercase tracking-wider">

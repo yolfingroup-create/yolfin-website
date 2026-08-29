@@ -4,15 +4,16 @@
 import { useState } from "react";
 import { X, Search, CheckCircle2, Image as ImageIcon } from "lucide-react";
 import type { MediaAssetRow } from "@/types";
+import type { PlacementKey } from "@/lib/placement-config";
 
 interface ImagePickerModalProps {
   isOpen: boolean;
   placementTitle: string;
-  placementKey: "hero_image_id" | "why_us_image_id";
+  placementKey: PlacementKey;
   assets: MediaAssetRow[];
   currentAssetId: string | null;
   onClose: () => void;
-  onSelect: (placementKey: "hero_image_id" | "why_us_image_id", assetId: string | null) => void;
+  onSelect: (placementKey: PlacementKey, assetId: string | null) => void;
 }
 
 export function ImagePickerModal({
@@ -55,7 +56,7 @@ export function ImagePickerModal({
         <div className="flex items-center justify-between border-b border-slate-800 pb-4 shrink-0">
           <div>
             <span className="text-xs font-bold text-emerald-400 uppercase tracking-wider">
-              Select Homepage Image
+              Select Image
             </span>
             <h2 id="picker-modal-title" className="text-lg font-bold text-white">
               Assign to {placementTitle}

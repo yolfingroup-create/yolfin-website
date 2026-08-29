@@ -249,13 +249,23 @@ export async function getAllMediaAssets(): Promise<MediaAssetRow[]> {
 }
 
 /**
- * Fetches dynamic published media assets assigned to homepage placements (hero & why_us).
+ * Return type for all website image placements.
  */
-export async function getHomepageImagePlacements(): Promise<{
+export interface ImagePlacementsResult {
   heroImage: MediaAssetRow | null;
   whyUsImage: MediaAssetRow | null;
+  aboutHeroImage: MediaAssetRow | null;
+  aboutJourneyImage: MediaAssetRow | null;
+  servicesHeroImage: MediaAssetRow | null;
+  whyUsHeroImage: MediaAssetRow | null;
   placementsMap: Record<string, string>;
-}> {
+}
+
+/**
+ * Fetches all dynamic published media assets assigned to website placement slots.
+ * Uses a single batch query instead of individual queries per placement.
+ */
+export async function getImagePlacements(): Promise<ImagePlacementsResult> {
   const supabase = await createClient();
 
   const { data: settingData } = await supabase
@@ -266,31 +276,40 @@ export async function getHomepageImagePlacements(): Promise<{
 
   const placementsMap = (settingData?.setting_value as Record<string, string>) || {};
 
-  const heroImageId = placementsMap.hero_image_id;
-  const whyUsImageId = placementsMap.why_us_image_id;
+  // Collect all referenced asset IDs for a single batch query
+  const allIds = Object.values(placementsMap).filter(Boolean);
+  const uniqueIds = [...new Set(allIds)];
 
-  let heroImage: MediaAssetRow | null = null;
-  let whyUsImage: MediaAssetRow | null = null;
+  const assetsById: Record<string, MediaAssetRow> = {};
 
-  if (heroImageId) {
+  if (uniqueIds.length > 0) {
     const { data } = await supabase
       .from("media_assets")
       .select("*")
-      .eq("id", heroImageId)
-      .eq("is_published", true)
-      .maybeSingle();
-    heroImage = data;
+      .in("id", uniqueIds)
+      .eq("is_published", true);
+
+    if (data) {
+      for (const asset of data) {
+        assetsById[asset.id] = asset;
+      }
+    }
   }
 
-  if (whyUsImageId) {
-    const { data } = await supabase
-      .from("media_assets")
-      .select("*")
-      .eq("id", whyUsImageId)
-      .eq("is_published", true)
-      .maybeSingle();
-    whyUsImage = data;
-  }
-
-  return { heroImage, whyUsImage, placementsMap };
+  return {
+    heroImage: assetsById[placementsMap.hero_image_id] || null,
+    whyUsImage: assetsById[placementsMap.why_us_image_id] || null,
+    aboutHeroImage: assetsById[placementsMap.about_hero_image_id] || null,
+    aboutJourneyImage: assetsById[placementsMap.about_journey_image_id] || null,
+    servicesHeroImage: assetsById[placementsMap.services_hero_image_id] || null,
+    whyUsHeroImage: assetsById[placementsMap.why_us_hero_image_id] || null,
+    placementsMap,
+  };
 }
+
+/**
+ * Backward-compatible alias.
+ * @deprecated Use getImagePlacements instead.
+ */
+export const getHomepageImagePlacements = getImagePlacements;
+

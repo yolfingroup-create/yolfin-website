@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { getAdminUser } from "@/lib/supabase/auth";
-import { getAllMediaAssets, getHomepageImagePlacements } from "@/lib/supabase/queries";
+import { getAllMediaAssets, getImagePlacements } from "@/lib/supabase/queries";
 
 export const dynamic = "force-dynamic";
 
@@ -13,7 +13,7 @@ export async function GET() {
 
   const [assets, placementsData] = await Promise.all([
     getAllMediaAssets(),
-    getHomepageImagePlacements(),
+    getImagePlacements(),
   ]);
 
   return NextResponse.json({
@@ -21,3 +21,4 @@ export async function GET() {
     placementsMap: placementsData.placementsMap,
   });
 }
+

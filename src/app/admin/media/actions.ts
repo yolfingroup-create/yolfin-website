@@ -4,6 +4,8 @@ import { revalidatePath } from "next/cache";
 import { requireAdmin } from "@/lib/supabase/auth";
 import { createClient } from "@/lib/supabase/server";
 import { uploadToCloudinaryServer } from "@/lib/cloudinary/client";
+import type { PlacementKey } from "@/lib/placement-config";
+import { getPlacementSlot } from "@/lib/placement-config";
 
 export interface MediaActionResult {
   success?: boolean;
@@ -142,10 +144,12 @@ export async function deleteMediaAssetAction(id: string): Promise<MediaActionRes
 }
 
 /**
- * Server Action to assign an image asset to a specific homepage placement slot.
+ * Server Action to assign an image asset to any website image placement slot.
+ * Supports all 6 placements: homepage hero, homepage why us, about hero,
+ * about journey, services hero, and why us hero.
  */
-export async function assignHomepageImageAction(
-  placementKey: "hero_image_id" | "why_us_image_id",
+export async function assignPlacementImageAction(
+  placementKey: PlacementKey,
   mediaAssetId: string | null
 ): Promise<MediaActionResult> {
   try {
@@ -170,24 +174,34 @@ export async function assignHomepageImageAction(
       .upsert({
         setting_key: "homepage_image_placements",
         setting_value: updatedMap,
-        description: "Homepage image placement assignments mapping",
+        description: "Website image placement assignments mapping",
         is_public: true,
       }, { onConflict: "setting_key" });
 
     if (error) {
-      console.error("Error assigning homepage image placement:", error);
-      return { error: "Unable to update homepage image placement. Please try again." };
+      console.error("Error assigning image placement:", error);
+      return { error: "Unable to update image placement. Please try again." };
     }
 
     revalidatePath("/admin/media");
     revalidatePath("/");
+    revalidatePath("/about");
+    revalidatePath("/services");
+    revalidatePath("/why-us");
 
+    const slot = getPlacementSlot(placementKey);
     return {
       success: true,
-      message: "Homepage image updated successfully",
+      message: slot?.successMessage || "Image placement updated successfully",
     };
   } catch (err) {
-    console.error("Assign homepage image error:", err);
+    console.error("Assign placement image error:", err);
     return { error: "Unable to assign image. Please try again." };
   }
 }
+
+/**
+ * Backward-compatible alias for the original function name.
+ * @deprecated Use assignPlacementImageAction instead.
+ */
+export const assignHomepageImageAction = assignPlacementImageAction;
