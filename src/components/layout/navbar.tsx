@@ -1,6 +1,7 @@
+
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Menu, ArrowRight } from "lucide-react";
@@ -15,12 +16,25 @@ export function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
   const pathname = usePathname();
 
+  // Stable callback for closing the mobile menu
+  const handleCloseMobileMenu = useCallback(() => {
+    setIsMobileMenuOpen(false);
+  }, []);
+
+  // Handle navbar appearance on scroll
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 20);
     };
+
+    // Set initial state in case the page loads already scrolled
+    handleScroll();
+
     window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
   }, []);
 
   return (
@@ -43,6 +57,7 @@ export function Navbar() {
           >
             {SITE_CONFIG.navLinks.map((link) => {
               const isActive = pathname === link.href;
+
               return (
                 <Link
                   key={link.href}
@@ -54,6 +69,7 @@ export function Navbar() {
                   }`}
                 >
                   {link.name}
+
                   {isActive && (
                     <span className="absolute bottom-0 left-0 right-0 h-0.5 bg-brand-green rounded-full" />
                   )}
@@ -62,7 +78,7 @@ export function Navbar() {
             })}
           </nav>
 
-          {/* Desktop CTA Button (Opens Trial Modal) */}
+          {/* Desktop CTA Button */}
           <div className="hidden lg:flex items-center gap-4">
             <Button
               openBookingModal
@@ -76,10 +92,12 @@ export function Navbar() {
 
           {/* Mobile Hamburger Control */}
           <button
+            type="button"
             onClick={() => setIsMobileMenuOpen(true)}
             className="lg:hidden p-2 rounded-xl text-navy hover:bg-slate-100 focus:outline-none focus:ring-2 focus:ring-brand-green"
             aria-label="Open navigation menu"
             aria-expanded={isMobileMenuOpen}
+            aria-controls="mobile-navigation"
           >
             <Menu className="w-6 h-6" />
           </button>
@@ -89,8 +107,9 @@ export function Navbar() {
       {/* Mobile Drawer */}
       <MobileMenu
         isOpen={isMobileMenuOpen}
-        onClose={() => setIsMobileMenuOpen(false)}
+        onClose={handleCloseMobileMenu}
       />
     </>
   );
 }
+
