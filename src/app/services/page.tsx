@@ -89,8 +89,19 @@ export default async function ServicesPage() {
       <div className="flex flex-col min-h-screen">
         {/* 1. Hero Section — with dynamic Services Hero image on right */}
         <section className="relative bg-gradient-to-b from-slate-50 via-white to-light-green/20 pt-8 pb-10 lg:pt-20 lg:pb-24 overflow-hidden border-b border-slate-100">
-          <Container>
-            {/* DESKTOP LAYOUT (lg and above) - Kept completely intact */}
+          {/* Desktop Integrated Background Image (hidden on mobile/tablet) */}
+          {servicesHeroImage && (
+            <div className="hidden lg:block absolute top-0 right-0 w-[55%] h-full z-0 select-none pointer-events-none overflow-hidden">
+              <img
+                src={servicesHeroImage.secure_url}
+                alt={servicesHeroImage.alt_text || "Services Yolfin Group Background"}
+                className="w-full h-full object-cover object-left hero-mask-image"
+              />
+            </div>
+          )}
+
+          <Container className="relative z-10">
+            {/* DESKTOP LAYOUT (lg and above) */}
             <div className="hidden lg:grid grid-cols-2 gap-14 lg:items-stretch items-center">
               {/* Left — Text Content */}
               <div className="space-y-6 flex flex-col justify-center">
@@ -124,31 +135,8 @@ export default async function ServicesPage() {
                 </div>
               </div>
 
-              {/* Right — Dynamic Hero Image */}
-              <div className="relative lg:h-full">
-                <div className="relative lg:h-full h-auto min-h-[350px] lg:min-h-0 aspect-[4/3] lg:aspect-none rounded-3xl overflow-hidden shadow-2xl border border-slate-200/60">
-                  {servicesHeroImage ? (
-                    <Image
-                      src={servicesHeroImage.secure_url}
-                      alt={servicesHeroImage.alt_text || "Yolfin Group Services"}
-                      fill
-                      className="object-cover"
-                      sizes="(max-width: 1024px) 100vw, 50vw"
-                      priority
-                    />
-                  ) : (
-                    <div className="w-full h-full bg-gradient-to-br from-slate-100 via-emerald-50 to-slate-100 flex items-center justify-center">
-                      <div className="text-center space-y-3 p-8">
-                        <div className="w-20 h-20 rounded-full bg-light-green flex items-center justify-center mx-auto">
-                          <Building2 className="w-10 h-10 text-brand-green" />
-                        </div>
-                        <p className="text-sm font-bold text-navy">Yolfin Group</p>
-                        <p className="text-xs text-slate-muted">Corporate Support Services</p>
-                      </div>
-                    </div>
-                  )}
-                </div>
-              </div>
+              {/* Right Column: Empty spacer on desktop to show background image */}
+              <div className="hidden lg:block w-full min-h-[350px]" aria-hidden="true" />
             </div>
 
             {/* MOBILE & TABLET REDESIGNED LAYOUT (lg:hidden) */}
