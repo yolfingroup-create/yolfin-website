@@ -76,3 +76,17 @@ body {
 .touch-target {
   min-height: 44px;
 }
+
+/* Custom Hero Image Masking for seamless background integration */
+.hero-mask-image {
+  mask-image: linear-gradient(to bottom, transparent 0%, rgba(0, 0, 0, 0.05) 8%, rgba(0, 0, 0, 0.8) 35%, black 100%);
+  -webkit-mask-image: linear-gradient(to bottom, transparent 0%, rgba(0, 0, 0, 0.05) 8%, rgba(0, 0, 0, 0.8) 35%, black 100%);
+}
+
+@media (min-width: 1024px) {
+  .hero-mask-image {
+    mask-image: linear-gradient(to right, transparent 0%, rgba(0, 0, 0, 0.05) 12%, rgba(0, 0, 0, 0.8) 45%, black 100%);
+    -webkit-mask-image: linear-gradient(to right, transparent 0%, rgba(0, 0, 0, 0.05) 12%, rgba(0, 0, 0, 0.8) 45%, black 100%);
+  }
+}
+
