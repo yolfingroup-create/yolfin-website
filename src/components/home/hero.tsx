@@ -11,24 +11,38 @@ interface HeroProps {
 }
 
 export function Hero({ heroImage }: HeroProps) {
+  const hasImage = !!heroImage?.secure_url;
+
   return (
-    <section className="relative bg-gradient-to-b from-slate-50 via-white to-light-green/20 pt-8 pb-12 sm:pt-12 sm:pb-16 md:pt-16 md:pb-24 overflow-hidden border-b border-slate-100">
+    <section className="relative bg-gradient-to-b from-slate-50 via-white to-light-green/20 pt-6 pb-8 lg:pt-16 lg:pb-24 overflow-hidden border-b border-slate-100">
       {/* Background Subtle Accents */}
       <div className="absolute top-0 right-0 -mr-20 -mt-20 w-96 h-96 bg-emerald-100/40 rounded-full blur-3xl pointer-events-none" />
       <div className="absolute bottom-0 left-0 -ml-20 -mb-20 w-96 h-96 bg-blue-100/30 rounded-full blur-3xl pointer-events-none" />
 
+      {/* Desktop Integrated Background Image (hidden on mobile/tablet) */}
+      {hasImage && (
+        <div className="hidden lg:block absolute top-0 right-0 w-[55%] h-full z-0 select-none pointer-events-none overflow-hidden">
+          <img
+            src={heroImage.secure_url}
+            alt={heroImage.alt_text || "Yolfin Group Corporate Hero Background"}
+            className="w-full h-full object-cover object-left hero-mask-image"
+          />
+        </div>
+      )}
+
       <Container className="relative z-10">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-center">
+        {/* DESKTOP LAYOUT (lg and above) - Kept completely intact */}
+        <div className="hidden lg:grid grid-cols-12 gap-12 items-center">
           {/* Left Column: Brand Statement & Positioning */}
-          <div className="lg:col-span-6 space-y-6">
+          <div className="col-span-6 space-y-6">
             {/* Eyebrow Badge */}
-            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-light-green border border-emerald-200 text-brand-green font-bold text-[11px] sm:text-xs uppercase tracking-wider">
+            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-light-green border border-emerald-200 text-brand-green font-bold text-xs uppercase tracking-wider">
               <Sparkles className="w-3.5 h-3.5 text-brand-green shrink-0" />
               <span>YOUR GROWTH. OUR RESPONSIBILITY.</span>
             </div>
 
             {/* Strong H1 */}
-            <h1 className="text-2xl sm:text-4xl lg:text-5xl font-extrabold text-navy tracking-tight leading-[1.18]">
+            <h1 className="text-5xl font-extrabold text-navy tracking-tight leading-[1.18]">
               Smart Solutions for Every{" "}
               <span className="text-brand-green underline decoration-emerald-400/40 decoration-wavy">
                 Step Forward.
@@ -36,13 +50,13 @@ export function Hero({ heroImage }: HeroProps) {
             </h1>
 
             {/* Short Supporting Paragraph */}
-            <p className="text-slate-muted text-sm sm:text-base md:text-lg leading-relaxed max-w-xl">
+            <p className="text-slate-muted text-lg leading-relaxed max-w-xl">
               Integrated solutions for Accounting, Finance, Travel and Facility
               Management – all under one trusted partner across India and UAE.
             </p>
 
             {/* Primary & Secondary CTAs */}
-            <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 pt-1">
+            <div className="flex items-center gap-3 pt-1">
               <Button
                 openBookingModal
                 variant="primary"
@@ -62,19 +76,19 @@ export function Hero({ heroImage }: HeroProps) {
 
             {/* Floating Quote Statement */}
             <div className="pt-2">
-              <div className="p-4 sm:p-5 bg-navy text-white rounded-2xl shadow-lg border border-navy-light relative overflow-hidden">
+              <div className="p-5 bg-navy text-white rounded-2xl shadow-lg border border-navy-light relative overflow-hidden">
                 <div className="absolute top-0 right-0 w-24 h-24 bg-brand-green/10 rounded-full blur-xl" />
-                <p className="text-xs sm:text-sm font-medium italic leading-relaxed text-slate-200">
+                <p className="text-sm font-medium italic leading-relaxed text-slate-200">
                   &quot;We don&apos;t just manage your business, we help it grow.&quot;
                 </p>
-                <div className="mt-2 text-[11px] sm:text-xs font-bold text-emerald-400 uppercase tracking-wider">
+                <div className="mt-2 text-xs font-bold text-emerald-400 uppercase tracking-wider">
                   — Yolfin Group Leadership Commitment
                 </div>
               </div>
             </div>
 
             {/* Trust Badges */}
-            <div className="pt-1 flex flex-wrap items-center gap-4 text-xs font-semibold text-slate-600">
+            <div className="pt-1 flex items-center gap-4 text-xs font-semibold text-slate-600">
               <span className="flex items-center gap-1.5">
                 <ShieldCheck className="w-4 h-4 text-brand-green shrink-0" /> 100% Data Confidentiality
               </span>
@@ -84,30 +98,10 @@ export function Hero({ heroImage }: HeroProps) {
             </div>
           </div>
 
-          {/* Right Column: Dynamic Media Image or Corporate Feature Card */}
-          <div className="lg:col-span-6 w-full">
-            {heroImage?.secure_url ? (
-              <div className="relative rounded-2xl sm:rounded-3xl overflow-hidden shadow-2xl border border-slate-200 group">
-                <img
-                  src={heroImage.secure_url}
-                  alt={heroImage.alt_text || "Yolfin Group Corporate Hero"}
-                  className="w-full h-auto max-h-[500px] object-cover rounded-2xl sm:rounded-3xl group-hover:scale-[1.02] transition-transform duration-500"
-                />
-                <div className="absolute bottom-4 left-4 right-4 p-4 bg-navy/90 backdrop-blur-md rounded-2xl border border-white/10 text-white flex items-center justify-between">
-                  <div className="space-y-0.5">
-                    <p className="text-[10px] font-bold text-emerald-400 uppercase tracking-wider">
-                      Corporate Support
-                    </p>
-                    <p className="text-xs sm:text-sm font-bold">Trusted Partner for India & UAE</p>
-                  </div>
-                  <Button openBookingModal variant="primary" size="sm">
-                    Book Free Month
-                  </Button>
-                </div>
-              </div>
-            ) : (
-              /* Corporate Fallback Card when no custom image assigned */
-              <div className="bg-white rounded-2xl sm:rounded-3xl p-6 sm:p-8 shadow-xl border border-slate-200/90 space-y-6 relative overflow-hidden">
+          {/* Right Column: Fallback Card when no image assigned */}
+          <div className="col-span-6 w-full">
+            {!hasImage && (
+              <div className="bg-white rounded-3xl p-8 shadow-xl border border-slate-200/90 space-y-6 relative overflow-hidden">
                 <div className="flex items-center justify-between border-b border-slate-100 pb-4">
                   <div className="space-y-1">
                     <span className="px-3 py-1 bg-light-green text-brand-green text-[11px] font-bold rounded-full uppercase tracking-wider">
@@ -122,7 +116,6 @@ export function Hero({ heroImage }: HeroProps) {
                   </div>
                 </div>
 
-                {/* Service Pillars Preview */}
                 <div className="space-y-3">
                   <div className="flex items-center justify-between p-3.5 rounded-xl bg-slate-50 border border-slate-100">
                     <div className="flex items-center gap-3">
@@ -134,7 +127,7 @@ export function Hero({ heroImage }: HeroProps) {
                         <p className="text-[11px] text-slate-500">Bookkeeping, GST & VAT compliance</p>
                       </div>
                     </div>
-                    <span className="px-2.5 py-0.5 bg-emerald-900 text-emerald-300 text-[10px] font-bold rounded-md uppercase">
+                    <span className="px-2.5 py-0.5 bg-emerald-950 text-emerald-300 text-[10px] font-bold rounded-md uppercase">
                       Active
                     </span>
                   </div>
@@ -170,7 +163,6 @@ export function Hero({ heroImage }: HeroProps) {
                   </div>
                 </div>
 
-                {/* Instant Modal Trigger Banner */}
                 <div className="p-4 bg-navy text-white rounded-2xl flex flex-col sm:flex-row items-center justify-between gap-3 text-center sm:text-left">
                   <div className="space-y-0.5">
                     <p className="text-xs font-bold text-emerald-400 uppercase tracking-wider">
@@ -189,6 +181,90 @@ export function Hero({ heroImage }: HeroProps) {
                 </div>
               </div>
             )}
+          </div>
+        </div>
+
+        {/* MOBILE & TABLET REDESIGNED LAYOUT (lg:hidden) */}
+        <div className="block lg:hidden space-y-5">
+          {/* Part 1: TEXT */}
+          <div className="space-y-3 flex flex-col items-center text-center">
+            <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-light-green border border-emerald-200 text-brand-green font-bold text-[10px] sm:text-xs uppercase tracking-wider">
+              <Sparkles className="w-3 h-3 text-brand-green shrink-0" />
+              <span>YOUR GROWTH. OUR RESPONSIBILITY.</span>
+            </div>
+
+            <h1 className="text-[23px] sm:text-3xl font-extrabold text-navy tracking-tight leading-[1.2]">
+              Smart Solutions for Every{" "}
+              <span className="text-brand-green underline decoration-emerald-400/40 decoration-wavy">
+                Step Forward.
+              </span>
+            </h1>
+
+            <p className="text-slate-muted text-xs sm:text-sm leading-relaxed max-w-sm">
+              Integrated solutions for Accounting, Finance, Travel and Facility
+              Management – all under one trusted partner across India and UAE.
+            </p>
+          </div>
+
+          {/* Part 2: VISUAL */}
+          {hasImage ? (
+            <div className="w-full relative py-1 select-none pointer-events-none overflow-hidden">
+              <div className="w-full h-40 sm:h-52 relative rounded-2xl overflow-hidden border border-slate-100 shadow-sm">
+                <img
+                  src={heroImage.secure_url}
+                  alt={heroImage.alt_text || "Yolfin Group Corporate Hero"}
+                  className="w-full h-full object-cover object-center hero-mask-image"
+                />
+              </div>
+            </div>
+          ) : (
+            <div className="w-full p-4 rounded-xl bg-slate-50 border border-slate-100 flex items-center gap-3">
+              <Building2 className="w-8 h-8 text-brand-green shrink-0" />
+              <div className="text-left">
+                <p className="text-xs font-bold text-navy">Yolfin Group Business Support</p>
+                <p className="text-[10px] text-slate-500">Accounting, Travel & Facility Services</p>
+              </div>
+            </div>
+          )}
+
+          {/* Part 3: CTA BUTTONS WITH CLEAR HIERARCHY */}
+          <div className="flex flex-col items-center gap-2 pt-1">
+            <Button
+              openBookingModal
+              variant="primary"
+              size="lg"
+              fullWidth
+              className="text-sm py-3.5 shadow-sm active:scale-[0.98]"
+              icon={<ArrowRight className="w-4 h-4" />}
+            >
+              Book 1 Month Free
+            </Button>
+            <a
+              href="#services"
+              className="text-xs font-bold text-slate-500 hover:text-brand-green py-2 transition-colors inline-block active:scale-[0.97]"
+            >
+              See How It Works →
+            </a>
+          </div>
+
+          {/* Part 4: COMPACT INTEGRATED LEADERSHIP QUOTE ACCENT */}
+          <div className="border-l-2 border-brand-green pl-3.5 py-1 text-left max-w-sm mx-auto">
+            <p className="text-[11px] sm:text-xs italic text-slate-600 leading-relaxed">
+              &quot;We don&apos;t just manage your business, we help it grow.&quot;
+            </p>
+            <span className="text-[9px] font-bold text-brand-green uppercase tracking-wider block mt-0.5">
+              — Yolfin Leadership Commitment
+            </span>
+          </div>
+
+          {/* Part 5: COMPACT TRUST BADGES */}
+          <div className="pt-1 flex flex-wrap items-center justify-center gap-x-4 gap-y-1.5 text-[10px] sm:text-xs font-semibold text-slate-600">
+            <span className="flex items-center gap-1">
+              <ShieldCheck className="w-3.5 h-3.5 text-brand-green shrink-0" /> 100% Data Confidentiality
+            </span>
+            <span className="flex items-center gap-1">
+              <CheckCircle2 className="w-3.5 h-3.5 text-brand-green shrink-0" /> No Payment Required
+            </span>
           </div>
         </div>
       </Container>
