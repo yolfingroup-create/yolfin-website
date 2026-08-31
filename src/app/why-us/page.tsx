@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 import type { Metadata } from "next";
 import Image from "next/image";
 import {
@@ -95,9 +96,10 @@ export default async function WhyUsPage() {
 
       <div className="flex flex-col min-h-screen">
         {/* 1. Hero Section — with dynamic Why Us Hero image on right */}
-        <section className="relative bg-gradient-to-b from-slate-50 via-white to-light-green/20 pt-12 pb-16 md:pt-20 md:pb-24 overflow-hidden border-b border-slate-100">
+        <section className="relative bg-gradient-to-b from-slate-50 via-white to-light-green/20 pt-8 pb-10 lg:pt-20 lg:pb-24 overflow-hidden border-b border-slate-100">
           <Container>
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-14 lg:items-stretch items-center">
+            {/* DESKTOP LAYOUT (lg and above) - Kept completely intact */}
+            <div className="hidden lg:grid grid-cols-2 gap-14 lg:items-stretch items-center">
               {/* Left — Text Content */}
               <div className="space-y-6 flex flex-col justify-center">
                 <div>
@@ -107,14 +109,14 @@ export default async function WhyUsPage() {
                   </div>
                 </div>
 
-                <h1 className="text-3xl sm:text-5xl font-extrabold text-navy tracking-tight leading-tight">
+                <h1 className="text-5xl font-extrabold text-navy tracking-tight leading-tight">
                   Your Success Is{" "}
                   <span className="text-brand-green underline decoration-emerald-400/40 decoration-wavy">
                     Our Priority
                   </span>
                 </h1>
 
-                <p className="text-slate-muted text-base sm:text-lg leading-relaxed">
+                <p className="text-slate-muted text-lg leading-relaxed">
                   We don&apos;t just handle your numbers; we take care of your business growth with trust, accuracy, and dedicated responsibility across India and the UAE.
                 </p>
 
@@ -134,7 +136,7 @@ export default async function WhyUsPage() {
               </div>
 
               {/* Right — Dynamic Hero Image */}
-              <div className="relative hidden lg:block lg:h-full">
+              <div className="relative lg:h-full">
                 <div className="relative lg:h-full h-auto min-h-[350px] lg:min-h-0 aspect-[4/3] lg:aspect-none rounded-3xl overflow-hidden shadow-2xl border border-slate-200/60">
                   {whyUsHeroImage ? (
                     <Image
@@ -157,6 +159,69 @@ export default async function WhyUsPage() {
                     </div>
                   )}
                 </div>
+              </div>
+            </div>
+
+            {/* MOBILE & TABLET REDESIGNED LAYOUT (lg:hidden) */}
+            <div className="block lg:hidden space-y-5">
+              {/* Part 1: TEXT */}
+              <div className="space-y-3 flex flex-col items-center text-center">
+                <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-light-green border border-emerald-200 text-brand-green font-bold text-[10px] sm:text-xs uppercase tracking-wider">
+                  <Sparkles className="w-3 h-3 text-brand-green shrink-0" />
+                  <span>WHY CHOOSE YOLFIN GROUP</span>
+                </div>
+
+                <h1 className="text-[23px] sm:text-3xl font-extrabold text-navy tracking-tight leading-[1.2]">
+                  Your Success Is{" "}
+                  <span className="text-brand-green underline decoration-emerald-400/40 decoration-wavy">
+                    Our Priority
+                  </span>
+                </h1>
+
+                <p className="text-slate-muted text-xs sm:text-sm leading-relaxed max-w-sm">
+                  We don&apos;t just handle your numbers; we take care of your business growth with trust, accuracy, and dedicated responsibility across India and the UAE.
+                </p>
+              </div>
+
+              {/* Part 2: VISUAL */}
+              {whyUsHeroImage ? (
+                <div className="w-full relative py-1 select-none mt-1">
+                  <div className="w-full h-40 sm:h-52 relative rounded-2xl overflow-hidden border border-slate-100 shadow-sm">
+                    <img
+                      src={whyUsHeroImage.secure_url}
+                      alt={whyUsHeroImage.alt_text || "Why Choose Yolfin Group"}
+                      className="w-full h-full object-cover object-center hero-mask-image"
+                    />
+                  </div>
+                </div>
+              ) : (
+                <div className="w-full p-4 rounded-xl bg-slate-50 border border-slate-100 flex items-center gap-3">
+                  <Handshake className="w-8 h-8 text-brand-green shrink-0" />
+                  <div className="text-left">
+                    <p className="text-xs font-bold text-navy">Yolfin Group Business Support</p>
+                    <p className="text-[10px] text-slate-500">Accounting, Travel & Facility Services</p>
+                  </div>
+                </div>
+              )}
+
+              {/* Part 3: CTA BUTTONS WITH CLEAR HIERARCHY */}
+              <div className="flex flex-col items-center gap-2 pt-2">
+                <Button
+                  openBookingModal
+                  variant="primary"
+                  size="lg"
+                  fullWidth
+                  className="text-sm py-3.5 shadow-sm active:scale-[0.98]"
+                  icon={<ArrowRight className="w-4 h-4" />}
+                >
+                  Book 1 Month Free
+                </Button>
+                <a
+                  href="/services"
+                  className="text-xs font-bold text-slate-500 hover:text-brand-green py-2 transition-colors inline-block active:scale-[0.97]"
+                >
+                  Explore Services →
+                </a>
               </div>
             </div>
           </Container>

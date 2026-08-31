@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 import type { Metadata } from "next";
 import Image from "next/image";
 import {
@@ -75,9 +76,10 @@ export default async function AboutPage() {
 
       <div className="flex flex-col min-h-screen">
         {/* 1. Hero Section — with dynamic About Hero image on right */}
-        <section className="relative bg-gradient-to-b from-slate-50 via-white to-light-green/20 pt-12 pb-16 md:pt-20 md:pb-24 overflow-hidden border-b border-slate-100">
+        <section className="relative bg-gradient-to-b from-slate-50 via-white to-light-green/20 pt-8 pb-10 lg:pt-20 lg:pb-24 overflow-hidden border-b border-slate-100">
           <Container>
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-14 lg:items-stretch items-center">
+            {/* DESKTOP LAYOUT (lg and above) - Kept completely intact */}
+            <div className="hidden lg:grid grid-cols-2 gap-14 lg:items-stretch items-center">
               {/* Left — Text Content */}
               <div className="space-y-6 flex flex-col justify-center">
                 <div>
@@ -87,18 +89,18 @@ export default async function AboutPage() {
                   </div>
                 </div>
 
-                <h1 className="text-3xl sm:text-5xl font-extrabold text-navy tracking-tight leading-tight">
+                <h1 className="text-5xl font-extrabold text-navy tracking-tight leading-tight">
                   We Simplify Business.{" "}
                   <span className="text-brand-green underline decoration-emerald-400/40 decoration-wavy">
                     You Focus on Growth.
                   </span>
                 </h1>
 
-                <p className="text-slate-muted text-base sm:text-lg leading-relaxed">
+                <p className="text-slate-muted text-lg leading-relaxed">
                   Yolfin Group is a startup company committed to providing reliable and affordable solutions in Accounting, Finance, Travel and Facility Management across India and the UAE. We combine modern technology with personal attention to help businesses work smarter and grow faster.
                 </p>
 
-                <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3.5 pt-2">
+                <div className="flex items-center gap-3.5 pt-2">
                   <Button
                     openBookingModal
                     variant="primary"
@@ -114,7 +116,7 @@ export default async function AboutPage() {
               </div>
 
               {/* Right — Dynamic Hero Image */}
-              <div className="relative hidden lg:block lg:h-full">
+              <div className="relative lg:h-full">
                 <div className="relative lg:h-full h-auto min-h-[350px] lg:min-h-0 aspect-[4/3] lg:aspect-none rounded-3xl overflow-hidden shadow-2xl border border-slate-200/60">
                   {aboutHeroImage ? (
                     <Image
@@ -144,6 +146,75 @@ export default async function AboutPage() {
                     We don&apos;t just manage your business, we help it grow.
                   </p>
                 </div>
+              </div>
+            </div>
+
+            {/* MOBILE & TABLET REDESIGNED LAYOUT (lg:hidden) */}
+            <div className="block lg:hidden space-y-5">
+              {/* Part 1: TEXT */}
+              <div className="space-y-3 flex flex-col items-center text-center">
+                <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-light-green border border-emerald-200 text-brand-green font-bold text-[10px] sm:text-xs uppercase tracking-wider">
+                  <Sparkles className="w-3 h-3 text-brand-green shrink-0" />
+                  <span>ABOUT YOLFIN GROUP</span>
+                </div>
+
+                <h1 className="text-[23px] sm:text-3xl font-extrabold text-navy tracking-tight leading-[1.2]">
+                  We Simplify Business.{" "}
+                  <span className="text-brand-green underline decoration-emerald-400/40 decoration-wavy">
+                    You Focus on Growth.
+                  </span>
+                </h1>
+
+                <p className="text-slate-muted text-xs sm:text-sm leading-relaxed max-w-sm">
+                  Yolfin Group is a startup company committed to providing reliable and affordable solutions in Accounting, Finance, Travel and Facility Management across India and the UAE.
+                </p>
+              </div>
+
+              {/* Part 2: DYNAMIC VISUAL COMPOSITION WITH FLOATING QUOTE */}
+              {aboutHeroImage ? (
+                <div className="w-full relative py-1 select-none mt-2 mb-6">
+                  <div className="w-full h-40 sm:h-52 relative rounded-2xl overflow-hidden border border-slate-100 shadow-sm">
+                    <img
+                      src={aboutHeroImage.secure_url}
+                      alt={aboutHeroImage.alt_text || "About Yolfin Group"}
+                      className="w-full h-full object-cover object-center hero-mask-image"
+                    />
+                  </div>
+                  {/* Floating Quote Card */}
+                  <div className="absolute -bottom-3 left-4 right-4 bg-navy/95 backdrop-blur-md text-white p-3 rounded-xl border border-slate-700/50 shadow-md">
+                    <p className="text-[10px] leading-relaxed text-slate-200 italic font-medium">
+                      &quot;We don&apos;t just manage your business, we help it grow.&quot;
+                    </p>
+                  </div>
+                </div>
+              ) : (
+                <div className="w-full p-4 rounded-xl bg-slate-50 border border-slate-100 flex items-center gap-3">
+                  <Building2 className="w-8 h-8 text-brand-green shrink-0" />
+                  <div className="text-left">
+                    <p className="text-xs font-bold text-navy">Yolfin Group Business Support</p>
+                    <p className="text-[10px] text-slate-500">Accounting, Travel & Facility Services</p>
+                  </div>
+                </div>
+              )}
+
+              {/* Part 3: CTA BUTTONS WITH CLEAR HIERARCHY */}
+              <div className="flex flex-col items-center gap-2 pt-2">
+                <Button
+                  openBookingModal
+                  variant="primary"
+                  size="lg"
+                  fullWidth
+                  className="text-sm py-3.5 shadow-sm active:scale-[0.98]"
+                  icon={<ArrowRight className="w-4 h-4" />}
+                >
+                  Book 1 Month Free
+                </Button>
+                <a
+                  href="/contact"
+                  className="text-xs font-bold text-slate-500 hover:text-brand-green py-2 transition-colors inline-block active:scale-[0.97]"
+                >
+                  Contact Us →
+                </a>
               </div>
             </div>
           </Container>
@@ -324,7 +395,8 @@ export default async function AboutPage() {
 
               {/* Right — Dynamic Journey Image */}
               <div className="relative lg:h-full">
-                <div className="relative lg:h-full h-auto min-h-[300px] lg:min-h-0 aspect-[4/3] lg:aspect-none rounded-3xl overflow-hidden shadow-xl border border-slate-200/60">
+                {/* Desktop: bordered card */}
+                <div className="hidden sm:block relative lg:h-full h-auto min-h-[300px] lg:min-h-0 aspect-[4/3] lg:aspect-none rounded-3xl overflow-hidden shadow-xl border border-slate-200/60">
                   {aboutJourneyImage ? (
                     <Image
                       src={aboutJourneyImage.secure_url}
@@ -345,6 +417,16 @@ export default async function AboutPage() {
                     </div>
                   )}
                 </div>
+                {/* Mobile: integrated image with fade */}
+                {aboutJourneyImage && (
+                  <div className="block sm:hidden w-full overflow-hidden select-none pointer-events-none">
+                    <img
+                      src={aboutJourneyImage.secure_url}
+                      alt={aboutJourneyImage.alt_text || "Our Journey at Yolfin Group"}
+                      className="w-full h-auto max-h-[180px] object-cover object-center hero-mask-image"
+                    />
+                  </div>
+                )}
                 {/* Floating quote overlay — matches reference design */}
                 <div className="absolute bottom-4 left-4 right-4 bg-navy/90 backdrop-blur-sm text-white p-4 rounded-xl border border-slate-700/50">
                   <Quote className="w-4 h-4 text-emerald-400 mb-1.5" />

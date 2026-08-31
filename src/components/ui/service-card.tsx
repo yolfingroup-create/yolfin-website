@@ -25,7 +25,7 @@ export function ServiceCard({ service }: ServiceCardProps) {
 
   return (
     <div
-      className={`relative bg-white rounded-2xl p-6 sm:p-8 border transition-all duration-300 flex flex-col justify-between h-full ${
+      className={`relative bg-white rounded-xl sm:rounded-2xl p-4 sm:p-8 border transition-all duration-300 flex flex-col justify-between h-full ${
         isActive
           ? "border-emerald-200 shadow-sm hover:shadow-xl hover:-translate-y-1 hover:border-brand-green ring-1 ring-emerald-500/10"
           : "border-slate-200 opacity-85 hover:opacity-100 shadow-xs"
@@ -54,8 +54,8 @@ export function ServiceCard({ service }: ServiceCardProps) {
         </div>
 
         {/* Title & Description */}
-        <div className="space-y-2">
-          <h3 className="text-xl font-extrabold text-navy tracking-tight">
+        <div className="space-y-1.5 sm:space-y-2">
+          <h3 className="text-base sm:text-xl font-extrabold text-navy tracking-tight">
             {service.name}
           </h3>
           <p className="text-slate-muted text-sm leading-relaxed">
@@ -65,7 +65,7 @@ export function ServiceCard({ service }: ServiceCardProps) {
       </div>
 
       {/* Footer Action Button / Badge */}
-      <div className="pt-6 mt-6 border-t border-slate-100 flex items-center justify-between">
+      <div className="pt-4 mt-4 sm:pt-6 sm:mt-6 border-t border-slate-100 flex items-center justify-between">
         {isActive ? (
           <Link
             href={`/services?selected=${service.slug}`}

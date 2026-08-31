@@ -26,7 +26,7 @@ const trustPoints = [
 
 export function TrustBar() {
   return (
-    <section className="py-10 sm:py-12 bg-white border-b border-slate-100">
+    <section className="hidden md:block py-10 sm:py-12 bg-white border-b border-slate-100">
       <Container>
         {/* Clean 2-column grid on mobile (320px - 1024px), 4-column on desktop */}
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-3.5 sm:gap-6">

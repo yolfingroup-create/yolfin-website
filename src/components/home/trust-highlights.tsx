@@ -26,25 +26,25 @@ const highlights = [
 
 export function TrustHighlights() {
   return (
-    <section className="py-10 sm:py-12 bg-white border-b border-slate-100">
+    <section className="py-6 sm:py-10 md:py-12 bg-white border-b border-slate-100">
       <Container>
-        {/* Clean 2-column grid on mobile (320px - 768px), 4-column on desktop */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-3.5 sm:gap-6">
+        {/* Compact 2×2 on mobile, 4-column on desktop */}
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-2.5 sm:gap-6">
           {highlights.map((item, idx) => {
             const Icon = item.icon;
             return (
               <div
                 key={idx}
-                className="flex flex-col sm:flex-row items-start text-left gap-3 p-4 rounded-2xl bg-slate-50 border border-slate-100/90 hover:border-emerald-200 transition-colors h-full"
+                className="flex flex-col sm:flex-row items-start text-left gap-2 sm:gap-3 p-3 sm:p-4 rounded-xl sm:rounded-2xl bg-slate-50 border border-slate-100/90 hover:border-emerald-200 transition-colors h-full"
               >
-                <div className="w-10 h-10 rounded-xl bg-light-green flex items-center justify-center shrink-0">
-                  <Icon className="w-5 h-5 text-brand-green" />
+                <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-lg sm:rounded-xl bg-light-green flex items-center justify-center shrink-0">
+                  <Icon className="w-4 h-4 sm:w-5 sm:h-5 text-brand-green" />
                 </div>
-                <div className="space-y-1">
-                  <h3 className="text-xs sm:text-sm font-bold text-navy leading-snug">
+                <div className="space-y-0.5 sm:space-y-1">
+                  <h3 className="text-[11px] sm:text-sm font-bold text-navy leading-snug">
                     {item.title}
                   </h3>
-                  <p className="text-[11px] sm:text-xs text-slate-muted leading-relaxed">
+                  <p className="text-[10px] sm:text-xs text-slate-muted leading-relaxed">
                     {item.description}
                   </p>
                 </div>
