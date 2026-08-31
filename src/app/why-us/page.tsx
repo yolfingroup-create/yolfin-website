@@ -97,12 +97,14 @@ export default async function WhyUsPage() {
         {/* 1. Hero Section — with dynamic Why Us Hero image on right */}
         <section className="relative bg-gradient-to-b from-slate-50 via-white to-light-green/20 pt-12 pb-16 md:pt-20 md:pb-24 overflow-hidden border-b border-slate-100">
           <Container>
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-14 items-center">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-14 lg:items-stretch items-center">
               {/* Left — Text Content */}
-              <div className="space-y-6">
-                <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-light-green border border-emerald-200 text-brand-green font-bold text-xs uppercase tracking-wider">
-                  <Sparkles className="w-3.5 h-3.5" />
-                  <span>WHY CHOOSE YOLFIN GROUP</span>
+              <div className="space-y-6 flex flex-col justify-center">
+                <div>
+                  <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-light-green border border-emerald-200 text-brand-green font-bold text-xs uppercase tracking-wider">
+                    <Sparkles className="w-3.5 h-3.5" />
+                    <span>WHY CHOOSE YOLFIN GROUP</span>
+                  </div>
                 </div>
 
                 <h1 className="text-3xl sm:text-5xl font-extrabold text-navy tracking-tight leading-tight">
@@ -132,8 +134,8 @@ export default async function WhyUsPage() {
               </div>
 
               {/* Right — Dynamic Hero Image */}
-              <div className="relative hidden lg:block">
-                <div className="relative aspect-[4/3] rounded-3xl overflow-hidden shadow-2xl border border-slate-200/60">
+              <div className="relative hidden lg:block lg:h-full">
+                <div className="relative lg:h-full h-auto min-h-[350px] lg:min-h-0 aspect-[4/3] lg:aspect-none rounded-3xl overflow-hidden shadow-2xl border border-slate-200/60">
                   {whyUsHeroImage ? (
                     <Image
                       src={whyUsHeroImage.secure_url}
@@ -144,7 +146,7 @@ export default async function WhyUsPage() {
                       priority
                     />
                   ) : (
-                    <div className="w-full h-full bg-gradient-to-br from-slate-100 via-emerald-50 to-slate-100 flex items-center justify-center">
+                    <div className="w-full lg:h-full h-auto min-h-[350px] lg:min-h-0 bg-gradient-to-br from-slate-100 via-emerald-50 to-slate-100 flex items-center justify-center">
                       <div className="text-center space-y-3 p-8">
                         <div className="w-20 h-20 rounded-full bg-light-green flex items-center justify-center mx-auto">
                           <Handshake className="w-10 h-10 text-brand-green" />

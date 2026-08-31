@@ -32,18 +32,21 @@ export function WhyUsPreview({ items, whyUsImage }: WhyUsPreviewProps) {
 
   return (
     <section className="py-12 sm:py-16 md:py-24 bg-white border-b border-slate-100">
-      <Container className="space-y-10 sm:space-y-12">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-center">
-          {/* Left Column: Heading & Key Points Grid */}
-          <div className="lg:col-span-7 space-y-6 sm:space-y-8">
-            <SectionHeading
-              eyebrow="WHY CHOOSE YOLFIN GROUP?"
-              title="Your Success is"
-              highlightText="Our Priority"
-              subtitle="We bring fresh ideas, modern technology and a strong commitment to help your business grow with confidence."
-            />
+      <Container className="space-y-8 sm:space-y-10">
+        {/* Section Heading (Above Content Row) */}
+        <div className="max-w-3xl">
+          <SectionHeading
+            eyebrow="WHY CHOOSE YOLFIN GROUP?"
+            title="Your Success is"
+            highlightText="Our Priority"
+            subtitle="We bring fresh ideas, modern technology and a strong commitment to help your business grow with confidence."
+          />
+        </div>
 
-            {/* Why Yolfin Benefit Grid (2-column on mobile) */}
+        {/* Content Row: Cards Grid + Visual Image */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 lg:items-stretch items-center">
+          {/* Left Column: Benefit Grid + CTA Button */}
+          <div className="lg:col-span-7 flex flex-col justify-between space-y-6 sm:space-y-8">
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5 sm:gap-4">
               {items.slice(0, 4).map((item) => (
                 <div
@@ -78,11 +81,11 @@ export function WhyUsPreview({ items, whyUsImage }: WhyUsPreviewProps) {
           {/* Right Column: Visual Image or Fallback Card */}
           <div className="lg:col-span-5 w-full">
             {whyUsImage?.secure_url ? (
-              <div className="relative rounded-3xl overflow-hidden shadow-2xl border border-slate-200 group">
+              <div className="relative rounded-3xl overflow-hidden shadow-2xl border border-slate-200 group lg:h-full flex flex-col h-auto">
                 <img
                   src={whyUsImage.secure_url}
                   alt={whyUsImage.alt_text || "Why Choose Yolfin Group"}
-                  className="w-full h-auto max-h-[480px] object-cover rounded-3xl group-hover:scale-[1.02] transition-transform duration-500"
+                  className="w-full lg:h-full h-auto min-h-[300px] lg:min-h-0 object-cover rounded-3xl group-hover:scale-[1.02] transition-transform duration-500"
                 />
                 <div className="absolute bottom-4 left-4 right-4 p-4 bg-navy/90 backdrop-blur-md rounded-2xl border border-white/10 text-white space-y-1">
                   <span className="inline-block px-2.5 py-0.5 bg-emerald-950 text-emerald-300 text-[10px] font-bold rounded uppercase">
@@ -93,21 +96,23 @@ export function WhyUsPreview({ items, whyUsImage }: WhyUsPreviewProps) {
               </div>
             ) : (
               /* Corporate Fallback Card when no custom image assigned */
-              <div className="relative rounded-3xl bg-gradient-to-br from-navy via-slate-900 to-navy-dark p-6 sm:p-8 text-white shadow-xl overflow-hidden border border-slate-800 space-y-6">
-                <div className="w-14 h-14 sm:w-16 sm:h-16 rounded-2xl bg-brand-green/20 border border-emerald-500/30 flex items-center justify-center">
-                  <Handshake className="w-7 h-7 sm:w-8 sm:h-8 text-emerald-400" />
-                </div>
+              <div className="relative rounded-3xl bg-gradient-to-br from-navy via-slate-900 to-navy-dark p-6 sm:p-8 text-white shadow-xl overflow-hidden border border-slate-800 space-y-6 lg:h-full flex flex-col justify-between h-auto">
+                <div className="space-y-6">
+                  <div className="w-14 h-14 sm:w-16 sm:h-16 rounded-2xl bg-brand-green/20 border border-emerald-500/30 flex items-center justify-center">
+                    <Handshake className="w-7 h-7 sm:w-8 sm:h-8 text-emerald-400" />
+                  </div>
 
-                <div className="space-y-3">
-                  <span className="inline-block px-3 py-1 bg-emerald-950 text-emerald-300 border border-emerald-800 text-[11px] font-bold rounded-full uppercase tracking-wider">
-                    Trusted Business Partner
-                  </span>
-                  <h3 className="text-xl sm:text-2xl font-extrabold tracking-tight leading-snug">
-                    Long-Term Partnership Built on Transparency
-                  </h3>
-                  <p className="text-xs sm:text-sm text-slate-300 leading-relaxed">
-                    We handle your financial compliance, travel operations, and facility management so your team can focus 100% on growth.
-                  </p>
+                  <div className="space-y-3">
+                    <span className="inline-block px-3 py-1 bg-emerald-950 text-emerald-300 border border-emerald-800 text-[11px] font-bold rounded-full uppercase tracking-wider">
+                      Trusted Business Partner
+                    </span>
+                    <h3 className="text-xl sm:text-2xl font-extrabold tracking-tight leading-snug">
+                      Long-Term Partnership Built on Transparency
+                    </h3>
+                    <p className="text-xs sm:text-sm text-slate-300 leading-relaxed">
+                      We handle your financial compliance, travel operations, and facility management so your team can focus 100% on growth.
+                    </p>
+                  </div>
                 </div>
 
                 <div className="pt-4 border-t border-slate-800 flex flex-wrap items-center justify-between gap-2 text-xs text-slate-400 font-medium">

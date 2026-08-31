@@ -11,11 +11,24 @@ interface HeroProps {
 }
 
 export function Hero({ heroImage }: HeroProps) {
+  const hasImage = !!heroImage?.secure_url;
+
   return (
     <section className="relative bg-gradient-to-b from-slate-50 via-white to-light-green/20 pt-8 pb-12 sm:pt-12 sm:pb-16 md:pt-16 md:pb-24 overflow-hidden border-b border-slate-100">
       {/* Background Subtle Accents */}
       <div className="absolute top-0 right-0 -mr-20 -mt-20 w-96 h-96 bg-emerald-100/40 rounded-full blur-3xl pointer-events-none" />
       <div className="absolute bottom-0 left-0 -ml-20 -mb-20 w-96 h-96 bg-blue-100/30 rounded-full blur-3xl pointer-events-none" />
+
+      {/* Desktop Integrated Background Image (hidden on mobile/tablet) */}
+      {hasImage && (
+        <div className="hidden lg:block absolute top-0 right-0 w-[55%] h-full z-0 select-none pointer-events-none overflow-hidden">
+          <img
+            src={heroImage.secure_url}
+            alt={heroImage.alt_text || "Yolfin Group Corporate Hero Background"}
+            className="w-full h-full object-cover object-left hero-mask-image"
+          />
+        </div>
+      )}
 
       <Container className="relative z-10">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-center">
@@ -86,24 +99,14 @@ export function Hero({ heroImage }: HeroProps) {
 
           {/* Right Column: Dynamic Media Image or Corporate Feature Card */}
           <div className="lg:col-span-6 w-full">
-            {heroImage?.secure_url ? (
-              <div className="relative rounded-2xl sm:rounded-3xl overflow-hidden shadow-2xl border border-slate-200 group">
+            {hasImage ? (
+              /* Mobile/Tablet Hero Image (hidden on desktop) */
+              <div className="block lg:hidden w-full select-none pointer-events-none overflow-hidden">
                 <img
                   src={heroImage.secure_url}
                   alt={heroImage.alt_text || "Yolfin Group Corporate Hero"}
-                  className="w-full h-auto max-h-[500px] object-cover rounded-2xl sm:rounded-3xl group-hover:scale-[1.02] transition-transform duration-500"
+                  className="w-full h-auto max-h-[350px] sm:max-h-[450px] object-cover object-center hero-mask-image"
                 />
-                <div className="absolute bottom-4 left-4 right-4 p-4 bg-navy/90 backdrop-blur-md rounded-2xl border border-white/10 text-white flex items-center justify-between">
-                  <div className="space-y-0.5">
-                    <p className="text-[10px] font-bold text-emerald-400 uppercase tracking-wider">
-                      Corporate Support
-                    </p>
-                    <p className="text-xs sm:text-sm font-bold">Trusted Partner for India & UAE</p>
-                  </div>
-                  <Button openBookingModal variant="primary" size="sm">
-                    Book Free Month
-                  </Button>
-                </div>
               </div>
             ) : (
               /* Corporate Fallback Card when no custom image assigned */
