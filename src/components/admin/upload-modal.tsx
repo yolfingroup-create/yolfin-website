@@ -40,7 +40,12 @@ export function UploadModal({ isOpen, onClose, onToast }: UploadModalProps) {
     const url = URL.createObjectURL(file);
     setPreviewUrl(url);
     if (!altText) {
-      setAltText(file.name.replace(/\.[^/.]+$/, "").replace(/[-_]/g, " "));
+      const cleanName = file.name
+        .replace(/\.[^/.]+$/, "")
+        .replace(/(chatgpt|screenshot|image|img|\d+)/gi, "")
+        .replace(/[-_]+/g, " ")
+        .trim();
+      setAltText(cleanName ? `Yolfin Group - ${cleanName}` : "Yolfin Group Business Support Asset");
     }
   };
 

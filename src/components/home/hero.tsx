@@ -1,9 +1,10 @@
 "use client";
 
 /* eslint-disable @next/next/no-img-element */
-import { ArrowRight, CheckCircle2, ShieldCheck, Sparkles, Building2, Calculator, Plane, Building } from "lucide-react";
+import { ArrowRight, CheckCircle2, ShieldCheck, Sparkles, Building2, Calculator, Plane, Building, MessageCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Container } from "@/components/ui/container";
+import { SITE_CONFIG } from "@/lib/constants";
 import type { MediaAssetRow } from "@/types";
 
 interface HeroProps {
@@ -43,16 +44,16 @@ export function Hero({ heroImage }: HeroProps) {
 
             {/* Strong H1 */}
             <h1 className="text-5xl font-extrabold text-navy tracking-tight leading-[1.18]">
-              Smart Solutions for Every{" "}
+              Outsourced Accounting & Finance for{" "}
               <span className="text-brand-green underline decoration-emerald-400/40 decoration-wavy">
-                Step Forward.
+                Growing Businesses.
               </span>
             </h1>
 
             {/* Short Supporting Paragraph */}
             <p className="text-slate-muted text-lg leading-relaxed max-w-xl">
-              Integrated solutions for Accounting, Finance, Travel and Facility
-              Management – all under one trusted partner across India and UAE.
+              Bookkeeping, GST/VAT, payroll, bank reconciliation and monthly
+              reports—without the cost of hiring a full-time accountant.
             </p>
 
             {/* Primary & Secondary CTAs */}
@@ -63,34 +64,22 @@ export function Hero({ heroImage }: HeroProps) {
                 size="lg"
                 icon={<ArrowRight className="w-4 h-4" />}
               >
-                Book 1 Month Free
+                Start Your Free Month
               </Button>
               <Button
-                href="#services"
+                href={SITE_CONFIG.contact.whatsappUrl}
                 variant="outline"
                 size="lg"
+                icon={<MessageCircle className="w-4 h-4" />}
               >
-                See How It Works
+                WhatsApp Us
               </Button>
-            </div>
-
-            {/* Floating Quote Statement */}
-            <div className="pt-2">
-              <div className="p-5 bg-navy text-white rounded-2xl shadow-lg border border-navy-light relative overflow-hidden">
-                <div className="absolute top-0 right-0 w-24 h-24 bg-brand-green/10 rounded-full blur-xl" />
-                <p className="text-sm font-medium italic leading-relaxed text-slate-200">
-                  &quot;We don&apos;t just manage your business, we help it grow.&quot;
-                </p>
-                <div className="mt-2 text-xs font-bold text-emerald-400 uppercase tracking-wider">
-                  — Yolfin Group Leadership Commitment
-                </div>
-              </div>
             </div>
 
             {/* Trust Badges */}
-            <div className="pt-1 flex items-center gap-4 text-xs font-semibold text-slate-600">
+            <div className="pt-2 flex items-center gap-4 text-xs font-semibold text-slate-600">
               <span className="flex items-center gap-1.5">
-                <ShieldCheck className="w-4 h-4 text-brand-green shrink-0" /> 100% Data Confidentiality
+                <ShieldCheck className="w-4 h-4 text-brand-green shrink-0" /> Strict Data Confidentiality
               </span>
               <span className="flex items-center gap-1.5">
                 <CheckCircle2 className="w-4 h-4 text-brand-green shrink-0" /> No Payment Required
@@ -194,15 +183,15 @@ export function Hero({ heroImage }: HeroProps) {
             </div>
 
             <h1 className="text-[23px] sm:text-3xl font-extrabold text-navy tracking-tight leading-[1.2]">
-              Smart Solutions for Every{" "}
+              Outsourced Accounting & Finance for{" "}
               <span className="text-brand-green underline decoration-emerald-400/40 decoration-wavy">
-                Step Forward.
+                Growing Businesses.
               </span>
             </h1>
 
             <p className="text-slate-muted text-xs sm:text-sm leading-relaxed max-w-sm">
-              Integrated solutions for Accounting, Finance, Travel and Facility
-              Management – all under one trusted partner across India and UAE.
+              Bookkeeping, GST/VAT, payroll, bank reconciliation and monthly
+              reports—without the cost of hiring a full-time accountant.
             </p>
           </div>
 
@@ -237,30 +226,30 @@ export function Hero({ heroImage }: HeroProps) {
               className="text-sm py-3.5 shadow-sm active:scale-[0.98]"
               icon={<ArrowRight className="w-4 h-4" />}
             >
-              Book 1 Month Free
+              Start Your Free Month
             </Button>
             <a
-              href="#services"
-              className="text-xs font-bold text-slate-500 hover:text-brand-green py-2 transition-colors inline-block active:scale-[0.97]"
+              href={SITE_CONFIG.contact.whatsappUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center justify-center gap-1.5 text-xs font-bold text-slate-500 hover:text-brand-green py-2 transition-colors active:scale-[0.97]"
             >
-              See How It Works →
+              <MessageCircle className="w-3.5 h-3.5" />
+              WhatsApp Us
             </a>
           </div>
 
-          {/* Part 4: COMPACT INTEGRATED LEADERSHIP QUOTE ACCENT */}
+          {/* Part 4: TAGLINE ACCENT */}
           <div className="border-l-2 border-brand-green pl-3.5 py-1 text-left max-w-sm mx-auto">
-            <p className="text-[11px] sm:text-xs italic text-slate-600 leading-relaxed">
-              &quot;We don&apos;t just manage your business, we help it grow.&quot;
+            <p className="text-[11px] sm:text-xs font-semibold text-slate-600 leading-relaxed">
+              Your Growth. Our Responsibility.
             </p>
-            <span className="text-[9px] font-bold text-brand-green uppercase tracking-wider block mt-0.5">
-              — Yolfin Leadership Commitment
-            </span>
           </div>
 
           {/* Part 5: COMPACT TRUST BADGES */}
           <div className="pt-1 flex flex-wrap items-center justify-center gap-x-4 gap-y-1.5 text-[10px] sm:text-xs font-semibold text-slate-600">
             <span className="flex items-center gap-1">
-              <ShieldCheck className="w-3.5 h-3.5 text-brand-green shrink-0" /> 100% Data Confidentiality
+              <ShieldCheck className="w-3.5 h-3.5 text-brand-green shrink-0" /> Strict Data Confidentiality
             </span>
             <span className="flex items-center gap-1">
               <CheckCircle2 className="w-3.5 h-3.5 text-brand-green shrink-0" /> No Payment Required

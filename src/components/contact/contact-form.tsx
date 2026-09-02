@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Link from "next/link";
 import { Send, CheckCircle2, AlertCircle, Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { submitContactInquiryAction, type ContactActionResult } from "@/app/contact/actions";
@@ -62,6 +63,12 @@ export function ContactForm() {
             </div>
           )}
 
+          {/* Honeypot - hidden from real users */}
+          <div className="absolute opacity-0 h-0 w-0 overflow-hidden" aria-hidden="true" tabIndex={-1}>
+            <label htmlFor="contact_website_hp">Website</label>
+            <input type="text" id="contact_website_hp" name="website_hp" autoComplete="off" tabIndex={-1} />
+          </div>
+
           {/* Full Name & Email */}
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>
@@ -104,7 +111,7 @@ export function ContactForm() {
                 name="phone"
                 type="tel"
                 required
-                placeholder="+91 95629 75022 / +971..."
+                placeholder="+91 98765 43210"
                 className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-brand-green min-h-[44px]"
               />
             </div>
@@ -169,7 +176,11 @@ export function ContactForm() {
           </Button>
 
           <p className="text-[11px] text-center text-slate-500">
-            🔒 Your information is confidential and will never be shared.
+            By submitting this form, you agree to our{" "}
+            <Link href="/privacy-policy" className="text-brand-green hover:underline font-semibold">
+              Privacy Policy
+            </Link>
+            .
           </p>
         </form>
       )}

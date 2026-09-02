@@ -10,6 +10,8 @@ import {
   Calculator,
   Building2,
   Sparkles,
+  Clock,
+  Bell,
 } from "lucide-react";
 import { Container } from "@/components/ui/container";
 import { Button } from "@/components/ui/button";
@@ -33,7 +35,7 @@ export async function generateMetadata({ params }: ServiceDetailPageProps): Prom
   }
 
   return {
-    title: `${service.name} | Yolfin Group`,
+    title: service.name,
     description: service.short_description,
     openGraph: {
       title: service.name,
@@ -52,6 +54,7 @@ export default async function ServiceDetailPage({ params }: ServiceDetailPagePro
   }
 
   const serviceItems = await getActiveServiceItems(service.id);
+  const isActive = service.status === "active";
 
   const jsonLd = {
     "@context": "https://schema.org",
@@ -103,10 +106,17 @@ export default async function ServiceDetailPage({ params }: ServiceDetailPagePro
             </nav>
 
             <div className="max-w-3xl space-y-4">
-              <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-light-green border border-emerald-200 text-brand-green font-bold text-xs uppercase tracking-wider">
-                <Sparkles className="w-3.5 h-3.5" />
-                <span>Active Service</span>
-              </div>
+              {isActive ? (
+                <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-light-green border border-emerald-200 text-brand-green font-bold text-xs uppercase tracking-wider">
+                  <Sparkles className="w-3.5 h-3.5" />
+                  <span>Active Service</span>
+                </div>
+              ) : (
+                <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-slate-100 border border-slate-200 text-slate-500 font-bold text-xs uppercase tracking-wider">
+                  <Clock className="w-3.5 h-3.5" />
+                  <span>Coming Soon</span>
+                </div>
+              )}
 
               <h1 className="text-3xl sm:text-5xl font-extrabold text-navy tracking-tight leading-tight">
                 {service.name}
@@ -116,19 +126,27 @@ export default async function ServiceDetailPage({ params }: ServiceDetailPagePro
                 {service.short_description}
               </p>
 
-              <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3.5 pt-2">
-                <Button
-                  openBookingModal
-                  variant="primary"
-                  size="lg"
-                  icon={<ArrowRight className="w-4 h-4" />}
-                >
-                  Book 1 Month Free
-                </Button>
-                <Button href="/contact" variant="outline" size="lg">
-                  Inquire Now
-                </Button>
-              </div>
+              {isActive ? (
+                <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3.5 pt-2">
+                  <Button
+                    openBookingModal
+                    variant="primary"
+                    size="lg"
+                    icon={<ArrowRight className="w-4 h-4" />}
+                  >
+                    Book 1 Month Free
+                  </Button>
+                  <Button href="/contact" variant="outline" size="lg">
+                    Inquire Now
+                  </Button>
+                </div>
+              ) : (
+                <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3.5 pt-2">
+                  <Button href="/contact" variant="primary" size="lg" icon={<Bell className="w-4 h-4" />}>
+                    Notify Me When Available
+                  </Button>
+                </div>
+              )}
             </div>
           </Container>
         </section>
@@ -184,10 +202,10 @@ export default async function ServiceDetailPage({ params }: ServiceDetailPagePro
                     <div className="w-10 h-10 rounded-xl bg-brand-green/20 border border-emerald-500/30 flex items-center justify-center">
                       <ShieldCheck className="w-5 h-5 text-emerald-400" />
                     </div>
-                    <h3 className="text-lg font-bold">100% Compliance & Confidentiality</h3>
+                    <h3 className="text-lg font-bold">Strict Compliance & Confidentiality</h3>
                   </div>
                   <p className="text-xs sm:text-sm text-slate-300 leading-relaxed">
-                    We maintain strict non-disclosure agreements, end-to-end data encryption, and adhere strictly to Indian GST & UAE VAT regulatory standards.
+                    We maintain strict non-disclosure agreements and adhere to Indian GST & UAE VAT regulatory standards with careful attention to accuracy.
                   </p>
                 </div>
               </div>

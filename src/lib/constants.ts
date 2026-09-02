@@ -12,6 +12,7 @@ export const SITE_CONFIG = {
     phoneIndiaDisplay: "+91 95629 75022",
     phoneUAE: "+971 556646580",
     phoneUAEDisplay: "+971 55 664 6580",
+    whatsappUrl: "https://wa.me/919562975022",
     address: {
       street: "Office No. 11/501, Areekode Road",
       city: "Kondotty",

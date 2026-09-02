@@ -16,6 +16,13 @@ export async function submitContactInquiryAction(
   formData: FormData
 ): Promise<ContactActionResult> {
   try {
+    // Honeypot spam check
+    const honeypot = formData.get("website_hp")?.toString().trim();
+    if (honeypot) {
+      // Silently reject bot submissions
+      return { success: true, message: "Thank you for your inquiry." };
+    }
+
     const fullName = formData.get("fullName")?.toString().trim();
     const email = formData.get("email")?.toString().trim();
     const phone = formData.get("phone")?.toString().trim();

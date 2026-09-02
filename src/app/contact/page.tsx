@@ -22,7 +22,7 @@ export async function generateMetadata(): Promise<Metadata> {
   }
 
   return {
-    title: "Contact Us | Yolfin Group",
+    title: "Contact Us",
     description:
       "Get in touch with Yolfin Group for accounting, finance, travel, and facility management support across India and UAE. Email: yolfingroup@gmail.com",
   };
@@ -115,7 +115,7 @@ export default function ContactPage() {
 
                 {/* WhatsApp & India Phone */}
                 <a
-                  href="https://wa.me/919562975022"
+                  href={SITE_CONFIG.contact.whatsappUrl}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="p-5 bg-white rounded-2xl border border-slate-200 flex items-start gap-4 hover:border-emerald-300 transition-colors shadow-xs group"
@@ -151,13 +151,26 @@ export default function ContactPage() {
 
                 {/* Registered Address */}
                 <div className="p-5 bg-navy text-white rounded-2xl space-y-3 shadow-lg">
-                  <div className="flex items-center gap-3">
-                    <MapPin className="w-5 h-5 text-emerald-400 shrink-0" />
-                    <h3 className="text-sm font-bold">Headquarters Address</h3>
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center gap-3">
+                      <MapPin className="w-5 h-5 text-emerald-400 shrink-0" />
+                      <h3 className="text-sm font-bold">Headquarters Address</h3>
+                    </div>
                   </div>
                   <p className="text-xs text-slate-300 leading-relaxed pl-8">
                     {SITE_CONFIG.contact.address.formatted}
                   </p>
+                  <div className="pl-8 pt-1">
+                    <a
+                      href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(SITE_CONFIG.contact.address.formatted)}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-1.5 text-xs font-bold text-emerald-400 hover:underline"
+                    >
+                      <span>View on Google Maps</span>
+                      <span>→</span>
+                    </a>
+                  </div>
                   <div className="pt-2 border-t border-slate-800 text-[11px] text-slate-400 pl-8 flex items-center gap-2">
                     <Clock className="w-3.5 h-3.5 text-emerald-400" />
                     <span>Mon - Sat: 9:00 AM - 6:00 PM IST</span>
