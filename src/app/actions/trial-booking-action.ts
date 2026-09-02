@@ -2,6 +2,7 @@
 
 import { createClient } from "@/lib/supabase/server";
 import { sendEmailViaBrevo } from "@/lib/brevo/client";
+import type { TaxClassification } from "@/types";
 
 export interface TrialBookingResult {
   success?: boolean;
@@ -27,7 +28,8 @@ export async function submitTrialBookingAction(
     const email = formData.get("email")?.toString().trim();
     const phone = formData.get("phone")?.toString().trim();
     const companyName = formData.get("company_name")?.toString().trim() || null;
-    const taxClassification = formData.get("tax_classification")?.toString().trim() || "indian_gst";
+    const rawTax = formData.get("tax_classification")?.toString().trim();
+    const taxClassification: TaxClassification = rawTax === "uae_vat" ? "uae_vat" : "indian_gst";
     const servicesInterested = formData.getAll("services_interested").map((s) => s.toString());
 
     // Validation
@@ -53,7 +55,7 @@ export async function submitTrialBookingAction(
       country: taxClassification === "uae_vat" ? "UAE" : "India",
       tax_classification: taxClassification,
       services_interested: servicesInterested,
-      status: "new",
+      status: "pending",
     });
 
     if (dbError) {
