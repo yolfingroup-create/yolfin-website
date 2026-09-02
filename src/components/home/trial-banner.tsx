@@ -1,4 +1,4 @@
-import { ArrowRight, Gift, CreditCard, ShieldAlert } from "lucide-react";
+import { ArrowRight, Gift, CreditCard, CheckCircle2 } from "lucide-react";
 import { Container } from "@/components/ui/container";
 import { Button } from "@/components/ui/button";
 
@@ -16,7 +16,7 @@ export function TrialBanner() {
             <div className="lg:col-span-7 space-y-3 sm:space-y-4">
               <div className="inline-flex items-center gap-1.5 px-3 py-1 sm:px-3.5 sm:py-1.5 bg-emerald-950 text-emerald-400 border border-emerald-800 text-[10px] sm:text-xs font-bold rounded-full uppercase tracking-wider">
                 <Gift className="w-3 h-3 sm:w-3.5 sm:h-3.5" />
-                <span>Zero Risk Guarantee</span>
+                <span>Launch Offer</span>
               </div>
 
               <h2 className="text-xl sm:text-3xl lg:text-4xl font-extrabold tracking-tight leading-tight text-center sm:text-left">
@@ -45,9 +45,9 @@ export function TrialBanner() {
                 </div>
 
                 <div className="flex items-center gap-2.5 p-3.5 bg-slate-950/90 border border-slate-800 rounded-xl">
-                  <ShieldAlert className="w-4 h-4 text-emerald-400 shrink-0" />
+                  <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0" />
                   <span className="text-xs font-bold text-slate-200">
-                    Cancel Anytime
+                    No Obligation
                   </span>
                 </div>
               </div>
@@ -65,8 +65,8 @@ export function TrialBanner() {
                 </div>
                 <div className="w-1 h-1 rounded-full bg-slate-800" />
                 <div className="flex items-center gap-1.5 text-[10px] font-bold text-emerald-400">
-                  <ShieldAlert className="w-3.5 h-3.5 shrink-0" />
-                  <span>Cancel Anytime</span>
+                  <CheckCircle2 className="w-3.5 h-3.5 shrink-0" />
+                  <span>No Obligation</span>
                 </div>
               </div>
             </div>

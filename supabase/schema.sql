@@ -413,6 +413,26 @@ ON CONFLICT (slug) DO UPDATE SET
     detailed_description = EXCLUDED.detailed_description,
     status = EXCLUDED.status;
 
+-- 7.1b Accounting & Finance Service Items Seed
+-- Uses the service UUID from the services table
+INSERT INTO public.service_items (service_id, title, description, icon_name, display_order, is_active)
+SELECT s.id, items.title, items.description, items.icon_name, items.display_order, true
+FROM public.services s
+CROSS JOIN (VALUES
+    ('Bookkeeping & Accounting', 'Accurate daily transaction recording, ledger maintenance, and financial data organization for your business.', 'BookOpen', 1),
+    ('GST (India) & VAT (UAE) Compliance', 'Preparation and filing of GST returns for Indian businesses and VAT compliance support for UAE operations.', 'FileCheck', 2),
+    ('Bank Reconciliation', 'Regular reconciliation of bank statements against accounting records to identify and resolve discrepancies.', 'Building2', 3),
+    ('Payroll Processing', 'End-to-end salary computation, statutory deductions, payslip generation, and disbursement support.', 'Users', 4),
+    ('Profit & Loss Reports', 'Periodic income and expenditure statements to give you clear visibility into business performance.', 'TrendingUp', 5),
+    ('Monthly Management Reports', 'Comprehensive monthly financial summaries including balance sheets, cash flow, and key metrics.', 'FileBarChart', 6),
+    ('Corporate Tax Support', 'Assistance with corporate tax computation, advance tax planning, and filing support for India and UAE.', 'Calculator', 7),
+    ('Invoice & Expense Management', 'Systematic tracking of invoices, receipts, and business expenses for organized financial records.', 'Receipt', 8),
+    ('Free Month Inclusions', 'The 1-month free trial covers standard bookkeeping, basic GST/VAT filing support, and an initial financial health review.', 'Gift', 9),
+    ('Free Month Scope & Limitations', 'The free trial provides an evaluation of core accounting workflows. Advanced advisory, audit preparation, and complex restructuring are scoped separately.', 'Info', 10)
+) AS items(title, description, icon_name, display_order)
+WHERE s.slug = 'accounting-finance'
+ON CONFLICT DO NOTHING;
+
 -- 7.2 Site Settings Seed (CONFIRMED COMPANY INFO ONLY - NO FABRICATED LEGAL NAMES)
 INSERT INTO public.site_settings (setting_key, setting_value, description, is_public)
 VALUES
@@ -436,9 +456,9 @@ ON CONFLICT (setting_key) DO UPDATE SET setting_value = EXCLUDED.setting_value;
 INSERT INTO public.why_yolfin_items (title, description, icon_name, category, display_order, is_active)
 VALUES
 ('1 Month Free Trial', 'Try our business services for one full month. Continue only if you are completely satisfied.', 'Gift', 'why_choose', 1, true),
-('100% Data Security', 'Your business data is safe with us under strict confidentiality protocols and security.', 'ShieldCheck', 'why_choose', 2, true),
+('Strict Data Confidentiality', 'Your business data is handled under strict confidentiality protocols and non-disclosure agreements.', 'ShieldCheck', 'why_choose', 2, true),
 ('Expert & Friendly Team', 'Qualified professionals with dedicated support at every step of your growth.', 'Users', 'why_choose', 3, true),
-('Accurate & Timely Reports', 'Clear, error-free financial reports delivered on schedule to make better business decisions.', 'FileBarChart', 'why_choose', 4, true),
+('Accurate & Timely Reports', 'Financial reports carefully reviewed for accuracy and delivered on schedule.', 'FileBarChart', 'why_choose', 4, true),
 ('Fast & Reliable Support', 'Quick response through WhatsApp, telephone, and email whenever you need assistance.', 'MessageSquare', 'why_choose', 5, true),
 ('Long-Term Partnership', 'We build dedicated, long-term business support relationships that scale with your growth.', 'Handshake', 'why_choose', 6, true)
 ON CONFLICT DO NOTHING;

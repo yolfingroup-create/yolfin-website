@@ -37,7 +37,7 @@ export async function generateMetadata(): Promise<Metadata> {
   }
 
   return {
-    title: "Services | Yolfin Group",
+    title: "Our Services",
     description:
       "Explore Yolfin Group's integrated corporate support services including Accounting, Bookkeeping, GST & VAT compliance, Travel Management, and Facility Management across India and UAE.",
   };
@@ -248,7 +248,7 @@ export default async function ServicesPage() {
             {/* Dynamic Services Grid */}
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
               {services.map((service) => {
-                const isActive = service.is_published && service.status !== "draft";
+                const isActive = service.is_published && service.status === "active";
                 return (
                   <div
                     key={service.id}
@@ -385,7 +385,7 @@ export default async function ServicesPage() {
             <div className="flex items-center gap-3">
               <FileCheck className="w-6 h-6 text-emerald-400 shrink-0" />
               <div>
-                <p className="text-xs font-bold">100% Tax & Legal Compliance</p>
+                <p className="text-xs font-bold">Compliance-Focused Support</p>
                 <p className="text-[11px] text-slate-400">Indian GST & UAE VAT regulatory standards</p>
               </div>
             </div>
@@ -415,7 +415,7 @@ export default async function ServicesPage() {
               Start Your <span className="text-emerald-400">1 Month Free Trial</span> Today!
             </h2>
             <p className="text-slate-300 text-sm sm:text-base leading-relaxed">
-              Experience the Yolfin difference. Zero upfront cost, cancel anytime.
+              Experience the Yolfin difference. Zero upfront cost, no long-term obligation.
             </p>
             <div className="pt-2 flex justify-center">
               <Button

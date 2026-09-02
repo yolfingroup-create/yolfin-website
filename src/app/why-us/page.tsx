@@ -44,7 +44,7 @@ export async function generateMetadata(): Promise<Metadata> {
   }
 
   return {
-    title: "Why Choose Yolfin Group | Your Trusted Growth Partner",
+    title: "Why Choose Us",
     description:
       "Discover why companies choose Yolfin Group for accounting, finance, travel, and facility management across India and UAE. Built on trust, accuracy, and dedicated support.",
   };
