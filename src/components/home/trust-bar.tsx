@@ -19,8 +19,8 @@ const trustPoints = [
   },
   {
     icon: Headphones,
-    title: "24/7 Support",
-    description: "Dedicated assistance always.",
+    title: "Dedicated Support",
+    description: "Prompt assistance when you need us.",
   },
 ];
 

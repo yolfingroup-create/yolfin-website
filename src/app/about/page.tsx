@@ -38,7 +38,7 @@ export async function generateMetadata(): Promise<Metadata> {
   }
 
   return {
-    title: "About Us | Yolfin Group",
+    title: "About Us",
     description:
       "Learn about Yolfin Group's mission, vision, and core values in providing integrated accounting, finance, travel, and facility management solutions across India and UAE.",
   };
@@ -108,7 +108,7 @@ export default async function AboutPage() {
                 </h1>
 
                 <p className="text-slate-muted text-lg leading-relaxed">
-                  Yolfin Group is a startup company committed to providing reliable and affordable solutions in Accounting, Finance, Travel and Facility Management across India and the UAE. We combine modern technology with personal attention to help businesses work smarter and grow faster.
+                  Yolfin Group is a new-generation business support firm committed to providing reliable and affordable solutions in Accounting, Finance, Travel and Facility Management across India and the UAE. We combine modern technology with personal attention to help businesses work smarter and grow faster.
                 </p>
 
                 <div className="flex items-center gap-3.5 pt-2">
@@ -155,7 +155,7 @@ export default async function AboutPage() {
                 </h1>
 
                 <p className="text-slate-muted text-xs sm:text-sm leading-relaxed max-w-sm">
-                  Yolfin Group is a startup company committed to providing reliable and affordable solutions in Accounting, Finance, Travel and Facility Management across India and the UAE.
+                  Yolfin Group is a new-generation business support firm committed to providing reliable and affordable solutions in Accounting, Finance, Travel and Facility Management across India and the UAE.
                 </p>
               </div>
 
@@ -246,7 +246,7 @@ export default async function AboutPage() {
                 <p className="text-xs font-semibold text-slate-300">Multi-Region Reach</p>
               </div>
               <div className="p-4 text-center space-y-1 border-t sm:border-t-0 sm:border-l border-slate-800">
-                <p className="text-base sm:text-lg font-extrabold text-emerald-400">100% Safe</p>
+                <p className="text-base sm:text-lg font-extrabold text-emerald-400">Strict Security</p>
                 <p className="text-xs font-semibold text-slate-300">Data Confidentiality</p>
               </div>
               <div className="p-4 text-center space-y-1 border-t lg:border-t-0 border-l border-slate-800">
@@ -305,7 +305,7 @@ export default async function AboutPage() {
                 </div>
                 <h3 className="text-base font-bold text-navy">Secure & Confidential</h3>
                 <p className="text-xs text-slate-muted leading-relaxed">
-                  Your financial and operational data is 100% safe with us, adhering to strict security standards and NDAs.
+                  Your financial and operational data is handled under strict security standards and NDAs.
                 </p>
               </div>
 
@@ -436,7 +436,7 @@ export default async function AboutPage() {
                 eyebrow="OUR ADVANTAGE"
                 title="What Sets"
                 highlightText="Yolfin Apart"
-                subtitle="Database-backed core capabilities designed for your peace of mind."
+                subtitle="Core capabilities designed for your peace of mind."
               />
 
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">

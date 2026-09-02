@@ -122,7 +122,7 @@ export function WhyUsPreview({ items, whyUsImage }: WhyUsPreviewProps) {
                       Long-Term Partnership Built on Transparency
                     </h3>
                     <p className="text-[11px] sm:text-sm text-slate-300 leading-relaxed">
-                      We handle your financial compliance, travel operations, and facility management so your team can focus 100% on growth.
+                      We handle your accounting, compliance, and support operations so your team can focus entirely on core business growth.
                     </p>
                   </div>
                 </div>

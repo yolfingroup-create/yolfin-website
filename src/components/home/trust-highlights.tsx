@@ -5,7 +5,7 @@ const highlights = [
   {
     icon: ShieldCheck,
     title: "Secure & Confidential",
-    description: "100% data security under strict NDAs.",
+    description: "Strict confidentiality procedures and NDAs.",
   },
   {
     icon: MessageSquareCheck,

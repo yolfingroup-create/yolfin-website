@@ -293,7 +293,7 @@ export function Footer() {
           <div className="flex items-center justify-center gap-4 text-[10px] font-semibold text-slate-400">
             <span className="flex items-center gap-1.5">
               <ShieldCheck className="w-3.5 h-3.5 text-emerald-400 shrink-0" />
-              100% Data Confidentiality
+              Strict Data Confidentiality
             </span>
             <span className="flex items-center gap-1.5">
               <CreditCard className="w-3.5 h-3.5 text-emerald-400 shrink-0" />
