@@ -142,7 +142,7 @@ export function TrialBookingForm({ onSuccess }: TrialBookingFormProps) {
           {/* Region / Tax Selector Buttons */}
           <div>
             <label className="block text-xs font-bold uppercase text-slate-700 mb-1.5">
-              Target Region / Tax Classification
+              Target Region
             </label>
             <div className="grid grid-cols-2 gap-2.5">
               <button
@@ -155,7 +155,7 @@ export function TrialBookingForm({ onSuccess }: TrialBookingFormProps) {
                 }`}
               >
                 <Building2 className="w-4 h-4 text-emerald-400 shrink-0" />
-                <span>INDIAN GST</span>
+                <span>INDIA</span>
               </button>
 
               <button
@@ -168,7 +168,7 @@ export function TrialBookingForm({ onSuccess }: TrialBookingFormProps) {
                 }`}
               >
                 <Building2 className="w-4 h-4 text-emerald-400 shrink-0" />
-                <span>UAE VAT</span>
+                <span>UAE</span>
               </button>
             </div>
           </div>
