@@ -17,6 +17,7 @@ import {
 import { Container } from "@/components/ui/container";
 import { SectionHeading } from "@/components/ui/section-heading";
 import { Button } from "@/components/ui/button";
+import { ServicesSlider } from "@/components/ui/services-slider";
 import { getPublishedServices, getActiveServiceItems, getPublishedSeoMetadata, getImagePlacements } from "@/lib/supabase/queries";
 import { SITE_CONFIG } from "@/lib/constants";
 import type { SEOMetadataRow } from "@/types";
@@ -236,95 +237,14 @@ export default async function ServicesPage() {
           </Container>
         </section>
 
-        {/* 3. Primary Services Listing */}
-        <section className="py-14 sm:py-16 md:py-20 bg-slate-50 border-b border-slate-100">
-          <Container className="space-y-10">
-            <SectionHeading
-              eyebrow="SERVICE PORTFOLIO"
-              title="Integrated Business Support"
-              subtitle="Select an active service to explore detailed features, compliance coverage, and deliverables."
-              align="center"
-            />
-
-            {/* Dynamic Services Grid */}
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-              {services.map((service) => {
-                const isActive = service.is_published && service.status === "active";
-                return (
-                  <div
-                    key={service.id}
-                    className={`bg-white rounded-3xl p-6 sm:p-8 border flex flex-col justify-between space-y-6 shadow-md transition-all ${
-                      isActive
-                        ? "border-slate-200 hover:border-emerald-300 hover:shadow-xl"
-                        : "border-slate-200/60 opacity-80"
-                    }`}
-                  >
-                    <div className="space-y-4">
-                      <div className="flex items-center justify-between">
-                        <div className="w-12 h-12 rounded-2xl bg-light-green flex items-center justify-center">
-                          {getServiceIcon(service.slug)}
-                        </div>
-                        {isActive ? (
-                          <span className="px-3 py-1 bg-emerald-900 text-emerald-300 text-[10px] font-bold rounded-full uppercase">
-                            Active
-                          </span>
-                        ) : (
-                          <span className="px-3 py-1 bg-slate-100 text-slate-500 text-[10px] font-semibold rounded-full uppercase">
-                            Coming Soon
-                          </span>
-                        )}
-                      </div>
-
-                      <div>
-                        <h2 className="text-xl font-extrabold text-navy">{service.name}</h2>
-                        <p className="text-xs text-slate-muted leading-relaxed mt-2">
-                          {service.short_description}
-                        </p>
-                      </div>
-
-                      {/* Related Service Items List */}
-                      {serviceItems.length > 0 && service.slug === "accounting-finance" && (
-                        <div className="space-y-2 pt-2 border-t border-slate-100">
-                          <p className="text-[11px] font-bold uppercase text-slate-400 tracking-wider">
-                            Key Service Offerings
-                          </p>
-                          <div className="space-y-1.5 text-xs text-slate-700">
-                            {serviceItems.slice(0, 4).map((item) => (
-                              <div key={item.id} className="flex items-center gap-2">
-                                <CheckCircle2 className="w-3.5 h-3.5 text-brand-green shrink-0" />
-                                <span>{item.title}</span>
-                              </div>
-                            ))}
-                          </div>
-                        </div>
-                      )}
-                    </div>
-
-                    {/* Action Button */}
-                    <div className="pt-4 border-t border-slate-100">
-                      {isActive ? (
-                        <Link
-                          href={`/services/${service.slug}`}
-                          className="w-full py-3 bg-navy hover:bg-navy-dark text-white font-bold text-xs rounded-xl transition-colors flex items-center justify-center gap-2 group"
-                        >
-                          <span>Explore {service.name}</span>
-                          <ArrowRight className="w-4 h-4 text-emerald-400 group-hover:translate-x-1 transition-transform" />
-                        </Link>
-                      ) : (
-                        <button
-                          disabled
-                          className="w-full py-3 bg-slate-100 text-slate-400 font-semibold text-xs rounded-xl cursor-not-allowed text-center"
-                        >
-                          Coming Soon
-                        </button>
-                      )}
-                    </div>
-                  </div>
-                );
-              })}
-            </div>
-          </Container>
-        </section>
+        {/* 3. Primary Services Listing Slider */}
+        <ServicesSlider
+          services={services}
+          eyebrow="SERVICE PORTFOLIO"
+          title="Integrated Business"
+          highlightText="Support"
+          subtitle="Select an active service to explore detailed features, compliance coverage, and deliverables."
+        />
 
         {/* 4. Simple 5-Step Process Timeline */}
         <section className="py-14 sm:py-16 md:py-20 bg-white border-b border-slate-100">

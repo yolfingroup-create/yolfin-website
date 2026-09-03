@@ -14,14 +14,17 @@ export function TestimonialSlider({ testimonials }: TestimonialSliderProps) {
   const pauseTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const isPausedRef = useRef(false);
 
-  // Duplicate list 3 times so the loop is seamless and infinite
-  const items = testimonials && testimonials.length > 0
+  // Activate sliding/looping ONLY if there are more than 3 items
+  const isSliderActive = testimonials && testimonials.length > 3;
+
+  // Duplicate list 3 times ONLY if slider mode is active
+  const items = isSliderActive
     ? [...testimonials, ...testimonials, ...testimonials]
-    : [];
+    : (testimonials || []);
 
   // Smooth continuous requestAnimationFrame loop (60fps)
   useEffect(() => {
-    if (!scrollRef.current || items.length === 0) return;
+    if (!isSliderActive || !scrollRef.current || items.length === 0) return;
     let animId: number;
 
     const step = () => {
@@ -48,16 +51,17 @@ export function TestimonialSlider({ testimonials }: TestimonialSliderProps) {
       cancelAnimationFrame(animId);
       if (pauseTimeoutRef.current) clearTimeout(pauseTimeoutRef.current);
     };
-  }, [items.length]);
+  }, [isSliderActive, items.length]);
 
   // Pause auto-drift on interaction, resume after 3 seconds of inactivity
   const pauseAndResume = useCallback(() => {
+    if (!isSliderActive) return;
     isPausedRef.current = true;
     if (pauseTimeoutRef.current) clearTimeout(pauseTimeoutRef.current);
     pauseTimeoutRef.current = setTimeout(() => {
       isPausedRef.current = false;
     }, 3000);
-  }, []);
+  }, [isSliderActive]);
 
   const scroll = (direction: "left" | "right") => {
     if (!scrollRef.current) return;
@@ -82,22 +86,27 @@ export function TestimonialSlider({ testimonials }: TestimonialSliderProps) {
           />
         </div>
 
-        {/* Slider Container with Navigation Controls */}
+        {/* Container */}
         <div className="relative group">
-          {/* Scrollable Cards Track */}
+          {/* Scrollable / Centered Cards Track */}
           <div
             ref={scrollRef}
-            onMouseEnter={() => { isPausedRef.current = true; }}
+            onMouseEnter={() => { if (isSliderActive) isPausedRef.current = true; }}
             onMouseLeave={() => {
+              if (!isSliderActive) return;
               if (pauseTimeoutRef.current) clearTimeout(pauseTimeoutRef.current);
               pauseTimeoutRef.current = setTimeout(() => {
                 isPausedRef.current = false;
               }, 1200);
             }}
-            onTouchStart={() => { isPausedRef.current = true; }}
+            onTouchStart={() => { if (isSliderActive) isPausedRef.current = true; }}
             onTouchEnd={pauseAndResume}
-            className="flex gap-6 overflow-x-auto pb-4 pt-1 px-1 scrollbar-none select-none"
-            style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
+            className={`flex gap-6 pb-4 pt-1 px-1 ${
+              isSliderActive
+                ? "overflow-x-auto scrollbar-none select-none"
+                : "flex-wrap justify-center items-stretch"
+            }`}
+            style={isSliderActive ? { scrollbarWidth: "none", msOverflowStyle: "none" } : undefined}
           >
             {items.map((t, idx) => {
               const metaParts = [
@@ -139,23 +148,25 @@ export function TestimonialSlider({ testimonials }: TestimonialSliderProps) {
             })}
           </div>
 
-          {/* Sliding Control Arrows */}
-          <div className="flex items-center justify-center gap-3 pt-4">
-            <button
-              onClick={() => scroll("left")}
-              aria-label="Previous Testimonials"
-              className="w-10 h-10 rounded-full bg-slate-100 hover:bg-navy hover:text-white border border-slate-200 text-slate-700 flex items-center justify-center transition-all cursor-pointer shadow-xs active:scale-95"
-            >
-              <ChevronLeft className="w-5 h-5" />
-            </button>
-            <button
-              onClick={() => scroll("right")}
-              aria-label="Next Testimonials"
-              className="w-10 h-10 rounded-full bg-slate-100 hover:bg-navy hover:text-white border border-slate-200 text-slate-700 flex items-center justify-center transition-all cursor-pointer shadow-xs active:scale-95"
-            >
-              <ChevronRight className="w-5 h-5" />
-            </button>
-          </div>
+          {/* Sliding Control Arrows — Only displayed when items overflow (> 3) */}
+          {isSliderActive && (
+            <div className="flex items-center justify-center gap-3 pt-4">
+              <button
+                onClick={() => scroll("left")}
+                aria-label="Previous Testimonials"
+                className="w-10 h-10 rounded-full bg-slate-100 hover:bg-navy hover:text-white border border-slate-200 text-slate-700 flex items-center justify-center transition-all cursor-pointer shadow-xs active:scale-95"
+              >
+                <ChevronLeft className="w-5 h-5" />
+              </button>
+              <button
+                onClick={() => scroll("right")}
+                aria-label="Next Testimonials"
+                className="w-10 h-10 rounded-full bg-slate-100 hover:bg-navy hover:text-white border border-slate-200 text-slate-700 flex items-center justify-center transition-all cursor-pointer shadow-xs active:scale-95"
+              >
+                <ChevronRight className="w-5 h-5" />
+              </button>
+            </div>
+          )}
         </div>
       </div>
     </section>

@@ -156,6 +156,34 @@ export default function AdminServicesPage() {
     }
   };
 
+  const handleToggleStatus = async (service: ServiceRow) => {
+    const newStatus = service.status === "active" ? "coming_soon" : "active";
+    const res = await updateServiceAction(service.id, { status: newStatus });
+    if (res.error) {
+      setToast({ type: "error", text: res.error });
+    } else {
+      setToast({
+        type: "success",
+        text: `Status updated to ${newStatus === "active" ? "Active" : "Coming Soon"}`,
+      });
+      fetchServices();
+    }
+  };
+
+  const handleToggleVisibility = async (service: ServiceRow) => {
+    const newPublished = !service.is_published;
+    const res = await updateServiceAction(service.id, { is_published: newPublished });
+    if (res.error) {
+      setToast({ type: "error", text: res.error });
+    } else {
+      setToast({
+        type: "success",
+        text: `Visibility updated to ${newPublished ? "Published" : "Unpublished"}`,
+      });
+      fetchServices();
+    }
+  };
+
   const filteredServices = services.filter((s) => {
     const matchesSearch = s.name.toLowerCase().includes(search.toLowerCase()) || s.slug.includes(search.toLowerCase());
     if (filter === "active") return matchesSearch && s.status === "active" && s.is_published;
@@ -270,26 +298,38 @@ export default function AdminServicesPage() {
                     <td className="p-4 font-bold text-white">{service.name}</td>
                     <td className="p-4 font-mono text-emerald-400">/services/{service.slug}</td>
                     <td className="p-4">
-                      {service.status === "active" ? (
-                        <span className="px-2.5 py-0.5 bg-emerald-950 text-emerald-300 border border-emerald-800 text-[10px] font-bold rounded uppercase">
-                          Active
-                        </span>
-                      ) : (
-                        <span className="px-2.5 py-0.5 bg-slate-800 text-slate-400 border border-slate-700 text-[10px] font-semibold rounded uppercase">
-                          Coming Soon
-                        </span>
-                      )}
+                      <button
+                        onClick={() => handleToggleStatus(service)}
+                        title="Click to toggle status (Active / Coming Soon)"
+                        className="cursor-pointer transition-transform active:scale-95"
+                      >
+                        {service.status === "active" ? (
+                          <span className="px-2.5 py-0.5 bg-emerald-950 hover:bg-emerald-900 text-emerald-300 border border-emerald-800 text-[10px] font-bold rounded uppercase inline-block">
+                            Active
+                          </span>
+                        ) : (
+                          <span className="px-2.5 py-0.5 bg-slate-800 hover:bg-slate-700 text-slate-400 border border-slate-700 text-[10px] font-semibold rounded uppercase inline-block">
+                            Coming Soon
+                          </span>
+                        )}
+                      </button>
                     </td>
                     <td className="p-4">
-                      {service.is_published ? (
-                        <span className="text-emerald-400 flex items-center gap-1 font-semibold">
-                          <Eye className="w-3.5 h-3.5" /> Published
-                        </span>
-                      ) : (
-                        <span className="text-slate-500 flex items-center gap-1 font-semibold">
-                          <EyeOff className="w-3.5 h-3.5" /> Unpublished
-                        </span>
-                      )}
+                      <button
+                        onClick={() => handleToggleVisibility(service)}
+                        title="Click to toggle visibility (Published / Unpublished)"
+                        className="cursor-pointer transition-transform active:scale-95"
+                      >
+                        {service.is_published ? (
+                          <span className="text-emerald-400 hover:text-emerald-300 flex items-center gap-1 font-semibold">
+                            <Eye className="w-3.5 h-3.5" /> Published
+                          </span>
+                        ) : (
+                          <span className="text-slate-500 hover:text-slate-400 flex items-center gap-1 font-semibold">
+                            <EyeOff className="w-3.5 h-3.5" /> Unpublished
+                          </span>
+                        )}
+                      </button>
                     </td>
                     <td className="p-4 text-right space-x-2">
                       <button
