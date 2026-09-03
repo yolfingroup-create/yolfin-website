@@ -34,8 +34,8 @@ export default async function AdminDashboardPage() {
     supabase.from("trial_bookings").select("*", { count: "exact", head: true }),
     supabase.from("testimonials").select("*", { count: "exact", head: true }).eq("is_published", true),
     supabase.from("media_assets").select("*", { count: "exact", head: true }).eq("is_published", true),
-    supabase.from("contact_inquiries").select("*").order("created_at", { ascending: false }).limit(4),
-    supabase.from("trial_bookings").select("*").order("created_at", { ascending: false }).limit(4),
+    supabase.from("contact_inquiries").select("*").order("submitted_at", { ascending: false }).limit(4),
+    supabase.from("trial_bookings").select("*").order("submitted_at", { ascending: false }).limit(4),
   ]);
 
   return (
@@ -71,53 +71,53 @@ export default async function AdminDashboardPage() {
 
       {/* Overview Cards Grid */}
       <div className="grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-4">
-        <div className="bg-slate-900 border border-slate-800 rounded-2xl p-4 space-y-2">
+        <Link href="/admin/services" className="bg-slate-900 border border-slate-800 rounded-2xl p-4 space-y-2 hover:border-emerald-500/40 transition-colors cursor-pointer">
           <div className="flex items-center justify-between">
             <span className="text-xs font-bold text-slate-400">Total Services</span>
             <Layers className="w-4 h-4 text-emerald-400" />
           </div>
           <p className="text-2xl font-extrabold text-white">{totalServices || 0}</p>
-        </div>
+        </Link>
 
-        <div className="bg-slate-900 border border-slate-800 rounded-2xl p-4 space-y-2">
+        <Link href="/admin/services" className="bg-slate-900 border border-slate-800 rounded-2xl p-4 space-y-2 hover:border-emerald-500/40 transition-colors cursor-pointer">
           <div className="flex items-center justify-between">
             <span className="text-xs font-bold text-slate-400">Active Services</span>
             <CheckCircle2 className="w-4 h-4 text-emerald-400" />
           </div>
           <p className="text-2xl font-extrabold text-emerald-400">{activeServices || 0}</p>
-        </div>
+        </Link>
 
-        <div className="bg-slate-900 border border-slate-800 rounded-2xl p-4 space-y-2">
+        <Link href="/admin/inquiries" className="bg-slate-900 border border-slate-800 rounded-2xl p-4 space-y-2 hover:border-emerald-500/40 transition-colors cursor-pointer">
           <div className="flex items-center justify-between">
             <span className="text-xs font-bold text-slate-400">Inquiries</span>
             <Mail className="w-4 h-4 text-emerald-400" />
           </div>
           <p className="text-2xl font-extrabold text-white">{totalInquiries || 0}</p>
-        </div>
+        </Link>
 
-        <div className="bg-slate-900 border border-slate-800 rounded-2xl p-4 space-y-2">
+        <Link href="/admin/bookings" className="bg-slate-900 border border-slate-800 rounded-2xl p-4 space-y-2 hover:border-emerald-500/40 transition-colors cursor-pointer">
           <div className="flex items-center justify-between">
             <span className="text-xs font-bold text-slate-400">Trial Bookings</span>
             <Calendar className="w-4 h-4 text-emerald-400" />
           </div>
           <p className="text-2xl font-extrabold text-emerald-400">{totalBookings || 0}</p>
-        </div>
+        </Link>
 
-        <div className="bg-slate-900 border border-slate-800 rounded-2xl p-4 space-y-2">
+        <Link href="/admin/testimonials" className="bg-slate-900 border border-slate-800 rounded-2xl p-4 space-y-2 hover:border-emerald-500/40 transition-colors cursor-pointer">
           <div className="flex items-center justify-between">
             <span className="text-xs font-bold text-slate-400">Testimonials</span>
             <MessageSquareQuote className="w-4 h-4 text-emerald-400" />
           </div>
           <p className="text-2xl font-extrabold text-white">{publishedTestimonials || 0}</p>
-        </div>
+        </Link>
 
-        <div className="bg-slate-900 border border-slate-800 rounded-2xl p-4 space-y-2">
+        <Link href="/admin/media" className="bg-slate-900 border border-slate-800 rounded-2xl p-4 space-y-2 hover:border-emerald-500/40 transition-colors cursor-pointer">
           <div className="flex items-center justify-between">
             <span className="text-xs font-bold text-slate-400">Published Media</span>
             <ImageIcon className="w-4 h-4 text-emerald-400" />
           </div>
           <p className="text-2xl font-extrabold text-emerald-400">{publishedMedia || 0}</p>
-        </div>
+        </Link>
       </div>
 
       {/* Quick Action Shortcuts */}

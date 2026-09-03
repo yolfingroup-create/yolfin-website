@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef } from "react";
+import { useRef, useEffect, useCallback } from "react";
 import { Star, ChevronLeft, ChevronRight } from "lucide-react";
 import { SectionHeading } from "@/components/ui/section-heading";
 import type { TestimonialRow } from "@/types";
@@ -11,11 +11,59 @@ interface TestimonialSliderProps {
 
 export function TestimonialSlider({ testimonials }: TestimonialSliderProps) {
   const scrollRef = useRef<HTMLDivElement>(null);
+  const pauseTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const isPausedRef = useRef(false);
+
+  // Duplicate list 3 times so the loop is seamless and infinite
+  const items = testimonials && testimonials.length > 0
+    ? [...testimonials, ...testimonials, ...testimonials]
+    : [];
+
+  // Smooth continuous requestAnimationFrame loop (60fps)
+  useEffect(() => {
+    if (!scrollRef.current || items.length === 0) return;
+    let animId: number;
+
+    const step = () => {
+      if (!isPausedRef.current && scrollRef.current) {
+        const el = scrollRef.current;
+        // Total width of one full set of testimonials
+        const singleSetWidth = el.scrollWidth / 3;
+
+        if (singleSetWidth > 0) {
+          // If we drift into the 3rd set, reset back to the 2nd set seamlessly
+          if (el.scrollLeft >= singleSetWidth * 2) {
+            el.scrollLeft -= singleSetWidth;
+          } else {
+            el.scrollLeft += 0.75; // smooth drift speed (~45px/sec)
+          }
+        }
+      }
+      animId = requestAnimationFrame(step);
+    };
+
+    animId = requestAnimationFrame(step);
+
+    return () => {
+      cancelAnimationFrame(animId);
+      if (pauseTimeoutRef.current) clearTimeout(pauseTimeoutRef.current);
+    };
+  }, [items.length]);
+
+  // Pause auto-drift on interaction, resume after 3 seconds of inactivity
+  const pauseAndResume = useCallback(() => {
+    isPausedRef.current = true;
+    if (pauseTimeoutRef.current) clearTimeout(pauseTimeoutRef.current);
+    pauseTimeoutRef.current = setTimeout(() => {
+      isPausedRef.current = false;
+    }, 3000);
+  }, []);
 
   const scroll = (direction: "left" | "right") => {
     if (!scrollRef.current) return;
     const scrollAmount = direction === "left" ? -380 : 380;
     scrollRef.current.scrollBy({ left: scrollAmount, behavior: "smooth" });
+    pauseAndResume();
   };
 
   if (!testimonials || testimonials.length === 0) return null;
@@ -39,10 +87,19 @@ export function TestimonialSlider({ testimonials }: TestimonialSliderProps) {
           {/* Scrollable Cards Track */}
           <div
             ref={scrollRef}
-            className="flex gap-6 overflow-x-auto snap-x snap-mandatory scroll-smooth pb-4 pt-1 px-1 scrollbar-none"
+            onMouseEnter={() => { isPausedRef.current = true; }}
+            onMouseLeave={() => {
+              if (pauseTimeoutRef.current) clearTimeout(pauseTimeoutRef.current);
+              pauseTimeoutRef.current = setTimeout(() => {
+                isPausedRef.current = false;
+              }, 1200);
+            }}
+            onTouchStart={() => { isPausedRef.current = true; }}
+            onTouchEnd={pauseAndResume}
+            className="flex gap-6 overflow-x-auto pb-4 pt-1 px-1 scrollbar-none select-none"
             style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
           >
-            {testimonials.map((t) => {
+            {items.map((t, idx) => {
               const metaParts = [
                 t.designation || "Business Owner",
                 t.company_name,
@@ -51,8 +108,8 @@ export function TestimonialSlider({ testimonials }: TestimonialSliderProps) {
 
               return (
                 <div
-                  key={t.id}
-                  className="w-[300px] sm:w-[360px] md:w-[380px] shrink-0 snap-align-start p-6 bg-slate-50 rounded-3xl border border-slate-200 shadow-xs flex flex-col justify-between h-[280px] hover:border-emerald-300 hover:shadow-md transition-all"
+                  key={`${t.id}-${idx}`}
+                  className="w-[300px] sm:w-[360px] md:w-[380px] shrink-0 p-6 bg-slate-50 rounded-3xl border border-slate-200 shadow-xs flex flex-col justify-between h-[280px] hover:border-emerald-300 hover:shadow-md transition-all"
                 >
                   <div>
                     {/* Star Rating */}
@@ -63,7 +120,7 @@ export function TestimonialSlider({ testimonials }: TestimonialSliderProps) {
                     </div>
 
                     {/* Fixed Height Quote Container with Internal Scroll */}
-                    <div className="max-h-[120px] overflow-y-auto pr-1.5 text-xs sm:text-sm text-slate-700 italic leading-relaxed font-normal quote-scroll">
+                    <div className="max-h-[120px] overflow-y-auto pr-1.5 text-xs sm:text-sm text-slate-700 italic leading-relaxed font-normal quote-scroll select-text">
                       &quot;{t.quote}&quot;
                     </div>
                   </div>
