@@ -113,14 +113,11 @@ export default async function AboutPage() {
 
                 <div className="flex items-center gap-3.5 pt-2">
                   <Button
-                    openBookingModal
+                    href="/contact"
                     variant="primary"
                     size="lg"
                     icon={<ArrowRight className="w-4 h-4" />}
                   >
-                    Book 1 Month Free
-                  </Button>
-                  <Button href="/contact" variant="outline" size="lg">
                     Contact Us
                   </Button>
                 </div>
@@ -189,21 +186,15 @@ export default async function AboutPage() {
               {/* Part 3: CTA BUTTONS WITH CLEAR HIERARCHY */}
               <div className="flex flex-col items-center gap-2 pt-2">
                 <Button
-                  openBookingModal
+                  href="/contact"
                   variant="primary"
                   size="lg"
                   fullWidth
                   className="text-sm py-3.5 shadow-sm active:scale-[0.98]"
                   icon={<ArrowRight className="w-4 h-4" />}
                 >
-                  Book 1 Month Free
+                  Contact Us
                 </Button>
-                <a
-                  href="/contact"
-                  className="text-xs font-bold text-slate-500 hover:text-brand-green py-2 transition-colors inline-block active:scale-[0.97]"
-                >
-                  Contact Us →
-                </a>
               </div>
             </div>
           </Container>
@@ -265,7 +256,7 @@ export default async function AboutPage() {
               title="Built on Trust,"
               highlightText="Driven by Commitment"
               subtitle="We understand the challenges business owners face – time, compliance, accuracy and cost. That's why we built Yolfin Group."
-              className="text-center"
+              align="center"
             />
 
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -339,7 +330,7 @@ export default async function AboutPage() {
               eyebrow="OUR STORY"
               title="Our"
               highlightText="Journey"
-              className="text-center"
+              align="center"
             />
 
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-14 lg:items-stretch items-center">
@@ -437,6 +428,7 @@ export default async function AboutPage() {
                 title="What Sets"
                 highlightText="Yolfin Apart"
                 subtitle="Core capabilities designed for your peace of mind."
+                align="center"
               />
 
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -450,35 +442,6 @@ export default async function AboutPage() {
             </Container>
           </section>
         )}
-
-        {/* 6. Final CTA */}
-        <section className="py-14 sm:py-16 md:py-20 bg-navy text-white relative overflow-hidden">
-          <Container className="relative z-10 text-center space-y-5 max-w-3xl mx-auto">
-            <div className="inline-flex items-center gap-1.5 px-3.5 py-1.5 bg-emerald-950 text-emerald-400 border border-emerald-800 text-xs font-bold rounded-full uppercase tracking-wider">
-              <Building2 className="w-3.5 h-3.5" />
-              <span>Partner With Yolfin</span>
-            </div>
-
-            <h2 className="text-2xl sm:text-4xl font-extrabold tracking-tight">
-              Let&apos;s Build Success <span className="text-emerald-400">Together</span>
-            </h2>
-
-            <p className="text-slate-300 text-sm sm:text-base leading-relaxed">
-              Start your 1 Month Free Trial today. No commitment, zero risk, just results.
-            </p>
-
-            <div className="pt-2 flex justify-center">
-              <Button
-                openBookingModal
-                variant="primary"
-                size="lg"
-                icon={<ArrowRight className="w-5 h-5" />}
-              >
-                Book 1 Month Free
-              </Button>
-            </div>
-          </Container>
-        </section>
       </div>
     </>
   );

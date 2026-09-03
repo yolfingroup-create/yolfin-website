@@ -295,6 +295,7 @@ export async function createTestimonialAction(data: {
   client_name: string;
   company_name?: string;
   designation?: string;
+  country?: string;
   quote: string;
   rating?: number;
   is_published?: boolean;
@@ -309,6 +310,7 @@ export async function createTestimonialAction(data: {
       client_name: data.client_name,
       company_name: data.company_name || null,
       designation: data.designation || null,
+      country: data.country || null,
       quote: data.quote,
       rating: data.rating ?? 5,
       is_published: data.is_published ?? true,
@@ -335,6 +337,7 @@ export async function updateTestimonialAction(
     client_name?: string;
     company_name?: string;
     designation?: string;
+    country?: string;
     quote?: string;
     rating?: number;
     is_published?: boolean;
