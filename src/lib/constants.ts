@@ -13,6 +13,7 @@ export const SITE_CONFIG = {
     phoneUAE: "+971 556646580",
     phoneUAEDisplay: "+971 55 664 6580",
     whatsappUrl: "https://wa.me/919562975022",
+    mapUrl: "https://maps.app.goo.gl/AsbTWNjdsg8VBBH46?g_st=ac",
     address: {
       street: "Office No. 11/501, Areekode Road",
       city: "Kondotty",

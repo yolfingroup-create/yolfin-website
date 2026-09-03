@@ -256,6 +256,7 @@ export interface Database {
           client_name: string;
           company_name: string | null;
           designation: string | null;
+          country: string | null;
           location: string | null;
           quote: string;
           rating: number;
@@ -271,6 +272,7 @@ export interface Database {
           client_name: string;
           company_name?: string | null;
           designation?: string | null;
+          country?: string | null;
           location?: string | null;
           quote: string;
           rating?: number;
@@ -286,6 +288,7 @@ export interface Database {
           client_name?: string;
           company_name?: string | null;
           designation?: string | null;
+          country?: string | null;
           location?: string | null;
           quote?: string;
           rating?: number;

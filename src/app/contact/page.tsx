@@ -162,7 +162,7 @@ export default function ContactPage() {
                   </p>
                   <div className="pl-8 pt-1">
                     <a
-                      href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(SITE_CONFIG.contact.address.formatted)}`}
+                      href={SITE_CONFIG.contact.mapUrl}
                       target="_blank"
                       rel="noopener noreferrer"
                       className="inline-flex items-center gap-1.5 text-xs font-bold text-emerald-400 hover:underline"

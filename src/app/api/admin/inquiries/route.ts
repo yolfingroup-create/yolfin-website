@@ -15,7 +15,7 @@ export async function GET() {
   const { data: inquiries, error } = await supabase
     .from("contact_inquiries")
     .select("*")
-    .order("created_at", { ascending: false });
+    .order("submitted_at", { ascending: false });
 
   if (error) {
     return NextResponse.json({ error: error.message }, { status: 500 });
