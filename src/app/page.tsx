@@ -11,7 +11,7 @@ import { TrialBanner } from "@/components/home/trial-banner";
 import { ServicesSection } from "@/components/home/services-section";
 import { TrustBar } from "@/components/home/trust-bar";
 import { WhyUsPreview } from "@/components/home/why-us-preview";
-import { FinalCTA } from "@/components/home/final-cta";
+// import { FinalCTA } from "@/components/home/final-cta";
 import { SITE_CONFIG } from "@/lib/constants";
 import type { SEOMetadataRow } from "@/types";
 
@@ -92,7 +92,7 @@ export default async function HomePage() {
         <TrustHighlights />
 
         {/* C. 1-Month Free Trial Banner */}
-        <TrialBanner />
+        
 
         {/* D. Services Grid Section (Powered by Supabase DB) */}
         <ServicesSection services={services} />
@@ -104,7 +104,8 @@ export default async function HomePage() {
         <WhyUsPreview items={whyItems} whyUsImage={homepageImages.whyUsImage} />
 
         {/* G. Final Bottom Conversion CTA */}
-        <FinalCTA />
+        {/* <FinalCTA /> */}
+        <TrialBanner />
       </div>
     </>
   );
