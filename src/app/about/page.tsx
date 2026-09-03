@@ -113,14 +113,11 @@ export default async function AboutPage() {
 
                 <div className="flex items-center gap-3.5 pt-2">
                   <Button
-                    openBookingModal
+                    href="/contact"
                     variant="primary"
                     size="lg"
                     icon={<ArrowRight className="w-4 h-4" />}
                   >
-                    Book 1 Month Free
-                  </Button>
-                  <Button href="/contact" variant="outline" size="lg">
                     Contact Us
                   </Button>
                 </div>
@@ -189,21 +186,15 @@ export default async function AboutPage() {
               {/* Part 3: CTA BUTTONS WITH CLEAR HIERARCHY */}
               <div className="flex flex-col items-center gap-2 pt-2">
                 <Button
-                  openBookingModal
+                  href="/contact"
                   variant="primary"
                   size="lg"
                   fullWidth
                   className="text-sm py-3.5 shadow-sm active:scale-[0.98]"
                   icon={<ArrowRight className="w-4 h-4" />}
                 >
-                  Book 1 Month Free
+                  Contact Us
                 </Button>
-                <a
-                  href="/contact"
-                  className="text-xs font-bold text-slate-500 hover:text-brand-green py-2 transition-colors inline-block active:scale-[0.97]"
-                >
-                  Contact Us →
-                </a>
               </div>
             </div>
           </Container>

@@ -125,12 +125,12 @@ export default async function ServicesPage() {
 
                 <div className="flex items-center gap-3 pt-2">
                   <Button
-                    openBookingModal
+                    href="/contact"
                     variant="primary"
                     size="lg"
                     icon={<ArrowRight className="w-4 h-4" />}
                   >
-                    Book 1 Month Free
+                    Contact Us
                   </Button>
                 </div>
               </div>
@@ -184,14 +184,14 @@ export default async function ServicesPage() {
               {/* Part 3: CTA BUTTONS WITH CLEAR HIERARCHY */}
               <div className="flex flex-col items-center gap-2 pt-2">
                 <Button
-                  openBookingModal
+                  href="/contact"
                   variant="primary"
                   size="lg"
                   fullWidth
                   className="text-sm py-3.5 shadow-sm active:scale-[0.98]"
                   icon={<ArrowRight className="w-4 h-4" />}
                 >
-                  Book 1 Month Free
+                  Contact Us
                 </Button>
               </div>
             </div>

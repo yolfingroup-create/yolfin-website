@@ -134,12 +134,12 @@ export default async function WhyUsPage() {
 
                 <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3.5 pt-2">
                   <Button
-                    openBookingModal
+                    href="/contact"
                     variant="primary"
                     size="lg"
                     icon={<ArrowRight className="w-4 h-4" />}
                   >
-                    Book 1 Month Free
+                    Contact Us
                   </Button>
                   <Button href="/services" variant="outline" size="lg">
                     Explore Services
@@ -196,14 +196,14 @@ export default async function WhyUsPage() {
               {/* Part 3: CTA BUTTONS WITH CLEAR HIERARCHY */}
               <div className="flex flex-col items-center gap-2 pt-2">
                 <Button
-                  openBookingModal
+                  href="/contact"
                   variant="primary"
                   size="lg"
                   fullWidth
                   className="text-sm py-3.5 shadow-sm active:scale-[0.98]"
                   icon={<ArrowRight className="w-4 h-4" />}
                 >
-                  Book 1 Month Free
+                  Contact Us
                 </Button>
                 <a
                   href="/services"
