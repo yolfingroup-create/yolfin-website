@@ -34,12 +34,13 @@ export function WhyUsPreview({ items, whyUsImage }: WhyUsPreviewProps) {
     <section className="py-8 sm:py-16 md:py-24 bg-white border-b border-slate-100">
       <Container className="space-y-6 sm:space-y-10">
         {/* Section Heading (Above Content Row) */}
-        <div className="max-w-3xl">
+        <div className="flex flex-col items-center text-center">
           <SectionHeading
             eyebrow="WHY CHOOSE YOLFIN GROUP?"
             title="Your Success is"
             highlightText="Our Priority"
             subtitle="We bring fresh ideas, modern technology and a strong commitment to help your business grow with confidence."
+            align="center"
           />
         </div>
 

@@ -243,6 +243,7 @@ export default async function ServicesPage() {
               eyebrow="SERVICE PORTFOLIO"
               title="Integrated Business Support"
               subtitle="Select an active service to explore detailed features, compliance coverage, and deliverables."
+              align="center"
             />
 
             {/* Dynamic Services Grid */}
@@ -332,7 +333,7 @@ export default async function ServicesPage() {
               eyebrow="HOW IT WORKS"
               title="Our Simple 5-Step Process"
               subtitle="From onboarding to continuous monthly reporting, working with Yolfin is straightforward and stress-free."
-              className="text-center"
+              align="center"
             />
 
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">

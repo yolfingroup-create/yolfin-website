@@ -224,7 +224,7 @@ export default async function WhyUsPage() {
               title="Six Strong Reasons Why"
               highlightText="Businesses Choose Us"
               subtitle="Everything we do is designed to give you clarity, compliance, and complete peace of mind."
-              className="text-center"
+              align="center"
             />
 
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
@@ -255,7 +255,7 @@ export default async function WhyUsPage() {
                 title="Yolfin vs Traditional"
                 highlightText="Approach"
                 subtitle="Smarter, simpler, and stress-free financial management."
-                className="text-center"
+                align="center"
               />
 
               <div className="bg-white rounded-3xl border border-slate-200 shadow-xl overflow-hidden">

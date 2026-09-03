@@ -15,7 +15,7 @@ export function SectionHeading({
   title,
   highlightText,
   subtitle,
-  align = "left",
+  align = "center",
   className = "",
   isLight = false,
 }: SectionHeadingProps) {

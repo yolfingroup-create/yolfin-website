@@ -265,7 +265,7 @@ export default async function AboutPage() {
               title="Built on Trust,"
               highlightText="Driven by Commitment"
               subtitle="We understand the challenges business owners face – time, compliance, accuracy and cost. That's why we built Yolfin Group."
-              className="text-center"
+              align="center"
             />
 
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -339,7 +339,7 @@ export default async function AboutPage() {
               eyebrow="OUR STORY"
               title="Our"
               highlightText="Journey"
-              className="text-center"
+              align="center"
             />
 
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-14 lg:items-stretch items-center">
@@ -437,6 +437,7 @@ export default async function AboutPage() {
                 title="What Sets"
                 highlightText="Yolfin Apart"
                 subtitle="Core capabilities designed for your peace of mind."
+                align="center"
               />
 
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
