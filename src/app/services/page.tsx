@@ -408,27 +408,6 @@ export default async function ServicesPage() {
           </Container>
         </section>
 
-        {/* 6. Final Conversion CTA */}
-        <section className="py-14 sm:py-16 md:py-20 bg-gradient-to-r from-navy via-slate-900 to-navy-dark text-white relative overflow-hidden">
-          <Container className="relative z-10 text-center space-y-5 max-w-3xl mx-auto">
-            <h2 className="text-2xl sm:text-4xl font-extrabold tracking-tight">
-              Start Your <span className="text-emerald-400">1 Month Free Trial</span> Today!
-            </h2>
-            <p className="text-slate-300 text-sm sm:text-base leading-relaxed">
-              Experience the Yolfin difference. Zero upfront cost, no long-term obligation.
-            </p>
-            <div className="pt-2 flex justify-center">
-              <Button
-                openBookingModal
-                variant="primary"
-                size="lg"
-                icon={<ArrowRight className="w-5 h-5" />}
-              >
-                Book 1 Month Free
-              </Button>
-            </div>
-          </Container>
-        </section>
       </div>
     </>
   );

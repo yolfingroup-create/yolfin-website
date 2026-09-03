@@ -450,35 +450,6 @@ export default async function AboutPage() {
             </Container>
           </section>
         )}
-
-        {/* 6. Final CTA */}
-        <section className="py-14 sm:py-16 md:py-20 bg-navy text-white relative overflow-hidden">
-          <Container className="relative z-10 text-center space-y-5 max-w-3xl mx-auto">
-            <div className="inline-flex items-center gap-1.5 px-3.5 py-1.5 bg-emerald-950 text-emerald-400 border border-emerald-800 text-xs font-bold rounded-full uppercase tracking-wider">
-              <Building2 className="w-3.5 h-3.5" />
-              <span>Partner With Yolfin</span>
-            </div>
-
-            <h2 className="text-2xl sm:text-4xl font-extrabold tracking-tight">
-              Let&apos;s Build Success <span className="text-emerald-400">Together</span>
-            </h2>
-
-            <p className="text-slate-300 text-sm sm:text-base leading-relaxed">
-              Start your 1 Month Free Trial today. No commitment, zero risk, just results.
-            </p>
-
-            <div className="pt-2 flex justify-center">
-              <Button
-                openBookingModal
-                variant="primary"
-                size="lg"
-                icon={<ArrowRight className="w-5 h-5" />}
-              >
-                Book 1 Month Free
-              </Button>
-            </div>
-          </Container>
-        </section>
       </div>
     </>
   );

@@ -119,6 +119,7 @@ CREATE TABLE IF NOT EXISTS public.testimonials (
     client_name VARCHAR(150) NOT NULL,
     company_name VARCHAR(150),
     designation VARCHAR(150),
+    country VARCHAR(150),
     location VARCHAR(150),
     quote TEXT NOT NULL,
     rating INTEGER NOT NULL DEFAULT 5 CHECK (rating >= 1 AND rating <= 5),

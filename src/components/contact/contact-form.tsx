@@ -179,6 +179,10 @@ export function ContactForm() {
             By submitting this form, you agree to our{" "}
             <Link href="/privacy-policy" className="text-brand-green hover:underline font-semibold">
               Privacy Policy
+            </Link>{" "}
+            and{" "}
+            <Link href="/terms-and-conditions" className="text-brand-green hover:underline font-semibold">
+              Terms & Conditions
             </Link>
             .
           </p>

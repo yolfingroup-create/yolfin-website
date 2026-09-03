@@ -228,6 +228,10 @@ export function TrialBookingForm({ onSuccess }: TrialBookingFormProps) {
             By submitting this form, you agree to our{" "}
             <Link href="/privacy-policy" className="text-brand-green hover:underline font-semibold">
               Privacy Policy
+            </Link>{" "}
+            and{" "}
+            <Link href="/terms-and-conditions" className="text-brand-green hover:underline font-semibold">
+              Terms & Conditions
             </Link>
             . No payment details required.
           </p>

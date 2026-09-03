@@ -26,6 +26,7 @@ import {
   getImagePlacements,
 } from "@/lib/supabase/queries";
 import { SITE_CONFIG } from "@/lib/constants";
+import { TestimonialSlider } from "@/components/ui/testimonial-slider";
 import type { SEOMetadataRow } from "@/types";
 
 export async function generateMetadata(): Promise<Metadata> {
@@ -298,39 +299,8 @@ export default async function WhyUsPage() {
           </section>
         )}
 
-        {/* 4. Client Testimonials */}
-        {testimonials.length > 0 && (
-          <section className="py-14 sm:py-16 md:py-20 bg-white border-b border-slate-100">
-            <Container className="space-y-10">
-              <SectionHeading
-                eyebrow="CLIENT TESTIMONIALS"
-                title="What Our"
-                highlightText="Clients Say"
-                subtitle="Real feedback from business owners who rely on Yolfin Group."
-                className="text-center"
-              />
-
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                {testimonials.map((t) => (
-                  <div key={t.id} className="p-6 bg-slate-50 rounded-3xl border border-slate-200 space-y-4">
-                    <div className="flex items-center gap-1 text-amber-400">
-                      {[...Array(t.rating || 5)].map((_, i) => (
-                        <Star key={i} className="w-4 h-4 fill-amber-400" />
-                      ))}
-                    </div>
-                    <p className="text-xs sm:text-sm text-slate-700 italic leading-relaxed">
-                      &quot;{t.quote}&quot;
-                    </p>
-                    <div className="pt-2 border-t border-slate-200 text-xs">
-                      <p className="font-bold text-navy">{t.client_name}</p>
-                      <p className="text-slate-500">{t.designation || "Business Owner"} • {t.company_name}</p>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </Container>
-          </section>
-        )}
+        {/* 4. Client Testimonials Slider */}
+        <TestimonialSlider testimonials={testimonials} />
 
         {/* 5. Regional Presence */}
         <section className="py-12 bg-slate-900 text-white">
@@ -353,22 +323,6 @@ export default async function WhyUsPage() {
           </Container>
         </section>
 
-        {/* 6. Final Conversion CTA */}
-        <section className="py-14 sm:py-16 md:py-20 bg-navy text-white text-center">
-          <Container className="space-y-4 max-w-2xl mx-auto">
-            <h2 className="text-2xl sm:text-4xl font-extrabold tracking-tight">
-              Experience the <span className="text-emerald-400">Yolfin Difference</span> Today!
-            </h2>
-            <p className="text-xs sm:text-sm text-slate-300">
-              Start your 1 Month Free Trial and see how simple business management can be.
-            </p>
-            <div className="pt-2 flex justify-center">
-              <Button openBookingModal variant="primary" size="lg">
-                Book 1 Month Free
-              </Button>
-            </div>
-          </Container>
-        </section>
       </div>
     </>
   );

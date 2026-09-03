@@ -288,22 +288,6 @@ export default async function ServiceDetailPage({ params }: ServiceDetailPagePro
           </Container>
         </section>
 
-        {/* 3. Bottom Conversion CTA */}
-        <section className="py-14 sm:py-16 bg-navy text-white text-center">
-          <Container className="space-y-4 max-w-2xl mx-auto">
-            <h2 className="text-2xl sm:text-3xl font-extrabold">
-              Ready to Simplify Your {service.name}?
-            </h2>
-            <p className="text-xs sm:text-sm text-slate-300">
-              Get started with our 1 Month Free Trial today.
-            </p>
-            <div className="pt-2 flex justify-center">
-              <Button openBookingModal variant="primary" size="lg">
-                Book 1 Month Free
-              </Button>
-            </div>
-          </Container>
-        </section>
       </div>
     </>
   );

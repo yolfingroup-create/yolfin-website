@@ -20,6 +20,7 @@ export default function AdminTestimonialsPage() {
   const [clientName, setClientName] = useState("");
   const [companyName, setCompanyName] = useState("");
   const [designation, setDesignation] = useState("");
+  const [country, setCountry] = useState("");
   const [quote, setQuote] = useState("");
   const [rating, setRating] = useState(5);
   const [isPublished, setIsPublished] = useState(true);
@@ -67,6 +68,7 @@ export default function AdminTestimonialsPage() {
     setClientName("");
     setCompanyName("");
     setDesignation("Business Owner");
+    setCountry("India");
     setQuote("");
     setRating(5);
     setIsPublished(true);
@@ -79,6 +81,7 @@ export default function AdminTestimonialsPage() {
     setClientName(t.client_name);
     setCompanyName(t.company_name || "");
     setDesignation(t.designation || "");
+    setCountry(t.country || "");
     setQuote(t.quote);
     setRating(t.rating || 5);
     setIsPublished(t.is_published);
@@ -95,6 +98,7 @@ export default function AdminTestimonialsPage() {
         client_name: clientName,
         company_name: companyName,
         designation: designation,
+        country: country,
         quote,
         rating: Number(rating),
         is_published: isPublished,
@@ -114,6 +118,7 @@ export default function AdminTestimonialsPage() {
         client_name: clientName,
         company_name: companyName,
         designation: designation,
+        country: country,
         quote,
         rating: Number(rating),
         is_published: isPublished,
@@ -307,7 +312,7 @@ export default function AdminTestimonialsPage() {
                 />
               </div>
 
-              <div className="grid grid-cols-2 gap-4">
+              <div className="grid grid-cols-3 gap-3">
                 <div>
                   <label className="block text-xs font-bold uppercase text-slate-400 mb-1">
                     Company Name
@@ -329,7 +334,20 @@ export default function AdminTestimonialsPage() {
                     type="text"
                     value={designation}
                     onChange={(e) => setDesignation(e.target.value)}
-                    placeholder="e.g. Managing Director"
+                    placeholder="e.g. Business Owner"
+                    className="w-full px-3.5 py-2.5 bg-slate-950 border border-slate-800 rounded-xl text-xs text-slate-100 focus:ring-2 focus:ring-emerald-500"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-xs font-bold uppercase text-slate-400 mb-1">
+                    Country
+                  </label>
+                  <input
+                    type="text"
+                    value={country}
+                    onChange={(e) => setCountry(e.target.value)}
+                    placeholder="e.g. India"
                     className="w-full px-3.5 py-2.5 bg-slate-950 border border-slate-800 rounded-xl text-xs text-slate-100 focus:ring-2 focus:ring-emerald-500"
                   />
                 </div>
