@@ -91,9 +91,6 @@ export default async function HomePage() {
         {/* B. Trust Highlights Strip */}
         <TrustHighlights />
 
-        {/* C. 1-Month Free Trial Banner */}
-        
-
         {/* D. Services Grid Section (Powered by Supabase DB) */}
         <ServicesSection services={services} />
 
@@ -105,6 +102,7 @@ export default async function HomePage() {
 
         {/* G. Final Bottom Conversion CTA */}
         {/* <FinalCTA /> */}
+         {/* C. 1-Month Free Trial Banner */}
         <TrialBanner />
       </div>
     </>
