@@ -4,6 +4,7 @@ import {
   getWhyYolfinItems,
   getPublishedSeoMetadata,
   getImagePlacements,
+  getPrimaryCTALabel,
 } from "@/lib/supabase/queries";
 import { Hero } from "@/components/home/hero";
 import { TrustHighlights } from "@/components/home/trust-highlights";
@@ -37,10 +38,11 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export default async function HomePage() {
-  const [services, whyItems, homepageImages] = await Promise.all([
+  const [services, whyItems, homepageImages, primaryCtaLabel] = await Promise.all([
     getPublishedServices(),
     getWhyYolfinItems(),
     getImagePlacements(),
+    getPrimaryCTALabel(),
   ]);
 
   const jsonLd = {
@@ -85,8 +87,8 @@ export default async function HomePage() {
 
       {/* Main Homepage Flow */}
       <div className="flex flex-col min-h-screen">
-        {/* A. Hero Section (Dynamic Hero Image support) */}
-        <Hero heroImage={homepageImages.heroImage} />
+        {/* A. Hero Section (Dynamic Hero Image & CTA support) */}
+        <Hero heroImage={homepageImages.heroImage} ctaLabel={primaryCtaLabel} />
 
         {/* B. Trust Highlights Strip */}
         <TrustHighlights />
@@ -101,9 +103,9 @@ export default async function HomePage() {
         <WhyUsPreview items={whyItems} whyUsImage={homepageImages.whyUsImage} />
 
         {/* G. Final Bottom Conversion CTA */}
-        {/* <FinalCTA /> */}
+        {/* <FinalCTA ctaLabel={primaryCtaLabel} /> */}
          {/* C. 1-Month Free Trial Banner */}
-        <TrialBanner />
+        <TrialBanner ctaLabel={primaryCtaLabel} />
       </div>
     </>
   );

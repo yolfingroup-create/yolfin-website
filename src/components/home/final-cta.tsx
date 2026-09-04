@@ -2,7 +2,11 @@ import { ArrowRight, Sparkles } from "lucide-react";
 import { Container } from "@/components/ui/container";
 import { Button } from "@/components/ui/button";
 
-export function FinalCTA() {
+interface FinalCTAProps {
+  ctaLabel?: string;
+}
+
+export function FinalCTA({ ctaLabel = "Book 1 Month Free" }: FinalCTAProps) {
   return (
     <section className="py-8 sm:py-14 md:py-20 bg-gradient-to-r from-navy via-slate-900 to-navy-dark text-white relative overflow-hidden">
       {/* Background Decorative Accent */}
@@ -30,7 +34,7 @@ export function FinalCTA() {
             className="w-full sm:w-auto text-sm sm:text-base px-6 sm:px-8 py-3 sm:py-3.5"
             icon={<ArrowRight className="w-4 h-4 sm:w-5 sm:h-5" />}
           >
-            Book Your Free Month
+            {ctaLabel}
           </Button>
         </div>
       </Container>

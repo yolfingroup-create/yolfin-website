@@ -7,6 +7,7 @@ import { Footer } from "@/components/layout/footer";
 import { BookingModalProvider } from "@/context/booking-modal-context";
 import { TrialBookingModal } from "@/components/modals/trial-booking-modal";
 import { SITE_CONFIG } from "@/lib/constants";
+import { getPrimaryCTALabel } from "@/lib/supabase/queries";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -84,6 +85,7 @@ export default async function RootLayout({
 }>) {
   const headerList = await headers();
   const isAdminRoute = headerList.get("x-is-admin-route") === "true";
+  const primaryCtaLabel = await getPrimaryCTALabel();
 
   return (
     <html lang="en" className={`${inter.variable} antialiased`}>
@@ -93,7 +95,7 @@ export default async function RootLayout({
             children
           ) : (
             <>
-              <Navbar />
+              <Navbar ctaLabel={primaryCtaLabel} />
               <main className="flex-1">{children}</main>
               <Footer />
             </>

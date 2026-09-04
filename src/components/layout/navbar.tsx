@@ -11,7 +11,11 @@ import { Container } from "@/components/ui/container";
 import { MobileMenu } from "./mobile-menu";
 import { SITE_CONFIG } from "@/lib/constants";
 
-export function Navbar() {
+interface NavbarProps {
+  ctaLabel?: string;
+}
+
+export function Navbar({ ctaLabel = "Book 1 Month Free" }: NavbarProps) {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const pathname = usePathname();
@@ -86,7 +90,7 @@ export function Navbar() {
               size="md"
               icon={<ArrowRight className="w-4 h-4" />}
             >
-              Book 1 Month Free
+              {ctaLabel}
             </Button>
           </div>
 
@@ -108,6 +112,7 @@ export function Navbar() {
       <MobileMenu
         isOpen={isMobileMenuOpen}
         onClose={handleCloseMobileMenu}
+        ctaLabel={ctaLabel}
       />
     </>
   );

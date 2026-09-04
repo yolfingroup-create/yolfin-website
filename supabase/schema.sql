@@ -453,6 +453,16 @@ VALUES
 )
 ON CONFLICT (setting_key) DO UPDATE SET setting_value = EXCLUDED.setting_value;
 
+-- 7.2b Primary CTA Label Setting Seed
+INSERT INTO public.site_settings (setting_key, setting_value, description, is_public)
+VALUES (
+    'primary_cta_label',
+    '"Book 1 Month Free"'::jsonb,
+    'Controls the primary CTA button label used across the entire website',
+    true
+)
+ON CONFLICT (setting_key) DO NOTHING;
+
 -- 7.3 Why Yolfin Benefit Items Seed
 INSERT INTO public.why_yolfin_items (title, description, icon_name, category, display_order, is_active)
 VALUES

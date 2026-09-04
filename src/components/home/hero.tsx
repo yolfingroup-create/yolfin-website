@@ -9,9 +9,10 @@ import type { MediaAssetRow } from "@/types";
 
 interface HeroProps {
   heroImage?: MediaAssetRow | null;
+  ctaLabel?: string;
 }
 
-export function Hero({ heroImage }: HeroProps) {
+export function Hero({ heroImage, ctaLabel = "Book 1 Month Free" }: HeroProps) {
   const hasImage = !!heroImage?.secure_url;
 
   return (
@@ -64,7 +65,7 @@ export function Hero({ heroImage }: HeroProps) {
                 size="lg"
                 icon={<ArrowRight className="w-4 h-4" />}
               >
-                Start Your Free Month
+                {ctaLabel}
               </Button>
               <Button
                 href={SITE_CONFIG.contact.whatsappUrl}
@@ -165,7 +166,7 @@ export function Hero({ heroImage }: HeroProps) {
                     size="sm"
                     icon={<ArrowRight className="w-3.5 h-3.5" />}
                   >
-                    Book Free Month
+                    {ctaLabel}
                   </Button>
                 </div>
               </div>
@@ -226,7 +227,7 @@ export function Hero({ heroImage }: HeroProps) {
               className="text-sm py-3.5 shadow-sm active:scale-[0.98]"
               icon={<ArrowRight className="w-4 h-4" />}
             >
-              Start Your Free Month
+              {ctaLabel}
             </Button>
             <a
               href={SITE_CONFIG.contact.whatsappUrl}
