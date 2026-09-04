@@ -12,9 +12,10 @@ import { SITE_CONFIG } from "@/lib/constants";
 interface MobileMenuProps {
   isOpen: boolean;
   onClose: () => void;
+  ctaLabel?: string;
 }
 
-export function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
+export function MobileMenu({ isOpen, onClose, ctaLabel = "Book 1 Month Free" }: MobileMenuProps) {
   const pathname = usePathname();
 
   // Close mobile drawer when the route actually changes
@@ -151,7 +152,7 @@ export function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
             fullWidth
             icon={<ArrowRight className="w-4 h-4" />}
           >
-            Book 1 Month Free
+            {ctaLabel}
           </Button>
         </div>
       </div>

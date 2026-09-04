@@ -15,7 +15,7 @@ import {
 } from "lucide-react";
 import { Container } from "@/components/ui/container";
 import { Button } from "@/components/ui/button";
-import { getPublishedServiceBySlug, getActiveServiceItems } from "@/lib/supabase/queries";
+import { getPublishedServiceBySlug, getActiveServiceItems, getPrimaryCTALabel } from "@/lib/supabase/queries";
 import { SITE_CONFIG } from "@/lib/constants";
 
 interface ServiceDetailPageProps {
@@ -47,7 +47,10 @@ export async function generateMetadata({ params }: ServiceDetailPageProps): Prom
 
 export default async function ServiceDetailPage({ params }: ServiceDetailPageProps) {
   const { slug } = await params;
-  const service = await getPublishedServiceBySlug(slug);
+  const [service, primaryCtaLabel] = await Promise.all([
+    getPublishedServiceBySlug(slug),
+    getPrimaryCTALabel(),
+  ]);
 
   if (!service) {
     notFound();
@@ -134,7 +137,7 @@ export default async function ServiceDetailPage({ params }: ServiceDetailPagePro
                     size="lg"
                     icon={<ArrowRight className="w-4 h-4" />}
                   >
-                    Book 1 Month Free
+                    {primaryCtaLabel}
                   </Button>
                   <Button href="/contact" variant="outline" size="lg">
                     Inquire Now
@@ -280,7 +283,7 @@ export default async function ServiceDetailPage({ params }: ServiceDetailPagePro
                     fullWidth
                     icon={<ArrowRight className="w-4 h-4" />}
                   >
-                    Book My Free Month
+                    {primaryCtaLabel}
                   </Button>
                 </div>
               </div>

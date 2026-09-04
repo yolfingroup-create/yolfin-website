@@ -553,7 +553,8 @@ export async function updateSiteSettingAction(
     if (error) return { error: "Unable to save site setting." };
 
     revalidatePath("/admin/settings");
-    revalidatePath("/");
+    revalidatePath("/", "layout");
+    revalidatePath("/services", "layout");
 
     return { success: true, message: "Settings saved successfully" };
   } catch (err) {
