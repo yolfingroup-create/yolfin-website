@@ -313,3 +313,44 @@ export async function getImagePlacements(): Promise<ImagePlacementsResult> {
  */
 export const getHomepageImagePlacements = getImagePlacements;
 
+/**
+ * Fetches the global primary CTA label configured by the admin in site_settings.
+ * Falls back to default "Book 1 Month Free" if not set or error occurs.
+ */
+export async function getPrimaryCTALabel(): Promise<string> {
+  const DEFAULT_CTA_LABEL = "Book 1 Month Free";
+  try {
+    const supabase = await createClient();
+    const { data, error } = await supabase
+      .from("site_settings")
+      .select("setting_value")
+      .eq("setting_key", "primary_cta_label")
+      .maybeSingle();
+
+    if (error || !data || data.setting_value === null || data.setting_value === undefined) {
+      return DEFAULT_CTA_LABEL;
+    }
+
+    const val = data.setting_value;
+    if (typeof val === "string") {
+      return val;
+    }
+    if (typeof val === "object" && val !== null && "text" in (val as Record<string, unknown>)) {
+      return String((val as Record<string, unknown>).text) || DEFAULT_CTA_LABEL;
+    }
+    return String(val) || DEFAULT_CTA_LABEL;
+  } catch (err: unknown) {
+    if (
+      err &&
+      typeof err === "object" &&
+      (("digest" in err && (err as { digest?: string }).digest === "DYNAMIC_SERVER_USAGE") ||
+        ("message" in err && typeof (err as { message?: string }).message === "string" && (err as { message: string }).message.includes("Dynamic server usage")))
+    ) {
+      throw err;
+    }
+    console.error("Error fetching primary_cta_label setting:", err);
+    return DEFAULT_CTA_LABEL;
+  }
+}
+
+

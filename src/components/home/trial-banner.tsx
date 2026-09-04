@@ -2,7 +2,11 @@ import { ArrowRight, Gift, CreditCard, CheckCircle2 } from "lucide-react";
 import { Container } from "@/components/ui/container";
 import { Button } from "@/components/ui/button";
 
-export function TrialBanner() {
+interface TrialBannerProps {
+  ctaLabel?: string;
+}
+
+export function TrialBanner({ ctaLabel = "Book 1 Month Free" }: TrialBannerProps) {
   return (
     <section className="py-8 sm:py-16 md:py-20 bg-navy text-white relative overflow-hidden">
       {/* Background Graphic Accents */}
@@ -81,7 +85,7 @@ export function TrialBanner() {
                 className="text-sm py-3.5 px-6"
                 icon={<ArrowRight className="w-4 h-4" />}
               >
-                Book 1 Month Free
+                {ctaLabel}
               </Button>
               <p className="text-[10px] sm:text-xs text-slate-400">
                 Quick 1-minute registration • No obligation
