@@ -95,7 +95,7 @@ export default async function AdminDashboardPage() {
           <p className="text-2xl font-extrabold text-white">{totalInquiries || 0}</p>
         </Link>
 
-        <Link href="/admin/bookings" className="bg-slate-900 border border-slate-800 rounded-2xl p-4 space-y-2 hover:border-emerald-500/40 transition-colors cursor-pointer">
+        <Link href="/admin/trial-bookings" className="bg-slate-900 border border-slate-800 rounded-2xl p-4 space-y-2 hover:border-emerald-500/40 transition-colors cursor-pointer">
           <div className="flex items-center justify-between">
             <span className="text-xs font-bold text-slate-400">Trial Bookings</span>
             <Calendar className="w-4 h-4 text-emerald-400" />
