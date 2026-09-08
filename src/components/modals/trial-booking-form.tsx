@@ -212,6 +212,21 @@ export function TrialBookingForm({ onSuccess }: TrialBookingFormProps) {
             </div>
           </div>
 
+          {/* Company Description Field (Optional) */}
+          <div>
+            <label htmlFor="trial_company_description" className="block text-xs font-bold uppercase text-slate-700 mb-1">
+              Company Description
+            </label>
+            <textarea
+              id="trial_company_description"
+              name="company_description"
+              rows={3}
+              maxLength={1000}
+              placeholder="Briefly describe your company or business..."
+              className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-brand-green min-h-[100px] max-h-[150px] resize-y"
+            />
+          </div>
+
           {/* Submit Button */}
           <Button
             type="submit"

@@ -28,6 +28,8 @@ export async function submitTrialBookingAction(
     const email = formData.get("email")?.toString().trim();
     const phone = formData.get("phone")?.toString().trim();
     const companyName = formData.get("company_name")?.toString().trim() || null;
+    const companyDescriptionRaw = formData.get("company_description")?.toString().trim();
+    const companyDescription = companyDescriptionRaw ? companyDescriptionRaw.slice(0, 1000) : null;
     const rawTax = formData.get("tax_classification")?.toString().trim();
     const taxClassification: TaxClassification = rawTax === "uae_vat" ? "uae_vat" : "indian_gst";
     const servicesInterested = formData.getAll("services_interested").map((s) => s.toString());
@@ -52,6 +54,7 @@ export async function submitTrialBookingAction(
       email: email,
       phone: phone,
       company_name: companyName,
+      company_description: companyDescription,
       country: taxClassification === "uae_vat" ? "UAE" : "India",
       tax_classification: taxClassification,
       services_interested: servicesInterested,
@@ -74,6 +77,7 @@ export async function submitTrialBookingAction(
           <p><strong>Email:</strong> ${email}</p>
           <p><strong>Phone:</strong> ${phone}</p>
           <p><strong>Company:</strong> ${companyName || "Not provided"}</p>
+          <p><strong>Company Description:</strong> ${companyDescription || "Not provided"}</p>
           <p><strong>Tax Classification:</strong> ${taxClassification}</p>
           <p><strong>Services:</strong> ${servicesInterested.join(", ") || "Accounting & Finance"}</p>
         `,
