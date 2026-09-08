@@ -115,7 +115,7 @@ export default async function ServicesPage() {
 
                 <h1 className="text-5xl font-extrabold text-navy tracking-tight leading-tight">
                   Solutions That{" "}
-                  <span className="text-brand-green underline decoration-emerald-400/40 decoration-wavy">
+                  <span className="text-brand-green ">
                     Drive Your Business
                   </span>
                 </h1>
@@ -151,7 +151,7 @@ export default async function ServicesPage() {
 
                 <h1 className="text-[23px] sm:text-3xl font-extrabold text-navy tracking-tight leading-[1.2]">
                   Solutions That{" "}
-                  <span className="text-brand-green underline decoration-emerald-400/40 decoration-wavy">
+                  <span className="text-brand-green ">
                     Drive Your Business
                   </span>
                 </h1>

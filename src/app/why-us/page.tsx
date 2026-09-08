@@ -123,7 +123,7 @@ export default async function WhyUsPage() {
 
                 <h1 className="text-5xl font-extrabold text-navy tracking-tight leading-tight">
                   Your Success Is{" "}
-                  <span className="text-brand-green underline decoration-emerald-400/40 decoration-wavy">
+                  <span className="text-brand-green ">
                     Our Priority
                   </span>
                 </h1>
@@ -162,7 +162,7 @@ export default async function WhyUsPage() {
 
                 <h1 className="text-[23px] sm:text-3xl font-extrabold text-navy tracking-tight leading-[1.2]">
                   Your Success Is{" "}
-                  <span className="text-brand-green underline decoration-emerald-400/40 decoration-wavy">
+                  <span className="text-brand-green ">
                     Our Priority
                   </span>
                 </h1>
