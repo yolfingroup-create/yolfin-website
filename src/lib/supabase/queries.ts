@@ -353,4 +353,61 @@ export async function getPrimaryCTALabel(): Promise<string> {
   }
 }
 
+export interface SocialMediaLinks {
+  instagramUrl?: string;
+  facebookUrl?: string;
+  twitterUrl?: string;
+}
+
+/**
+ * Fetches configured social media URLs from site_settings.
+ */
+export async function getSocialMediaLinks(): Promise<SocialMediaLinks> {
+  try {
+    const supabase = await createClient();
+    const { data, error } = await supabase
+      .from("site_settings")
+      .select("setting_key, setting_value")
+      .in("setting_key", [
+        "social_instagram_url",
+        "social_facebook_url",
+        "social_twitter_url",
+      ]);
+
+    if (error || !data) {
+      return {};
+    }
+
+    const map: Record<string, string> = {};
+    for (const item of data) {
+      if (item.setting_value) {
+        const val =
+          typeof item.setting_value === "string"
+            ? item.setting_value
+            : String(item.setting_value);
+        if (val.trim().length > 0) {
+          map[item.setting_key] = val.trim();
+        }
+      }
+    }
+
+    return {
+      instagramUrl: map.social_instagram_url || "",
+      facebookUrl: map.social_facebook_url || "",
+      twitterUrl: map.social_twitter_url || "",
+    };
+  } catch (err: unknown) {
+    if (
+      err &&
+      typeof err === "object" &&
+      (("digest" in err && (err as { digest?: string }).digest === "DYNAMIC_SERVER_USAGE") ||
+        ("message" in err && typeof (err as { message?: string }).message === "string" && (err as { message: string }).message.includes("Dynamic server usage")))
+    ) {
+      throw err;
+    }
+    console.error("Error fetching social media links:", err);
+    return {};
+  }
+}
+
 
