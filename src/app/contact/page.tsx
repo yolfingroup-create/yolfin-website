@@ -69,7 +69,7 @@ export default function ContactPage() {
 
               <h1 className="text-3xl sm:text-5xl font-extrabold text-navy tracking-tight leading-tight">
                 Let&apos;s Talk About Your{" "}
-                <span className="text-brand-green underline decoration-emerald-400/40 decoration-wavy">
+                <span className="text-brand-green ">
                   Business Needs
                 </span>
               </h1>

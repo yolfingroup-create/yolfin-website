@@ -102,7 +102,7 @@ export default async function AboutPage() {
 
                 <h1 className="text-5xl font-extrabold text-navy tracking-tight leading-tight">
                   We Simplify Business.{" "}
-                  <span className="text-brand-green underline decoration-emerald-400/40 decoration-wavy">
+                  <span className="text-brand-green ">
                     You Focus on Growth.
                   </span>
                 </h1>
@@ -146,7 +146,7 @@ export default async function AboutPage() {
 
                 <h1 className="text-[23px] sm:text-3xl font-extrabold text-navy tracking-tight leading-[1.2]">
                   We Simplify Business.{" "}
-                  <span className="text-brand-green underline decoration-emerald-400/40 decoration-wavy">
+                  <span className="text-brand-green ">
                     You Focus on Growth.
                   </span>
                 </h1>
