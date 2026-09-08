@@ -36,6 +36,7 @@ export function Logo({ variant = "default", className = "" }: LogoProps) {
             width={160}
             height={36}
             className="h-full w-auto object-contain transition-all"
+            style={{ width: "auto" }}
             priority
           />
         </div>

@@ -1,58 +1,23 @@
-"use client";
-
-import { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { Mail, Phone, MapPin, ChevronDown, ArrowUp, ShieldCheck, CreditCard } from "lucide-react";
+import { Mail, Phone, MapPin, ShieldCheck, CreditCard } from "lucide-react";
 import { Logo } from "@/components/ui/logo";
 import { Container } from "@/components/ui/container";
 import { SITE_CONFIG } from "@/lib/constants";
+import type { SocialMediaLinks } from "@/lib/supabase/queries";
+import { FooterAccordion, ScrollToTop } from "@/components/layout/footer-interactive";
+import { InstagramIcon, FacebookIcon, TwitterXIcon } from "@/components/ui/social-icons";
 
-function FooterAccordion({ title, children }: { title: string; children: React.ReactNode }) {
-  const [isOpen, setIsOpen] = useState(false);
-
-  return (
-    <div className="border-b border-slate-800">
-      <button
-        onClick={() => setIsOpen(!isOpen)}
-        className="w-full flex items-center justify-between py-3.5 text-xs font-bold text-white uppercase tracking-wider"
-        aria-expanded={isOpen}
-      >
-        <span>{title}</span>
-        <ChevronDown
-          className={`w-4 h-4 text-slate-400 transition-transform duration-200 ${
-            isOpen ? "rotate-180" : ""
-          }`}
-        />
-      </button>
-      <div
-        className={`overflow-hidden transition-all duration-200 ${
-          isOpen ? "max-h-96 pb-4" : "max-h-0"
-        }`}
-      >
-        {children}
-      </div>
-    </div>
-  );
+interface FooterProps {
+  socialLinks?: SocialMediaLinks;
 }
 
-function ScrollToTop() {
-  const handleScrollToTop = () => {
-    window.scrollTo({ top: 0, behavior: "smooth" });
-  };
+export function Footer({ socialLinks }: FooterProps) {
+  const hasInstagram = Boolean(socialLinks?.instagramUrl?.trim());
+  const hasFacebook = Boolean(socialLinks?.facebookUrl?.trim());
+  const hasTwitter = Boolean(socialLinks?.twitterUrl?.trim());
+  const hasSocialLinks = hasInstagram || hasFacebook || hasTwitter;
 
-  return (
-    <button
-      onClick={handleScrollToTop}
-      className="w-9 h-9 rounded-full bg-slate-800 border border-slate-700 flex items-center justify-center text-slate-400 hover:text-white hover:bg-slate-700 transition-colors"
-      aria-label="Scroll to top"
-    >
-      <ArrowUp className="w-4 h-4" />
-    </button>
-  );
-}
-
-export function Footer() {
   return (
     <footer className="bg-navy-dark text-slate-300 border-t border-slate-800 pt-10 sm:pt-16 pb-6 sm:pb-8">
       <Container>
@@ -72,6 +37,52 @@ export function Footer() {
                 <span className="w-2 h-2 rounded-full bg-emerald-400" />
                 <span>Serving India & UAE Markets</span>
               </div>
+
+              {hasSocialLinks && (
+                <div className="pt-2 space-y-2">
+                  <span className="text-[11px] font-bold text-slate-400 uppercase tracking-wider block">
+                    Follow Us
+                  </span>
+                  <div className="flex items-center gap-2.5">
+                    {hasInstagram && (
+                      <a
+                        href={socialLinks!.instagramUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        aria-label="Instagram"
+                        title="Instagram"
+                        className="w-8 h-8 rounded-full bg-slate-800/80 border border-slate-700/80 flex items-center justify-center text-slate-400 hover:text-emerald-400 hover:bg-slate-700 hover:border-emerald-500/40 transition-all"
+                      >
+                        <InstagramIcon className="w-4 h-4" />
+                      </a>
+                    )}
+                    {hasFacebook && (
+                      <a
+                        href={socialLinks!.facebookUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        aria-label="Facebook"
+                        title="Facebook"
+                        className="w-8 h-8 rounded-full bg-slate-800/80 border border-slate-700/80 flex items-center justify-center text-slate-400 hover:text-emerald-400 hover:bg-slate-700 hover:border-emerald-500/40 transition-all"
+                      >
+                        <FacebookIcon className="w-4 h-4" />
+                      </a>
+                    )}
+                    {hasTwitter && (
+                      <a
+                        href={socialLinks!.twitterUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        aria-label="Twitter/X"
+                        title="Twitter/X"
+                        className="w-8 h-8 rounded-full bg-slate-800/80 border border-slate-700/80 flex items-center justify-center text-slate-400 hover:text-emerald-400 hover:bg-slate-700 hover:border-emerald-500/40 transition-all"
+                      >
+                        <TwitterXIcon className="w-4 h-4" />
+                      </a>
+                    )}
+                  </div>
+                </div>
+              )}
             </div>
 
             {/* 2. Quick Links */}
@@ -198,7 +209,7 @@ export function Footer() {
         {/* MOBILE FOOTER — compact accordion layout      */}
         {/* ============================================= */}
         <div className="block md:hidden space-y-6">
-          {/* Logo + Description + Market Indicator */}
+          {/* Logo + Description + Market Indicator + Social Links */}
           <div className="space-y-3 text-center">
             <div className="flex justify-center">
               <Logo variant="light" />
@@ -210,6 +221,47 @@ export function Footer() {
               <span className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
               <span>Serving India & UAE</span>
             </div>
+
+            {hasSocialLinks && (
+              <div className="flex items-center justify-center gap-3 pt-1">
+                {hasInstagram && (
+                  <a
+                    href={socialLinks!.instagramUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label="Instagram"
+                    title="Instagram"
+                    className="w-8 h-8 rounded-full bg-slate-800/80 border border-slate-700/80 flex items-center justify-center text-slate-400 hover:text-emerald-400 hover:bg-slate-700 hover:border-emerald-500/40 transition-all"
+                  >
+                    <InstagramIcon className="w-4 h-4" />
+                  </a>
+                )}
+                {hasFacebook && (
+                  <a
+                    href={socialLinks!.facebookUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label="Facebook"
+                    title="Facebook"
+                    className="w-8 h-8 rounded-full bg-slate-800/80 border border-slate-700/80 flex items-center justify-center text-slate-400 hover:text-emerald-400 hover:bg-slate-700 hover:border-emerald-500/40 transition-all"
+                  >
+                    <FacebookIcon className="w-4 h-4" />
+                  </a>
+                )}
+                {hasTwitter && (
+                  <a
+                    href={socialLinks!.twitterUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label="Twitter/X"
+                    title="Twitter/X"
+                    className="w-8 h-8 rounded-full bg-slate-800/80 border border-slate-700/80 flex items-center justify-center text-slate-400 hover:text-emerald-400 hover:bg-slate-700 hover:border-emerald-500/40 transition-all"
+                  >
+                    <TwitterXIcon className="w-4 h-4" />
+                  </a>
+                )}
+              </div>
+            )}
           </div>
 
           {/* Accordion Sections */}
