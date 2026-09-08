@@ -409,6 +409,7 @@ export interface Database {
           phone: string;
           country: string;
           company_name: string | null;
+          company_description: string | null;
           tax_classification: TaxClassification | null;
           services_interested: string[] | null;
           industry: string | null;
@@ -427,6 +428,7 @@ export interface Database {
           phone: string;
           country?: string;
           company_name?: string | null;
+          company_description?: string | null;
           tax_classification?: TaxClassification | null;
           services_interested?: string[] | null;
           industry?: string | null;
@@ -445,6 +447,7 @@ export interface Database {
           phone?: string;
           country?: string;
           company_name?: string | null;
+          company_description?: string | null;
           tax_classification?: TaxClassification | null;
           services_interested?: string[] | null;
           industry?: string | null;

@@ -84,7 +84,8 @@ export default function AdminTrialBookingsPage() {
       b.full_name.toLowerCase().includes(search.toLowerCase()) ||
       b.email.toLowerCase().includes(search.toLowerCase()) ||
       b.phone.includes(search) ||
-      (b.company_name && b.company_name.toLowerCase().includes(search.toLowerCase()));
+      (b.company_name && b.company_name.toLowerCase().includes(search.toLowerCase())) ||
+      (b.company_description && b.company_description.toLowerCase().includes(search.toLowerCase()));
 
     const matchesTax = taxFilter === "all" || b.tax_classification === taxFilter;
     const matchesStatus = statusFilter === "all" || b.status === statusFilter;
@@ -183,6 +184,11 @@ export default function AdminTrialBookingsPage() {
                     <td className="p-4">
                       <p className="font-bold text-white">{booking.full_name}</p>
                       {booking.company_name && <p className="text-[11px] text-slate-400">{booking.company_name}</p>}
+                      {booking.company_description && (
+                        <p className="text-[10px] text-slate-500 truncate max-w-[180px] italic" title={booking.company_description}>
+                          "{booking.company_description}"
+                        </p>
+                      )}
                     </td>
                     <td className="p-4">
                       <p className="text-emerald-400">{booking.email}</p>
@@ -297,6 +303,17 @@ export default function AdminTrialBookingsPage() {
                   <p className="font-semibold text-emerald-400 uppercase">
                     {selectedBooking.tax_classification ? selectedBooking.tax_classification.replace("_", " ") : "GST"}
                   </p>
+                </div>
+              </div>
+
+              <div>
+                <p className="text-[10px] font-bold text-slate-500 uppercase mb-1.5">Company Description</p>
+                <div className="bg-slate-950 p-3 rounded-xl border border-slate-800 text-slate-300 leading-relaxed whitespace-pre-wrap">
+                  {selectedBooking.company_description?.trim() ? (
+                    selectedBooking.company_description
+                  ) : (
+                    <span className="text-slate-500 italic">Not provided</span>
+                  )}
                 </div>
               </div>
 

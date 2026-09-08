@@ -174,6 +174,7 @@ CREATE TABLE IF NOT EXISTS public.trial_bookings (
     phone VARCHAR(50) NOT NULL CHECK (char_length(trim(phone)) >= 5),
     country VARCHAR(100) NOT NULL DEFAULT 'India',
     company_name VARCHAR(150),
+    company_description TEXT,
     tax_classification VARCHAR(50) CHECK (tax_classification IN ('uae_vat', 'indian_gst', 'other', 'none')),
     services_interested TEXT[] DEFAULT '{}',
     industry VARCHAR(100),
@@ -492,3 +493,7 @@ VALUES
 ('/why-us', 'Why Choose Yolfin Group', 'Six strong reasons why growing businesses choose Yolfin Group as their trusted business support partner.', true),
 ('/contact', 'Contact Us | Yolfin Group', 'Get in touch with Yolfin Group offices in Malappuram, Kerala, India and UAE.', true)
 ON CONFLICT (page_path) DO UPDATE SET title = EXCLUDED.title, description = EXCLUDED.description;
+
+-- Migration: Add company_description column to trial_bookings if updating existing schema
+ALTER TABLE public.trial_bookings ADD COLUMN IF NOT EXISTS company_description TEXT;
+
