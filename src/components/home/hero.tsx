@@ -46,7 +46,7 @@ export function Hero({ heroImage, ctaLabel = "Book 1 Month Free" }: HeroProps) {
             {/* Strong H1 */}
             <h1 className="text-5xl font-extrabold text-navy tracking-tight leading-[1.18]">
               Outsourced Accounting & Finance for{" "}
-              <span className="text-brand-green underline decoration-emerald-400/40 decoration-wavy">
+              <span className="text-brand-green ">
                 Growing Businesses.
               </span>
             </h1>
@@ -185,7 +185,7 @@ export function Hero({ heroImage, ctaLabel = "Book 1 Month Free" }: HeroProps) {
 
             <h1 className="text-[23px] sm:text-3xl font-extrabold text-navy tracking-tight leading-[1.2]">
               Outsourced Accounting & Finance for{" "}
-              <span className="text-brand-green underline decoration-emerald-400/40 decoration-wavy">
+              <span className="text-brand-green ">
                 Growing Businesses.
               </span>
             </h1>
