@@ -7,7 +7,7 @@ import { Footer } from "@/components/layout/footer";
 import { BookingModalProvider } from "@/context/booking-modal-context";
 import { TrialBookingModal } from "@/components/modals/trial-booking-modal";
 import { SITE_CONFIG } from "@/lib/constants";
-import { getPrimaryCTALabel } from "@/lib/supabase/queries";
+import { getPrimaryCTALabel, getSocialMediaLinks } from "@/lib/supabase/queries";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -85,7 +85,10 @@ export default async function RootLayout({
 }>) {
   const headerList = await headers();
   const isAdminRoute = headerList.get("x-is-admin-route") === "true";
-  const primaryCtaLabel = await getPrimaryCTALabel();
+  const [primaryCtaLabel, socialLinks] = await Promise.all([
+    getPrimaryCTALabel(),
+    getSocialMediaLinks(),
+  ]);
 
   return (
     <html lang="en" className={`${inter.variable} antialiased`}>
@@ -97,7 +100,7 @@ export default async function RootLayout({
             <>
               <Navbar ctaLabel={primaryCtaLabel} />
               <main className="flex-1">{children}</main>
-              <Footer />
+              <Footer socialLinks={socialLinks} />
             </>
           )}
           <TrialBookingModal />

@@ -25,17 +25,17 @@ export function ServiceCard({ service }: ServiceCardProps) {
 
   return (
     <div
-      className={`relative bg-white rounded-xl sm:rounded-2xl p-4 sm:p-8 border transition-all duration-300 flex flex-col justify-between h-full ${
+      className={`relative bg-white rounded-2xl sm:rounded-3xl p-6 sm:p-8 border transition-all duration-300 flex flex-col justify-between h-full ${
         isActive
-          ? "border-emerald-200 shadow-sm hover:shadow-xl hover:-translate-y-1 hover:border-brand-green ring-1 ring-emerald-500/10"
-          : "border-slate-200 opacity-85 hover:opacity-100 shadow-xs"
+          ? "border-emerald-200/80 shadow-xs hover:shadow-xl hover:-translate-y-1 hover:border-brand-green ring-1 ring-emerald-500/10"
+          : "border-slate-200 opacity-90 hover:opacity-100 shadow-xs"
       }`}
     >
-      <div className="space-y-4">
+      <div className="space-y-4 sm:space-y-5">
         {/* Header Icon + Status Badge */}
         <div className="flex items-center justify-between gap-4">
           <div
-            className={`w-12 h-12 rounded-xl flex items-center justify-center ${
+            className={`w-12 h-12 rounded-2xl flex items-center justify-center shrink-0 ${
               isActive ? "bg-light-green" : "bg-slate-100"
             }`}
           >
@@ -43,33 +43,33 @@ export function ServiceCard({ service }: ServiceCardProps) {
           </div>
 
           {isActive ? (
-            <span className="px-3 py-1 bg-emerald-900 text-emerald-300 text-xs font-bold rounded-full uppercase tracking-wider">
+            <span className="px-3 py-1 bg-emerald-950 text-emerald-300 text-xs font-bold rounded-full uppercase tracking-wider border border-emerald-900/50">
               Active Service
             </span>
           ) : (
-            <span className="inline-flex items-center gap-1 px-3 py-1 bg-slate-100 text-slate-500 border border-slate-200 text-xs font-semibold rounded-full uppercase tracking-wider">
-              <Clock className="w-3 h-3" /> Coming Soon
+            <span className="inline-flex items-center gap-1.5 px-3 py-1 bg-slate-100 text-slate-500 border border-slate-200 text-xs font-semibold rounded-full uppercase tracking-wider">
+              <Clock className="w-3.5 h-3.5" /> Coming Soon
             </span>
           )}
         </div>
 
-        {/* Title & Description */}
-        <div className="space-y-1.5 sm:space-y-2">
-          <h3 className="text-base sm:text-xl font-extrabold text-navy tracking-tight">
+        {/* Title & Short Description */}
+        <div className="space-y-2">
+          <h3 className="text-lg sm:text-xl font-extrabold text-navy tracking-tight leading-snug">
             {service.name}
           </h3>
-          <p className="text-slate-muted text-sm leading-relaxed">
+          <p className="text-slate-muted text-xs sm:text-sm leading-relaxed">
             {service.short_description}
           </p>
         </div>
       </div>
 
       {/* Footer Action Button / Badge */}
-      <div className="pt-4 mt-4 sm:pt-6 sm:mt-6 border-t border-slate-100 flex items-center justify-between">
+      <div className="pt-4 mt-6 border-t border-slate-100 flex items-center justify-between">
         {isActive ? (
           <Link
             href={`/services/${service.slug}`}
-            className="inline-flex items-center gap-2 text-sm font-bold text-brand-green hover:text-brand-green-hover transition-colors group"
+            className="inline-flex items-center gap-2 text-xs sm:text-sm font-bold text-brand-green hover:text-brand-green-hover transition-colors group"
           >
             <span>Explore {service.name}</span>
             <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
