@@ -179,14 +179,7 @@ export function Footer({ socialLinks }: FooterProps) {
           {/* Desktop Bottom Bar */}
           <div className="pt-8 border-t border-slate-800 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-500 text-center sm:text-left">
             <p>© 2026 Yolfin Group. All Rights Reserved.</p>
-            <div className="flex gap-4">
-              <Link
-                href="https://www.ekodrix.com/"
-                className="text-sm text-slate-500 hover:text-white transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-accent rounded px-0.5 inline-flex items-center gap-1"
-              >
-                Crafted by <span className="inline-flex items-center font-semibold">Ek<Image src="/ekodrix-logo.png" alt="o" width={14} height={14} className="mx-0.5 inline-block rounded-full align-middle" />drix</span>
-              </Link>
-            </div>
+            
             <div className="flex items-center gap-6">
               <Link
                 href="/privacy-policy"
@@ -378,14 +371,7 @@ export function Footer({ socialLinks }: FooterProps) {
               </Link>
             </div>
 
-            <div className="flex justify-center">
-              <Link
-                href="https://www.ekodrix.com/"
-                className="text-[10px] text-slate-500 hover:text-white transition-colors inline-flex items-center gap-1"
-              >
-                Crafted by <span className="inline-flex items-center font-semibold">Ek<Image src="/ekodrix-logo.png" alt="o" width={12} height={12} className="mx-0.5 inline-block rounded-full align-middle" />drix</span>
-              </Link>
-            </div>
+            
           </div>
         </div>
       </Container>
